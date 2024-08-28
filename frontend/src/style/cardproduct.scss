@@ -1,0 +1,37 @@
+.cardproduct{
+    display: flex;
+    width: 100%;
+    gap: .5em;
+    .cuerpo-cardproduct{
+        position: relative;
+        outline: 1px solid green;
+        max-width: 170px;
+        min-width: 140px;
+        max-height: 290px;
+        min-height: 265px;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        outline: 1px solid #707c3842;
+        background-color: #3d3c3c;
+        
+        .icon-addcar-cardproduct{
+            position: absolute;
+            top: 8px;
+            left: 140px;
+            font-size: 1.3em;
+            z-index: 50;
+            color: #fff;
+        }
+        .img-cardproduct{
+            width: 100%;
+            object-fit: cover;
+            width: 100%;
+
+        }
+        .precio-cardproduct{
+            background-color: #ffffff9c;
+            width: min-content;
+        }
+    }
+   }

@@ -1,0 +1,55 @@
+.modal-cardproduct{
+    color: #fff;
+    padding: .4em;
+    font-size: 1.5em;
+
+
+    .cont-modal-product{
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        margin-top: 1.3em;
+        img{
+            width: 80%;
+            margin: auto;
+        }
+        
+    }
+    .descripcion-modal-product{
+        font-size: .7em;
+        color: #7a7979;
+    }
+    .cont-preferencias-modal-product{
+        margin-top: 1.8em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        
+        .label-talle-modal-product{
+            font-size: .7em
+        }
+        .select-talle-modal-product{
+            width: 60px;
+            padding: .4em;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            font-size: .7em;    
+            }
+    }
+    .cont-btn-modal-product{
+display: flex;
+justify-content: center;
+margin-top: 1em;
+padding: 1em;
+
+        .btn-comprar-modal-product{
+            padding: 1em;
+            border-radius: 1em;
+            border: none;
+            font-weight: bold;
+            background-color: #ffffff;
+            
+        }
+    }
+}
