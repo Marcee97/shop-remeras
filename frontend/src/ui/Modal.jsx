@@ -2,11 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import "../style/modal.scss";
 import axios from "axios";
 
+
 export const Modal = ({ infoModals }) => {
   const [dataRecibida, setDataRecibida] = useState([]);
   const refProducto = useRef(null)
   const refPrecio = useRef(null)
-
 
 const [preferenciasRemera, setPreferenciasRemera] = useState({
   talle:'XXl',
@@ -41,14 +41,23 @@ const precioNumber = parseInt(precio, 10)
 const cantidadNumber = parseInt(preferenciasRemera.cantidad, 10)
 console.log(typeof precioNumber, producto, typeof cantidadNumber)
 
- 
-    await axios.post("http://localhost:3000/createOrder", {
-      producto: producto,
-      precio: precioNumber,
-      cantidad: cantidadNumber,
-      
+ try{
+
+   const response = await axios.post("http://localhost:3000/createOrder", {
+     producto: producto,
+     precio: precioNumber,
+     cantidad: cantidadNumber,
+     
     });
-  
+    
+    console.log(response.data.init_point)
+    if(response.data.init_point){
+      window.location.href = response.data.init_point;
+    }
+    
+  }catch(error){
+    console.log(error)
+  }
 }
 
 

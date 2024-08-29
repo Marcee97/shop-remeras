@@ -30,6 +30,7 @@ console.log(producto, precio)
       },
     });
     console.log(response)
+    res.json(response)
   } catch (error) {
     console.log(error);
   }
