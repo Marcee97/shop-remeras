@@ -26,7 +26,7 @@ console.log(producto, precio)
           },
         ],
         notification_url:
-          "https://route-marie-dressing-completing.trycloudflare.com/webhook",
+          "https://shop-remeras-production.up.railway.app/webhook",
       },
     });
     console.log(response)
@@ -48,12 +48,10 @@ export const webhook = async (req, res) => {
 
     const response = await payment.get({ id: req.query["data.id"] });
 
-    const paymentEmail = response.payer.email;
-    const paymentCantidad = response.transaction_amount;
+    //const paymentEmail = response.payer.email;
+    //const paymentCantidad = response.transaction_amount;
 
-    const database = await pool.query(
-      `INSERT INTO compradores (email, cantidad) VALUES ('${paymentEmail}', ${paymentCantidad})`
-    );
+    
     console.log(response);
 
     res.status(200).send(database);
