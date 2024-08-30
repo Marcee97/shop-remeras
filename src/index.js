@@ -2,10 +2,11 @@ import express from "express";
 import morgan from "morgan";
 import router from "./routes/payment.routes.js";
 import cors from "cors";
+import { PORT } from "./config.js";
 const app = express()
 
-app.listen(3000)
-console.log('http://localhost:3000')
+app.listen(PORT)
+console.log(`http://localhost:${PORT}`)
 
 
 app.use(cors())

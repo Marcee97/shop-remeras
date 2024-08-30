@@ -26,7 +26,7 @@ console.log(producto, precio)
           },
         ],
         notification_url:
-          "https://colony-group-rp-skill.trycloudflare.com/webhook",
+          "https://route-marie-dressing-completing.trycloudflare.com/webhook",
       },
     });
     console.log(response)
