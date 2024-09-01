@@ -26,7 +26,7 @@ console.log(producto, precio)
           },
         ],
         notification_url:
-          "https://shop-remeras-production.up.railway.app/webhook",
+          "https://maritime-florist-effective-royal.trycloudflare.com/webhook",
       },
     });
     console.log(response)
@@ -36,7 +36,7 @@ console.log(producto, precio)
   }
 };
 // 5031 7557 3453 0604 Tarjeta de prueba
-
+//22332611566, 22332706662 ultima Orden
 export const webhook = async (req, res) => {
   try {
     const client = new MercadoPagoConfig({
@@ -48,13 +48,25 @@ export const webhook = async (req, res) => {
 
     const response = await payment.get({ id: req.query["data.id"] });
 
-    //const paymentEmail = response.payer.email;
-    //const paymentCantidad = response.transaction_amount;
+    const status = response.status;
+    const paymentEmail = response.payer.email;
+    const paymentTransaction = response.transaction_amount;
+    const descripcion = response.description;
+    const order = response.order.id
+    console.log(response, order)
+
+
 
     
-    console.log(response);
+    if(status === 'approved'){
+      await pool.query('INSERT INTO ventas (nombre, email, precio, orden) VALUES ($1, $2, $3, $4)', [descripcion, paymentEmail, paymentTransaction, order])
+      console.log('se aprobo guardar en basedata')
+      return res.status(200).send('pago aprobado y en basedata')
+    }else{
+      return res.status(200).send('pago no aprovado')
+    }
 
-    res.status(200).send(database);
+  
   } catch (error) {
     console.log(error);
     res.status(500).send("No funciona");
@@ -69,9 +81,8 @@ export const database = async (req, res) => {
 
 export const productosDatabase = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM productos");
-
-    res.json(rows);
+    const response = await pool.query("SELECT * FROM productos");
+    res.json(response.rows)
   } catch (error) {
     console.log(error);
   }
