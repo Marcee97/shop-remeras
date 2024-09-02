@@ -2,10 +2,13 @@ import Router from "express";
 import {
   createOrder,
   database,
+  failure,
+  pending,
   productosDatabase,
+  success,
   webhook,
 } from "../controllers/payment.controllers.js";
-import { addProduct} from "../controllers/web.controllers.js";
+import { addProduct } from "../controllers/web.controllers.js";
 
 const router = Router();
 
@@ -17,7 +20,12 @@ router.get("/database", database);
 
 router.get("/productos", productosDatabase);
 
+router.get("/pending", pending);
 
-router.post('/addproduct', addProduct)
+router.get("/succes", success);
+
+router.get("/failure", failure);
+
+router.post("/addproduct", addProduct);
 
 export default router;

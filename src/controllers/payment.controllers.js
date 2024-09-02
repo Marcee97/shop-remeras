@@ -3,10 +3,9 @@ import { pool } from "../database.js";
 
 export const createOrder = async (req, res) => {
   try {
+    const { producto, cantidad, precio, descripcion } = req.body;
 
-const {producto, cantidad, precio} = req.body
-
-console.log(producto, precio)
+    console.log(producto, precio);
 
     const client = new MercadoPagoConfig({
       accessToken:
@@ -20,17 +19,22 @@ console.log(producto, precio)
         items: [
           {
             title: producto,
-            description: 'remera descriiciom',
+            description: descripcion,
             quantity: cantidad,
-            unit_price: precio
+            unit_price: precio,
           },
         ],
         notification_url:
-          "https://maritime-florist-effective-royal.trycloudflare.com/webhook",
+          "https://team-urge-vt-sustainability.trycloudflare.com/webhook",
+        back_urls: {
+          pending: "http://localhost:3000/pending",
+          success: "http://localhost:3000/succes",
+          failure: "http://localhost:3000/failure",
+        },
       },
     });
-    console.log(response)
-    res.json(response)
+    console.log(response);
+    res.json(response);
   } catch (error) {
     console.log(error);
   }
@@ -52,21 +56,19 @@ export const webhook = async (req, res) => {
     const paymentEmail = response.payer.email;
     const paymentTransaction = response.transaction_amount;
     const descripcion = response.description;
-    const order = response.order.id
-    console.log(response, order)
+    const order = response.order.id;
+    console.log(response, order);
 
-
-
-    
-    if(status === 'approved'){
-      await pool.query('INSERT INTO ventas (nombre, email, precio, orden) VALUES ($1, $2, $3, $4)', [descripcion, paymentEmail, paymentTransaction, order])
-      console.log('se aprobo guardar en basedata')
-      return res.status(200).send('pago aprobado y en basedata')
-    }else{
-      return res.status(200).send('pago no aprovado')
+    if (status === "approved") {
+      await pool.query(
+        "INSERT INTO ventas (nombre, email, precio, orden) VALUES ($1, $2, $3, $4)",
+        [descripcion, paymentEmail, paymentTransaction, order]
+      );
+      console.log("se aprobo guardar en basedata");
+      return res.status(200).send("pago aprobado y en basedata");
+    } else {
+      return res.status(200).send("pago no aprovado");
     }
-
-  
   } catch (error) {
     console.log(error);
     res.status(500).send("No funciona");
@@ -82,8 +84,18 @@ export const database = async (req, res) => {
 export const productosDatabase = async (req, res) => {
   try {
     const response = await pool.query("SELECT * FROM productos");
-    res.json(response.rows)
+    res.json(response.rows);
   } catch (error) {
     console.log(error);
   }
+};
+
+export const pending = (req, res) => {
+  res.send("Pendiente");
+};
+export const success = (req, res) => {
+  res.send("Success");
+};
+export const failure = (req, res) => {
+  res.send("Failure");
 };

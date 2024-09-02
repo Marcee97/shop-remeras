@@ -7,6 +7,7 @@ export const Modal = ({ infoModals }) => {
   const [dataRecibida, setDataRecibida] = useState([]);
   const refProducto = useRef(null)
   const refPrecio = useRef(null)
+  const refDescripcion = useRef(null)
 
 const [preferenciasRemera, setPreferenciasRemera] = useState({
   talle:'XXl',
@@ -37,14 +38,16 @@ const compraDef = async()=> {
 
   const producto = refProducto.current.textContent
   const precio = refPrecio.current.textContent
+  const descripcion = refDescripcion.current.textContent
 const precioNumber = parseInt(precio, 10)
 const cantidadNumber = parseInt(preferenciasRemera.cantidad, 10)
-console.log(typeof precioNumber, producto, typeof cantidadNumber)
+console.log(descripcion)
 
  try{
 
    const response = await axios.post("http://localhost:3000/createOrder", {
      producto: producto,
+     descripcion: descripcion,
      precio: precioNumber,
      cantidad: cantidadNumber,
      
@@ -77,7 +80,7 @@ useEffect(() => {
             <div className="cont-modal-product">
               <img src={item.imagen} alt="imagen producto modal" />
               <h5 ref={refProducto}>{item.nombre}</h5>
-              <p className="descripcion-modal-product">{item.descripcion}</p>
+              <p className="descripcion-modal-product" ref={refDescripcion}>{item.descripcion}</p>
             </div>
             <div className="cont-preferencias-modal-product">
               <h6 className="precio-modal-product">TOTAL: $ <span ref={refPrecio}>{item.precio}</span></h6>
