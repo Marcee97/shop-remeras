@@ -1,8 +1,9 @@
 import Router from "express";
 import {
   createOrder,
-  database,
+  
   failure,
+  infoDeEntrega,
   pending,
   productosDatabase,
   success,
@@ -16,7 +17,7 @@ router.post("/createOrder", createOrder);
 
 router.post("/webhook", webhook);
 
-router.get("/database", database);
+router.post("/infoentrega", infoDeEntrega);
 
 router.get("/productos", productosDatabase);
 

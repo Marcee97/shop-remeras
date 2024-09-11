@@ -3,7 +3,8 @@ import { pool } from "../database.js";
 
 export const createOrder = async (req, res) => {
   try {
-    const { producto, cantidad, precio, descripcion } = req.body;
+    const { producto, cantidad, precio, descripcion, formularioEnvio } =
+      req.body;
 
     console.log(producto, precio);
 
@@ -25,10 +26,11 @@ export const createOrder = async (req, res) => {
           },
         ],
         notification_url:
-          "https://team-urge-vt-sustainability.trycloudflare.com/webhook",
+          "https://arabic-jones-refugees-sonic.trycloudflare.com/webhook",
+        external_reference: JSON.stringify({ formularioEnvio }),
         back_urls: {
           pending: "http://localhost:3000/pending",
-          success: "http://localhost:3000/succes",
+          success: "http://localhost:3000/success",
           failure: "http://localhost:3000/failure",
         },
       },
@@ -41,8 +43,11 @@ export const createOrder = async (req, res) => {
 };
 // 5031 7557 3453 0604 Tarjeta de prueba
 //22332611566, 22332706662 ultima Orden
+
 export const webhook = async (req, res) => {
   try {
+    console.log(req.body, "deberia estar el nombre");
+
     const client = new MercadoPagoConfig({
       accessToken:
         "APP_USR-1640851723532033-081209-4649082d7ab35fa373147d3be490c839-1940967055",
@@ -57,6 +62,8 @@ export const webhook = async (req, res) => {
     const paymentTransaction = response.transaction_amount;
     const descripcion = response.description;
     const order = response.order.id;
+    const datosEnvio = response.external_reference;
+    const datosEnvioParse = JSON.parse(datosEnvio);
     console.log(response, order);
 
     if (status === "approved") {
@@ -64,6 +71,25 @@ export const webhook = async (req, res) => {
         "INSERT INTO ventas (nombre, email, precio, orden) VALUES ($1, $2, $3, $4)",
         [descripcion, paymentEmail, paymentTransaction, order]
       );
+      await pool.query(
+        "INSERT INTO envios (nombre, apellido, calle, numero, piso, departamento, codigopostal, provincia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+        [
+          datosEnvioParse.formularioEnvio.nombre,
+          datosEnvioParse.formularioEnvio.apellido,
+          datosEnvioParse.formularioEnvio.calle,
+          datosEnvioParse.formularioEnvio.numero,
+          datosEnvioParse.formularioEnvio.piso,
+          datosEnvioParse.formularioEnvio.departamento,
+          datosEnvioParse.formularioEnvio.codigopostal,
+          datosEnvioParse.formularioEnvio.provincia,
+        ]
+      );
+
+      console.log(
+        datosEnvioParse.formularioEnvio.nombre,
+        "external reference data obtenida"
+      );
+
       console.log("se aprobo guardar en basedata");
       return res.status(200).send("pago aprobado y en basedata");
     } else {
@@ -75,10 +101,13 @@ export const webhook = async (req, res) => {
   }
 };
 
-export const database = async (req, res) => {
-  const [rows] = await pool.query("SELECT * FROM compradores");
+export const infoDeEntrega = async (req, res) => {
+  const { nombre, apellido, calle } = req.body;
 
-  res.json(rows);
+  await pool.query(
+    "INSERT INTO ventas (nombre, apellido, calle) VALUES ($1, $2, $3)",
+    [nombre, apellido, calle]
+  );
 };
 
 export const productosDatabase = async (req, res) => {
