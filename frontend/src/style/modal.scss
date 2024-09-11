@@ -64,7 +64,11 @@
         gap: 1em;
         justify-content: center;
         align-items: start;
-
+        .errors-modal{
+            color: red;
+            font-size: .9em;
+            
+        }
         input{
             border: none;
             border-radius: 5px;
@@ -78,7 +82,9 @@
                 border: none;
             border-radius: 5px;
             padding: .5em;
+            
             }
+            
         }
         .btn-pagar-modal-product{
             padding: .7em;

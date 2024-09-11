@@ -16,6 +16,7 @@ const [preferenciasRemera, setPreferenciasRemera] = useState({
 
 
 const [formularioEnvio, setFormularioEnvio] = useState({
+  email: '',
   nombre: '',
   apellido: '',
   calle: '',
@@ -28,8 +29,6 @@ const [formularioEnvio, setFormularioEnvio] = useState({
 })
 
 
-
-  
 
 
 const dataExterna = (e)=> {
@@ -56,9 +55,10 @@ const compraDef = async () => {
 };
 
 
-
+const [errors, setErrors] = useState([])
 
   const crearPago = async()=> {
+
 
     const producto = refProducto.current.textContent;
     const precio = refPrecio.current.textContent;
@@ -76,29 +76,37 @@ const compraDef = async () => {
         formularioEnvio: formularioEnvio
       });
 
-      console.log(response.data.init_point);
+      
+
+     
       if (response.data.init_point) {
         window.open(response.data.init_point, '__blank');
 
         console.log("cambio de pagina  mercadopago");
       }
     } catch (error) {
-      console.log(error);
+
+const fieldErrores = error.response.data.reduce((acc, err) => {
+  const fieldName = err.path[0];
+  acc[fieldName] = err.message;
+  return acc;
+}, {})
+
+setErrors(fieldErrores);
+
+console.log(errors, 'erorr detectoed');
+
+
     }
 
-    
-      
   }
+
+ 
 
   
   useEffect(() => {
     setDataRecibida(infoModals);
   }, [infoModals]);
-
-
-
-
-  
 
 
   return (
@@ -160,19 +168,32 @@ const compraDef = async () => {
       {openClosePagos && (
         <div className="payment-data">
           <h5>CONTACTO</h5>
-          <input type="email" placeholder="Email"/>
+          {errors.email && <p className="errors-modal">{errors.email}</p>}
+          <input type="email" placeholder="Email" name="email" onChange={dataExterna}/>
 
-          <h5>DIRECCION</h5>
+          <h5>Nombre</h5>
+         
+            
+
           <div className="cont-direccion">
+          {errors.nombre && <p className="errors-modal">{errors.nombre}</p>}
           <input type="text" placeholder="Nombre" name="nombre" onChange={dataExterna}/>
+          {errors.apellido && <p className="errors-modal">{errors.apellido}</p>}
           <input type="text" placeholder="Apellido" name="apellido" onChange={dataExterna}/>
+          <h5>Direccion</h5>
+          {errors.calle && <p className="errors-modal">{errors.calle}</p>}
           <input type="text" placeholder="Calle" name="calle" onChange={dataExterna}/>
+          {errors.numero && <p className="errors-modal">{errors.numero}</p>}
           <input type="text" placeholder="Numero" name="numero" onChange={dataExterna}/>
-          <input type="text" placeholder="Piso" name="piso" onChange={dataExterna}/>
-          <input type="text" placeholder="Departamento" name="departamento" onChange={dataExterna} />
+          <input type="text" placeholder="Piso (Opcional)" name="piso" onChange={dataExterna}/>
+          <input type="text" placeholder="Departamento (Opcional)" name="departamento" onChange={dataExterna} />
+          {errors.codigopostal && <p className="errors-modal">{errors.codigopostal}</p>}
           <input type="text" placeholder="Codigo Postal" name="codigopostal" onChange={dataExterna} />
 
-          <select name="provincia" id="prov" className="select-provincia-modal" onChange={dataExterna}>
+          {errors.provincia && <p className="errors-modal">{errors.provincia}</p>}
+            
+          <select name="provincia" id="prov" className="select-provincia-modal" onChange={dataExterna} required={true}>
+            <option value="provincia">Provincia</option>
             <option value="cordoba">Cordoba</option>
             <option value="salta">Salta</option>
             <option value="buenos aires">Buenos Aires</option>
@@ -183,6 +204,9 @@ const compraDef = async () => {
             <option value="santiago del estero">Santiago del Estero</option>
           </select>
           </div>
+          
+        
+          
           <button className="btn-pagar-modal-product" onClick={crearPago}>Ir a pagar</button>
         </div>
       )}

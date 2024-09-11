@@ -23,7 +23,7 @@ router.get("/productos", productosDatabase);
 
 router.get("/pending", pending);
 
-router.get("/succes", success);
+router.get("/success", success);
 
 router.get("/failure", failure);
 

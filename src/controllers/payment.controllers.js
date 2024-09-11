@@ -1,10 +1,31 @@
 import { MercadoPagoConfig, Payment, Preference } from "mercadopago";
 import { pool } from "../database.js";
+import { z } from "zod";
 
 export const createOrder = async (req, res) => {
   try {
     const { producto, cantidad, precio, descripcion, formularioEnvio } =
       req.body;
+
+
+const envioSchema = z.object({
+  email: z.string().min(5, {message: 'Email demasiado corto'}).email({message: 'Email invalido'}),
+  nombre: z.string().min(3, {message: 'Nombre demasiado corto'}),
+  apellido: z.string().min(3, {message: 'Apellido demasiado corto'}),
+  calle: z.string().min(3, {message: 'Calle no valida'}),
+  numero: z.string().min(1, {message: 'Numero de calle Invalido'}),
+  codigopostal: z.string().min(2, {message: 'Codigo postal No Valido'}),
+  provincia: z.string().min(2, {message: 'Selecciona una provincia'})
+})
+
+const validation = envioSchema.safeParse(formularioEnvio)
+
+
+if(!validation.success) {
+  return res.status(400).json(validation.error.errors)
+}
+
+
 
     console.log(producto, precio);
 
@@ -26,8 +47,9 @@ export const createOrder = async (req, res) => {
           },
         ],
         notification_url:
-          "https://arabic-jones-refugees-sonic.trycloudflare.com/webhook",
+          "https://massive-beauty-again-handling.trycloudflare.com/webhook",
         external_reference: JSON.stringify({ formularioEnvio }),
+        auto_return: "approved",
         back_urls: {
           pending: "http://localhost:3000/pending",
           success: "http://localhost:3000/success",
@@ -72,7 +94,7 @@ export const webhook = async (req, res) => {
         [descripcion, paymentEmail, paymentTransaction, order]
       );
       await pool.query(
-        "INSERT INTO envios (nombre, apellido, calle, numero, piso, departamento, codigopostal, provincia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+        "INSERT INTO envios (nombre, apellido, calle, numero, piso, departamento, codigopostal, provincia, email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
         [
           datosEnvioParse.formularioEnvio.nombre,
           datosEnvioParse.formularioEnvio.apellido,
@@ -82,6 +104,7 @@ export const webhook = async (req, res) => {
           datosEnvioParse.formularioEnvio.departamento,
           datosEnvioParse.formularioEnvio.codigopostal,
           datosEnvioParse.formularioEnvio.provincia,
+          datosEnvioParse.formularioEnvio.email
         ]
       );
 
