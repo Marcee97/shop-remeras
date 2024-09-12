@@ -1,17 +1,13 @@
-import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_USER } from "./config.js";
+import { PG_DATABASE, PG_HOST, PG_PASSWORD, PG_PORT, PG_USER } from "./config.js";
 
 import pg from "pg";
 
-/*export const pool = mysql.createPool({
-    host: DB_HOST,
-    user: DB_USER,
-    database: DB_DATABASE,
-    password: DB_PASSWORD
-})*/
+
 
 export const pool = new pg.Pool({
-    host: DB_HOST,
-    user: DB_USER,
-    database: DB_DATABASE,
-    password: DB_PASSWORD
+    port:PG_PORT,
+    host: PG_HOST,
+    user: PG_USER,
+    database: PG_DATABASE,
+    password: PG_PASSWORD
 })

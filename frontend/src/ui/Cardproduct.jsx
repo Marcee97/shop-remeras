@@ -1,5 +1,5 @@
 import "../style/cardproduct.scss";
-import axios from "axios";
+import client from "../api/axios.js";
 import { useState, useEffect } from "react";
 
 export const Cardproduct = ({infoModal}) => {
@@ -8,7 +8,7 @@ export const Cardproduct = ({infoModal}) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/productos");
+        const response = await client.get("/productos");
 
         setProductData(response.data);
 

@@ -125,12 +125,10 @@ export const webhook = async (req, res) => {
 };
 
 export const infoDeEntrega = async (req, res) => {
-  const { nombre, apellido, calle } = req.body;
-
-  await pool.query(
-    "INSERT INTO ventas (nombre, apellido, calle) VALUES ($1, $2, $3)",
-    [nombre, apellido, calle]
-  );
+  
+const response = await pool.query("SELECT * FROM productos")
+   res.json(response)
+  
 };
 
 export const productosDatabase = async (req, res) => {
@@ -138,7 +136,7 @@ export const productosDatabase = async (req, res) => {
     const response = await pool.query("SELECT * FROM productos");
     res.json(response.rows);
   } catch (error) {
-    console.log(error);
+    console.log(error, 'error aca');
   }
 };
 
