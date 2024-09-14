@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import "../style/modal.scss";
-import axios from "axios";
+import client from "../api/axios.js";
 
 export const Modal = ({ infoModals }) => {
   const [dataRecibida, setDataRecibida] = useState([]);
@@ -68,7 +68,7 @@ const [errors, setErrors] = useState([])
     console.log(descripcion);
 
     try {
-      const response = await axios.post("http://localhost:3000/createOrder", {
+      const response = await client.post("/createOrder", {
         producto: producto,
         descripcion: descripcion,
         precio: precioNumber,
