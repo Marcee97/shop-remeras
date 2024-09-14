@@ -1,0 +1,78 @@
+.footer {
+  width: 100%;
+  background-color: #080808;
+  color: #fff;
+  margin-top: 3em;
+  padding: 2em 1em 0 1em;
+  font-size: 1.2em;
+  border-top: 1px solid #000000;
+  background-color: #202020;
+  min-height:300px ;
+  .info-footer {
+    cursor: pointer;
+
+    margin-bottom: 1em;
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    .info-opciones-arrow {
+      vertical-align: middle;
+      font-size: 0.7em;
+      margin-left: 5px;
+    }
+    .cont-texto-sobrenosotros {
+      .texto-info {
+        font-size: 0.6em;
+        .titulo-bienvenida {
+          font-weight: bold;
+        }
+      }
+    }
+    .cont-info-contacto {
+      display: flex;
+      flex-direction: column;
+      gap: .5em;
+      h6 {
+        font-size: 0.6em;
+      }
+      p {
+        font-size: 0.5em;
+
+      }
+    }
+  }
+  .cont-footer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-top: 1em;
+  }
+  .metodos-de-pago__footer {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    width: 100%;
+    padding: 1em 0;
+    .icons-metodos-de-pago {
+      width: 30px;
+    }
+  }
+  i {
+    font-size: 2.5em;
+  }
+  .cont-redes-sociales-footer {
+    font-size: 0.6em;
+    color: #9b9898;
+    gap: 1em;
+    border-top: 1px solid #fff;
+    width: 100%;
+    padding: 3em 1em 1em 1em;
+    .ul-redes-sociales-footer {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
