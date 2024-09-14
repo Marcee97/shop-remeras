@@ -2,6 +2,7 @@ import { MercadoPagoConfig, Payment, Preference } from "mercadopago";
 import { pool } from "../database.js";
 import { z } from "zod";
 
+
 export const createOrder = async (req, res) => {
   try {
     const { producto, cantidad, precio, descripcion, formularioEnvio } =
@@ -47,13 +48,13 @@ if(!validation.success) {
           },
         ],
         notification_url:
-          "https://massive-beauty-again-handling.trycloudflare.com/webhook",
+          "shop-remeras-production.up.railway.app/webhook",
         external_reference: JSON.stringify({ formularioEnvio }),
         auto_return: "approved",
         back_urls: {
-          pending: "http://localhost:3000/pending",
-          success: "http://localhost:3000/success",
-          failure: "http://localhost:3000/failure",
+          pending: "shop-remeras-production.up.railway.app/pending",
+          success: "shop-remeras-production.up.railway.app/success",
+          failure: "shop-remeras-production.up.railway.app/failure",
         },
       },
     });
