@@ -3,13 +3,16 @@ import morgan from "morgan";
 import router from "./routes/payment.routes.js";
 import cors from "cors";
 import { PORT } from "./config.js";
+import { ORIGIN } from "./config.js";
 const app = express()
 
 app.listen(PORT)
-console.log(`http://localhost:${PORT}`)
+//console.log(`http://localhost:${PORT}`)
 
 
-app.use(cors())
+app.use(cors({
+    origin: ORIGIN
+}))
 app.use(express.json())
 app.use(router)
 app.use(morgan('dev'))
