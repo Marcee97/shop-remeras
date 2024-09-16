@@ -76,7 +76,7 @@ export const webhook = async (req, res) => {
 
     const client = new MercadoPagoConfig({
       accessToken:
-        "APP_USR-1640851723532033-081209-4649082d7ab35fa373147d3be490c839-1940967055",
+        tokenMp,
     });
 
     const payment = new Payment(client);
