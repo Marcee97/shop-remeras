@@ -137,7 +137,7 @@ export const productosDatabase = async (req, res) => {
     const response = await pool.query("SELECT * FROM productos");
     res.json(response.rows);
   } catch (error) {
-    console.log(error, 'error aca');
+    console.log(error, 'error peticion productos a base de datos');
   }
 };
 
