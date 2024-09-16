@@ -17,13 +17,9 @@ export const NavBar = () => {
           </li>
         </ul>
       </div>
-      <div className="cont-scroll-data">
-
-
-        <div className="cont-moving">
-          <img src="/img/51CpU_yGPFL._AC_SX522_-removebg-preview.png" alt="img scroll" className="img-scroll-data"/>
-        </div>
-      </div>
+      
+      
+      
       <div className="opciones-catalogo-navbar">
         <p>Cine</p>
         <p>Anime</p>
