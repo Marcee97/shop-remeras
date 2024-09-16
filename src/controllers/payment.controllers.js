@@ -1,8 +1,11 @@
 import { MercadoPagoConfig, Payment, Preference } from "mercadopago";
 import { pool } from "../database.js";
 import { z } from "zod";
+import dotenv from "dotenv";
+dotenv.config()
 
 
+const tokenMp = process.env.TOKEN_MERCADO_PAGO_API
 export const createOrder = async (req, res) => {
   try {
     const { producto, cantidad, precio, descripcion, formularioEnvio } =
@@ -32,7 +35,7 @@ if(!validation.success) {
 
     const client = new MercadoPagoConfig({
       accessToken:
-        "APP_USR-1640851723532033-081209-4649082d7ab35fa373147d3be490c839-1940967055",
+        tokenMp,
     });
 
     const preference = new Preference(client);
@@ -145,7 +148,7 @@ export const pending = (req, res) => {
   res.send("Pendiente");
 };
 export const success = (req, res) => {
-  res.send("Success");
+  res.send("Success pago echo Volvio linkin park, la tatiana es re zurda pero le doy");
 };
 export const failure = (req, res) => {
   res.send("Failure");
