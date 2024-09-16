@@ -21,7 +21,7 @@ export const NavBar = () => {
 
 
         <div className="cont-moving">
-          <img src="https://i.pinimg.com/736x/87/da/7c/87da7cf2830b2c2c6378f8d596a35ba7.jpg" alt="img scroll" className="img-scroll-data"/>
+          <img src="/img/51CpU_yGPFL._AC_SX522_-removebg-preview.png" alt="img scroll" className="img-scroll-data"/>
         </div>
       </div>
       <div className="opciones-catalogo-navbar">
