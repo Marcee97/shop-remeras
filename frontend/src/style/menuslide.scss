@@ -1,0 +1,23 @@
+.menu-slide{
+    position: absolute;
+    font-size: 1.5em;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    background:linear-gradient(#000, #020202c7);
+    z-index: 85;
+    backdrop-filter: blur(9px);
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding: 1.5em 1.5em 1.5em .5em;
+    transform: translateY(0%);
+    transition: 1s all ease;
+    .cont-menu-slide{
+
+        .menu-slide-opciones{
+        list-style: none;
+        }
+    }
+}

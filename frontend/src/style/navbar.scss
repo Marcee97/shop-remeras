@@ -11,11 +11,14 @@ font-size: 2em;
         justify-content: space-between;
         align-items: center;
         margin-left: auto;
+
+        .icon-home{
+            font-size: 1.8em;
+        }
         .titulo{
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -31px;
             span{
                 margin: 0 -.1em;
                 font-size: 1.5em;

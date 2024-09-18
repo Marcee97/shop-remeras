@@ -7,6 +7,7 @@ import { NavBar } from "./ui/NavBar";
 import { Footer } from "./ui/Footer";
 import { Success } from "./ui/Success";
 import { Hero } from "./ui/Hero";
+import { MenuSlide } from "./ui/MenuSlide";
 
 export const App = () => {
   const [infoModal, setInfoModal] = useState([]);
@@ -23,6 +24,7 @@ export const App = () => {
     return (
       <>
         <NavBar />
+        <MenuSlide/>
         <Hero/>
         {children}
         <Footer />

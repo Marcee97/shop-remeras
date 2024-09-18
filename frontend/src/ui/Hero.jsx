@@ -10,15 +10,19 @@ export const Hero = () => {
           className="fondo-hero"
         />
         <div className="texto-hero">
-          
           <div className="cube-container">
             <div className="cube">
               <div className="face cara-uno">E-Commerce</div>
-              <div className="face cara-dos">Online</div>
-              <div className="face cara-tres">Remeras</div>
+              <div className="face cara-dos">Remeras</div>
+              <div className="face cara-tres">Online</div>
               <div className="face cara-cuatro">Envios</div>
             </div>
           </div>
+          <ul className="ul-hero-redes-sociales">
+            <li><i className="fa-brands fa-instagram"></i></li>
+            <li><i className="fa-brands fa-tiktok"></i></li>
+            <li><i className="fa-brands fa-x-twitter"></i></li>
+          </ul>
         </div>
       </div>
     </section>
