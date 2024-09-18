@@ -4,8 +4,7 @@ export const NavBar = () => {
   return (
     <section className="navbar">
       <div className="cont-navbar">
-        <h1 className="titulo-navbar">Limonada.</h1>
-        <ul className="ul-navbar-redes-sociales">
+      <ul className="ul-navbar-redes-sociales">
           <li>
             <i className="fa-brands fa-x-twitter"></i>
           </li>
@@ -16,15 +15,15 @@ export const NavBar = () => {
             <i className="fa-brands fa-tiktok"></i>
           </li>
         </ul>
+<h1 className="titulo"><span>A</span><span>C</span></h1>
+
+<span className="material-symbols-outlined btn-menu">
+menu
+</span>
+        
       </div>
-      
-      
-      
-      <div className="opciones-catalogo-navbar">
-        <p>Cine</p>
-        <p>Anime</p>
-        <p>Bandas</p>
-      </div>
+
+     
     </section>
   );
 };

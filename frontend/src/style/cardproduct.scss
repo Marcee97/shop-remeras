@@ -1,37 +1,55 @@
-.cardproduct{
-    display: flex;
-    width: 100%;
-    gap: .5em;
-    .cuerpo-cardproduct{
-        position: relative;
-        outline: 1px solid green;
-        max-width: 170px;
-        min-width: 140px;
-        max-height: 290px;
-        min-height: 265px;
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-        outline: 1px solid #707c3842;
-        background-color: #3d3c3c;
-        
-        .icon-addcar-cardproduct{
-            position: absolute;
-            top: 8px;
-            left: 140px;
-            font-size: 1.3em;
-            z-index: 50;
-            color: #fff;
-        }
-        .img-cardproduct{
-            width: 100%;
-            object-fit: cover;
-            width: 100%;
+.cardproduct {
+  width: 100%;
 
+  position: relative;
+  .fondo-products {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cont-products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 0.5em;
+    background-color: #000000d2;
+    backdrop-filter: blur(5px);
+
+    .cuerpo-cardproduct {
+      position: relative;
+      max-width: 170px;
+      min-width: 140px;
+      max-height: 290px;
+      min-height: 265px;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      padding: 0.1em;
+      background-color: #00000080;
+
+      .icon-addcar-cardproduct {
+        position: absolute;
+        top: 8px;
+        left: 140px;
+        font-size: 1.3em;
+        z-index: 50;
+        color: #fff;
+      }
+      .img-cardproduct {
+        width: 100%;
+        object-fit: cover;
+        width: 100%;
+      }
+      .precio-cardproduct {
+        width: min-content;
+
+        width: 100%;
+        span {
+          background-color: #ffffff9c;
         }
-        .precio-cardproduct{
-            background-color: #ffffff9c;
-            width: min-content;
-        }
+      }
     }
-   }
+  }
+}

@@ -1,0 +1,25 @@
+.hero {
+  margin-bottom: 2em;
+  .cont-hero {
+    position: relative;
+    width: 100%;
+    height: 110vh;
+    img {
+      mask-image: linear-gradient(#000 1%, transparent);
+      position: absolute;
+    }
+    .texto-hero {
+      width: 100%;
+      height: 40%;
+      z-index: 45;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 1.7em;
+      
+    }
+  }
+}

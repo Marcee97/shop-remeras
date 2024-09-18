@@ -1,5 +1,5 @@
 .navbar{
-    padding: .5em 0 0 0;
+    padding: .4em .9em;
     color: #fff;
     .titulo-navbar{ 
 font-size: 2em;
@@ -10,15 +10,28 @@ font-size: 2em;
         width: 100%;
         justify-content: space-between;
         align-items: center;
-        padding: 1.3em 0 1.5em 0;
-        .titulo-navbar{
-            margin-bottom: .5em;
+        margin-left: auto;
+        .titulo{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: -31px;
+            span{
+                margin: 0 -.1em;
+                font-size: 1.5em;
+            }
+           
         }
         .ul-navbar-redes-sociales{
+            margin-right: 0;
             list-style: none;
-            font-size: 1.3em;
+            font-size: 1.4em;
             display: flex;
             gap: .5em;
+        }
+        .btn-menu{
+            font-size: 1.9em;
+
         }
         
     }

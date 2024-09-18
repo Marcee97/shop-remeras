@@ -34,8 +34,7 @@ if(!validation.success) {
     console.log(producto, precio);
 
     const client = new MercadoPagoConfig({
-      accessToken:
-        tokenMp,
+      accessToken:tokenMp,
     });
 
     const preference = new Preference(client);
@@ -82,7 +81,8 @@ export const webhook = async (req, res) => {
     const payment = new Payment(client);
 
     const response = await payment.get({ id: req.query["data.id"] });
-
+const nombre = response.payer.first_name
+const apellido = response.payer.last_name
     const status = response.status;
     const paymentEmail = response.payer.email;
     const paymentTransaction = response.transaction_amount;
@@ -94,8 +94,8 @@ export const webhook = async (req, res) => {
 
     if (status === "approved") {
       await pool.query(
-        "INSERT INTO ventas (nombre, email, precio, orden) VALUES ($1, $2, $3, $4)",
-        [descripcion, paymentEmail, paymentTransaction, order]
+        "INSERT INTO ventas (nombre, apellido, descripcion, email, precio, orden) VALUES ($1, $2, $3, $4, $5, $6)",
+        [nombre, apellido, descripcion, paymentEmail, paymentTransaction, order]
       );
       await pool.query(
         "INSERT INTO envios (nombre, apellido, calle, numero, piso, departamento, codigopostal, provincia, email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
@@ -124,7 +124,7 @@ export const webhook = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send("No funciona");
+    res.status(500).send("No funciona el webhook");
   }
 };
 

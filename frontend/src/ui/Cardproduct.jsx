@@ -23,6 +23,9 @@ export const Cardproduct = ({infoModal}) => {
   
   return (
     <section className="cardproduct">
+      <img src="https://i.pinimg.com/474x/4d/f0/e5/4df0e5099af1430f7edde806b8cc1a3e.jpg" alt="background productos" className="fondo-products"/>
+      <div className="cont-products">
+
       {productData.map((items, index) => (
         <div key={index} className="cuerpo-cardproduct" onClick={()=> infoModal(items)}>
           <div>
@@ -34,9 +37,10 @@ export const Cardproduct = ({infoModal}) => {
               className="img-cardproduct"
               />
               </div>
-            <strong className="precio-cardproduct">${items.precio}</strong>
+            <strong className="precio-cardproduct"><span>${items.precio}</span></strong>
         </div>
       ))}
+      </div>
     </section>
   );
 };
