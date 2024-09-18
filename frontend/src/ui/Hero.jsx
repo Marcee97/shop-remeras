@@ -5,15 +5,20 @@ export const Hero = () => {
     <section className="hero">
       <div className="cont-hero">
         <img
-          src="https://i.pinimg.com/564x/66/0e/d0/660ed0f5ca458c383d9008096092d44b.jpg"
+          src="https://i.pinimg.com/736x/79/28/ed/7928edbcd0a355cd87d378afce440d24.jpg"
           alt="remera"
+          className="fondo-hero"
         />
         <div className="texto-hero">
-          <h4>Solo Remeras</h4>
-          <p>Anime</p>
-          <p>Peliculas</p>
-          <p>Anime</p>
-
+          
+          <div className="cube-container">
+            <div className="cube">
+              <div className="face cara-uno">E-Commerce</div>
+              <div className="face cara-dos">Online</div>
+              <div className="face cara-tres">Remeras</div>
+              <div className="face cara-cuatro">Envios</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
