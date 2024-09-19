@@ -3,28 +3,12 @@ import { useState, useRef } from "react";
 
 
 
-export const MenuSlide = () => {
+export const MenuSlide = ({dataSlide}) => {
 
-const [slideActive, setSlideActive] = useState(false)
-
-
-const refMenu = useRef(null)
-
-const menuActive = ()=> {
-setSlideActive(prevSlide => (!prevSlide))
-
-
-if(slideActive){
-    console.log('es true')
-}else{
-    console.log('es false')
-}
-}
-
-
+console.log(dataSlide)
 
   return (
-    <section className="menu-slide" ref={refMenu} onClick={menuActive}>
+    <section className="menu-slide">
         <div className="cont-menu-slide">
             <ul className="menu-slide-opciones">
                 <li>Sobre Nosotros</li>

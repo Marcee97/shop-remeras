@@ -1,6 +1,6 @@
 import { Cardproduct } from "./ui/Cardproduct";
 import { Modal } from "./ui/Modal";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "../src/App.css";
 import { NavBar } from "./ui/NavBar";
@@ -20,10 +20,19 @@ export const App = () => {
     navigate("/modal");
   };
 
+const [pruebas, setPruebas] = useState(false)
+const funcionpru = ()=> {
+  setPruebas(!pruebas)
+}
+    
+
+
+  
+
   const MainLayout = ({ children }) => {
     return (
       <>
-        <NavBar />
+        <NavBar activeSlide={funcionpru}/>
         <MenuSlide/>
         <Hero/>
         {children}

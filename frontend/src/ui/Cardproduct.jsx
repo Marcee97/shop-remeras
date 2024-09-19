@@ -1,6 +1,6 @@
 import "../style/cardproduct.scss";
 import client from "../api/axios.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 
 export const Cardproduct = ({infoModal}) => {
   const [productData, setProductData] = useState([]);
