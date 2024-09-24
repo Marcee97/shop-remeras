@@ -4,10 +4,10 @@ import { useState } from "react";
 
 export const NavBar = ({activeSlide}) => {
 
-
+const [dataActives, setDataActives] = useState(false)
 
 const funcionMenuslide = ()=> {
-  activeSlide()
+  activeSlide('messi')
 }
 
   return (

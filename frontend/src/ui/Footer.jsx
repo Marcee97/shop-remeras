@@ -24,7 +24,7 @@ export const Footer = () => {
               <h6> Bienvenidos a Limonada</h6>
               <p className="texto-info">
                 Somos una tienda en línea especializada en camisetas estampadas
-                no contamos con un local fisico no tenes que hablar con nadie.
+                no contamos con un local fisico.
               </p>
             </div>
           )}

@@ -1,6 +1,6 @@
 import { Cardproduct } from "./ui/Cardproduct";
 import { Modal } from "./ui/Modal";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "../src/App.css";
 import { NavBar } from "./ui/NavBar";
@@ -16,30 +16,36 @@ export const App = () => {
   const addElement = (items) => {
     setInfoModal([]);
     setInfoModal((prevInfo) => [...prevInfo, items]);
-
+console.log('messi')
     navigate("/modal");
   };
 
-const [pruebas, setPruebas] = useState(false)
-const funcionpru = ()=> {
-  setPruebas(!pruebas)
-}
+
+
     
 
 
   
 
   const MainLayout = ({ children }) => {
+  const [onSlide, setOnSlide] = useState(false)
+
+const menuSlideOn = ()=> {
+  setOnSlide(!onSlide)
+
+}
     return (
       <>
-        <NavBar activeSlide={funcionpru}/>
-        <MenuSlide/>
+        <NavBar activeSlide={menuSlideOn}/>
+        <MenuSlide openCloseSlide={onSlide}/>
         <Hero/>
         {children}
         <Footer />
       </>
     );
   };
+
+
 
   return (
     <>
