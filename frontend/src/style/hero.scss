@@ -6,7 +6,14 @@
     height: 110vh;
     overflow: hidden;
     img {
-      mask-image: linear-gradient(#000 1%, transparent);
+      mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 4%,    /* Parte superior transparente */
+    rgba(0, 0, 0, 1) 35%,   /* Oscuro en la parte superior */
+    rgba(0, 0, 0, 1) 80%,   /* Oscuro en la parte inferior */
+    rgba(0, 0, 0, 0) 100%   /* Parte inferior transparente */
+  );
+  
       position: absolute;
       width: 100%;
     }

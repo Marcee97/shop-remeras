@@ -14,41 +14,33 @@
   align-items: start;
   padding: 1em 0.5em 1.5em 0.5em;
   transform: translateY(-100%);
-  transition: .5s all ease;
+  transition: 0.5s all ease;
 
   .icon-close {
     width: 100%;
     display: flex;
     justify-content: end;
+    font-size: 1.6em;
+    cursor: pointer;
   }
-  .cont-menu-slide {
-    margin-top: 1em;
-    gap: 1em;
+  .cont-menu-opciones-slide {
     display: flex;
     flex-direction: column;
-
-    .cont-textos-menus {
-      height: 0px;
-      opacity: 0;
+    gap: 0.3em;
+    font-size: 1.3em;
+    h5{
+      cursor: pointer;
+    }
+    .contenido {
+      max-height: 0;
       overflow: hidden;
-      transition: all 1s ease;
-      padding: 0;
-      .text-opciones-menu-slide {
-        color: #868686;
-        font-size: 0.7em;
-        top: 0;
-      }
+      transition: max-height 0.8s ease;
+      font-size: .5em;
+      color: #9b9a9a;
     }
 
-    .redes-opciones-menu-slide {
-      display: flex;
-      gap: 0.6em;
-    }
-    .active {
-      height: 90px;
-      opacity: 1;
-      transition: all 1s ease;
-      padding: 1em;
+    .contenido.activo {
+      max-height: 150px;
     }
   }
 }

@@ -1,62 +1,59 @@
-.navbar{
-    padding: .4em .9em;
-    color: #fff;
-    .titulo-navbar{ 
-font-size: 2em;
+.navbar {
+  padding: 0.4em 0.9em;
+  background-color: rgb(15, 15, 15);
+  border-radius: 19px;
+  color: #fff;
+  cursor: pointer;
+  .titulo-navbar {
+    font-size: 2em;
+  }
+
+  .cont-navbar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+
+    .icon-home {
+      font-size: 1.8em;
     }
-   
-    .cont-navbar{
-        display: flex;
+    .titulo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        margin: 0 -0.1em;
+        font-size: 1.5em;
+      }
+    }
+    .ul-navbar-redes-sociales {
+      margin-right: 0;
+      list-style: none;
+      font-size: 1.4em;
+      display: flex;
+      gap: 0.5em;
+    }
+    .btn-menu {
+      font-size: 1.9em;
+    }
+  }
+  .cont-scroll-data {
+    .cont-moving {
+      img {
         width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        margin-left: auto;
-
-        .icon-home{
-            font-size: 1.8em;
-        }
-        .titulo{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            span{
-                margin: 0 -.1em;
-                font-size: 1.5em;
-            }
-           
-        }
-        .ul-navbar-redes-sociales{
-            margin-right: 0;
-            list-style: none;
-            font-size: 1.4em;
-            display: flex;
-            gap: .5em;
-        }
-        .btn-menu{
-            font-size: 1.9em;
-
-        }
-        
+      }
     }
-    .cont-scroll-data{
-
-        .cont-moving{
-            
-
-            img{
-                width: 100%;
-            }
-        }
+  }
+  .opciones-catalogo-navbar {
+    display: flex;
+    gap: 0.3em;
+    margin-bottom: 1.5em;
+    p {
+      background-color: #fff;
+      color: #000;
+      padding: 0.1em 0.6em;
+      border-radius: 5px;
     }
-    .opciones-catalogo-navbar{
-        display: flex;
-        gap: .3em;
-        margin-bottom: 1.5em;
-        p{
-            background-color: #fff;
-            color: #000;
-            padding: .1em .6em;
-            border-radius: 5px;
-        }
-    }
+  }
 }

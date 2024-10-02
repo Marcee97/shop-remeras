@@ -24,13 +24,14 @@ export const MenuSlide = ({ openCloseSlide }) => {
     menuSlide.style.transform = "translateY(-100%)";
   }, [closeSlide]);
 
-  const dataArray = ["Sobre Nosotros", "Sorteos", "Redes"];
 
-  const [activeIndex, setActiveIndex] = useState(null);
 
-  const opcionesMenu = (index) => {
-    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
-  };
+const [opcioSeleccionada, setOpcioSeleccionada] = useState(null)
+
+const renderOpcion = (opcion)=> {
+setOpcioSeleccionada(opcioSeleccionada === opcion ? null : opcion)
+}
+    
 
   return (
     <section className="menu-slide" ref={refMenuSlide}>
@@ -38,29 +39,22 @@ export const MenuSlide = ({ openCloseSlide }) => {
       <span className="material-symbols-outlined icon-close" onClick={closeMenuSlide}>
 close
 </span>
-      <div className="cont-menu-slide">
-        {dataArray.map((item, index) => (
-          <div key={index}>
-            <h5 onClick={() => opcionesMenu(index)}>{item}</h5>
-
-            {activeIndex === index && (
-              <div className={`cont-textos-menus ${activeIndex === index ? 'active' : ''}`}>
-                {item === "Sobre Nosotros" && (
-                  <p className="text-opciones-menu-slide">Somos una tienda en línea especializada en camisetas estampadas
-                no contamos con un local fisico.</p>
-                )}
-                {item === "Sorteos" && <p className="text-opciones-menu-slide">Info sobre sorteos esta aca</p>}
-                {item === "Redes" && (
-                  <div className="redes-opciones-menu-slide">
-                    <i className="fa-brands fa-instagram"></i>
-                    <i className="fa-brands fa-tiktok"></i>
-                    <i className="fa-brands fa-x-twitter"></i>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+      
+      <div className="cont-menu-opciones-slide">
+      
+<h5 onClick={()=> renderOpcion(1)}>Sobre Nosotros</h5>
+<div className={`contenido ${opcioSeleccionada === 1 ? "activo" : ""}`}>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum facere, temporibus blanditiis totam beatae fugit hic natus delec</p>
+</div>
+<h5 onClick={()=> renderOpcion(2)}>Sorteos</h5>
+<div className={`contenido ${opcioSeleccionada === 2 ? "activo" : ""}`}>
+  <p>Info sobre Sorteos</p>
+</div>
+<h5 onClick={()=> renderOpcion(3)}>Contacto</h5>
+<div className={`contenido ${opcioSeleccionada === 3 ? "activo" : ""}`}>
+  <p><span>WhatsApp:</span>  3385-***-****</p>
+  <p><span>Email:</span> tuvieja@gmail.com</p>
+</div>
       </div>
     </section>
   );
