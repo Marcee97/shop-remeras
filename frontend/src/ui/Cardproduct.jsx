@@ -4,7 +4,7 @@ import { useState, useEffect} from "react";
 
 export const Cardproduct = ({infoModal}) => {
   const [productData, setProductData] = useState([]);
-
+  
   useEffect(() => {
     const getData = async () => {
       try {

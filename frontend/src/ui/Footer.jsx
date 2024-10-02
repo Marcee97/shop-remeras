@@ -1,46 +1,10 @@
-import { useState } from "react";
 import "../style/footer.scss";
-export const Footer = () => {
-  const [contactoVisible, setContactoVisible] = useState(false);
-  const [sobreNos, setSobreNos] = useState(false);
-  const infoDesplegada = (num) => {
-    if (num === "contacto") {
-      setContactoVisible(!contactoVisible);
-    } else {
-      setSobreNos(!sobreNos);
-    }
-  };
 
+export const Footer = () => {
   return (
     <section className="footer">
       <div className="cont-footer">
-        <div className="info-footer">
-          <h5 onClick={() => infoDesplegada("sobrenos")}>
-            Sobre Nosotros{" "}
-            <i className="fa-solid fa-chevron-right info-opciones-arrow"></i>
-          </h5>
-          {sobreNos && (
-            <div className="cont-texto-sobrenosotros">
-              <h6> Bienvenidos a Limonada</h6>
-              <p className="texto-info">
-                Somos una tienda en línea especializada en camisetas estampadas
-                no contamos con un local fisico.
-              </p>
-            </div>
-          )}
-          <h5 onClick={() => infoDesplegada("contacto")}>
-            Contacto{" "}
-            <i className="fa-solid fa-chevron-right info-opciones-arrow"></i>
-          </h5>
-          {contactoVisible && (
-            <div className="cont-info-contacto">
-              <h6>WhatsApp</h6>
-              <p>3385442291</p>
-              <h6>Email</h6>
-              <p>usuario@gmail.com</p>
-            </div>
-          )}
-        </div>
+        <div className="info-footer"></div>
 
         <div className="cont-redes-sociales-footer">
           <ul className="ul-redes-sociales-footer">

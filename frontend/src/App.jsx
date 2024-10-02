@@ -1,6 +1,6 @@
 import { Cardproduct } from "./ui/Cardproduct";
 import { Modal } from "./ui/Modal";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "../src/App.css";
 import { NavBar } from "./ui/NavBar";
@@ -21,11 +21,6 @@ console.log('messi')
   };
 
 
-
-    
-
-
-  
 
   const MainLayout = ({ children }) => {
   const [onSlide, setOnSlide] = useState(false)
