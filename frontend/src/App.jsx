@@ -8,6 +8,7 @@ import { Footer } from "./ui/Footer";
 import { Success } from "./ui/Success";
 import { Hero } from "./ui/Hero";
 import { MenuSlide } from "./ui/MenuSlide";
+import { Payment } from "./ui/Payment";
 
 export const App = () => {
   const [infoModal, setInfoModal] = useState([]);
@@ -35,6 +36,7 @@ const menuSlideOn = ()=> {
         <MenuSlide openCloseSlide={onSlide}/>
         <Hero/>
         {children}
+        <Payment/>
         <Footer />
       </>
     );
