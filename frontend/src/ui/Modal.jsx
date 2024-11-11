@@ -7,12 +7,12 @@ import axios from "axios";
 export const Modal = ({ infoModals }) => {
   const [dataRecibida, setDataRecibida] = useState([]);
   const [openClosePagos, setopenClosePagos] = useState(false);
-  const [openCloseDataEnvio, setOpenCloseDataEnvio] = useState(false)
-  const [estadoPayment, setEstadoPayment] = useState('')
+  const [openCloseDataEnvio, setOpenCloseDataEnvio] = useState(false);
+  const [estadoPayment, setEstadoPayment] = useState("");
+  const [articulo, setArticulo] = useState("");
   const refProducto = useRef(null);
   const refPrecio = useRef(null);
   const refDescripcion = useRef(null);
-
 
   const [errors, setErrors] = useState([]);
 
@@ -29,7 +29,7 @@ export const Modal = ({ infoModals }) => {
   const [backResponse, setBackResponse] = useState(false);
   const [backResponseStatus, setBackResponseStatus] = useState(false);
   const [backResponseTextStatus, setBackResponseTextStatus] = useState("");
-
+  const [email, setEmail] = useState("");
   const inicializarMercadoPago = async () => {
     await loadMercadoPago();
     const mp = new window.MercadoPago(
@@ -245,10 +245,24 @@ export const Modal = ({ infoModals }) => {
               ).value,
             }
           );
-          if (respons.status === 200) {
-            console.log("la info fue recibida");
-            console.log(respons);
-            console.log("la data del form se envio correctamente", respons.data);
+          if (respons.data === "approved") {
+
+            const articulo = infoModals[0].nombre;
+            const email = document.getElementById(
+              "form-checkout__email"
+            ).value;
+            console.log(email, "email del front");
+
+            await axios.post("http://localhost:3000/data_form_envio", {
+              direccion,
+              codigoPostal,
+              transactionAmount: parseFloat(
+                document.getElementById("transactionAmount").value
+              ),
+              articulo,
+              email
+            });
+
 
             document.getElementById("form-checkout__cardNumber").textContent =
               "";
@@ -265,71 +279,49 @@ export const Modal = ({ infoModals }) => {
 
             setBackResponseStatus(true);
             setBackResponseTextStatus(respons.data);
-            setBackResponse(true);
             setLoading(false);
 
-            if (respons.data === "approved") {
-              console.log(infoModals, 'el infomodals')
-                console.log("y el pago fue approved");
-              await axios.post('http://localhost:3000/data_form_envio',{
-                direccion,
-                codigoPostal,
-                transactionAmount: parseFloat(
-                  document.getElementById("transactionAmount").value)
-              })
-             
-              
-
-            }
+            
           } else {
             console.log("el pago no se aprovo");
             setLoading(false);
-            setBackResponse(true);
           }
           if (loading === false) {
-            setBackResponse(JSON.parse(respons.config.data));
             const parseBack = respons.status;
             console.log(parseBack);
 
             console.log(backResponse, "la respuesta");
           }
-         
         }
       } catch (e) {
         console.error("error creating card token: ", e.message, e);
       }
     }
   };
-const [direccion, setDireccion] = useState('')
-const [codigoPostal, setCodigoPostal] = useState('')
-
-
+  const [direccion, setDireccion] = useState("");
+  const [codigoPostal, setCodigoPostal] = useState("");
 
   const compraDef = async () => {
-    console.log('enviar toda la data')
-    console.log(estadoPayment)
+    console.log("enviar toda la data");
+    console.log(estadoPayment);
   };
-  const despiegoPrueba = ()=> {
-setOpenCloseDataEnvio((prevData) => !prevData)
-
-  }
-
+  const despiegoPrueba = () => {
+    setOpenCloseDataEnvio((prevData) => !prevData);
+  };
 
   const formDataEnvio = async () => {
-   
-  if(direccion.length > 3){
-console.log('direccion correcta')
-setopenClosePagos((prevData) => !prevData)
-setOpenCloseDataEnvio((prevData) => !prevData)
-if(!openClosePagos){
-inicializarMercadoPago()
+    if (direccion.length > 3) {
+      console.log("direccion correcta");
+      setopenClosePagos((prevData) => !prevData);
+      setOpenCloseDataEnvio((prevData) => !prevData);
+      if (!openClosePagos) {
+        inicializarMercadoPago();
+      }
+    } else {
+      console.log("la direccion es demasiado corta");
+    }
+  };
 
-}
-  }else{
-    console.log('la direccion es demasiado corta')
-  }
-
-  }
   return (
     <section className="modal">
       <div>
@@ -377,100 +369,132 @@ inicializarMercadoPago()
               </select>
             </div>
             <div className="cont-btn-modal-product">
-              <p>Selecciona metodo de pago</p>
-              <button className="btn-comprar-modal-product" onClick={despiegoPrueba}>
+              <p className="text-metodo-de-pago">Metodo de pago</p>
+              <div className="cont-botones-metodos-de-pago">
+
+              <button
+                className="btn-comprar-modal-product"
+                onClick={despiegoPrueba}
+                >
                 Tarjeta
               </button>
-              <button className="btn-comprar-modal-product">MercadoPago</button>
+                </div>
+             
             </div>
           </section>
         ))}
       </div>
-      {openCloseDataEnvio &&
-
-        <div>
-        <input type="text" placeholder="Direccion" className="input-direccion" onChange={(e) => setDireccion(e.target.value)}/>
-        <input type="number" placeholder="Codigo Postal" className="input-postal" onChange={(e) => setCodigoPostal(e.target.value)}/>
-        <button onClick={formDataEnvio}>Aceptar</button>
-      </div>
-      }
+      {openCloseDataEnvio && (
+        <div className="cont-form-data-envio">
+          <input type="text" placeholder="Nombre" />
+          <input type="text" placeholder="Apellido" />
+          <input type="text" placeholder="Provincia" />
+          <input type="text" placeholder="Localidad" />
+          <input
+            type="text"
+            placeholder="Calle"
+            className="input-direccion"
+            onChange={(e) => setDireccion(e.target.value)}
+          />
+          <input type="number" name="" className="input-numero-calle" placeholder="Numero" />
+          <input
+            type="number"
+            placeholder="Codigo Postal"
+            className="input-postal"
+            onChange={(e) => setCodigoPostal(e.target.value)}
+          />
+          <button onClick={formDataEnvio}>Aceptar</button>
+        </div>
+      )}
       {openClosePagos && (
         <>
-        {dataRecibida.map((item, index) => (
-          <p key={index} style={{color: '#fff'}}>{item.nombre}</p>
-        ))}
-        {openClosePagos &&
-
-        <form
-        id="form-checkout"
-        action="http://localhost:3000/proccess_payment"
-        method="POST"
-        >
-          <div id="form-checkout__cardNumber" className="container"></div>
-          <div id="form-checkout__expirationDate" className="container"></div>
-          <div id="form-checkout__securityCode" className="container"></div>
-          <input
-            type="text"
-            id="form-checkout__cardholderName"
-            placeholder="Titular de la tarjeta"
-            />
-          <select id="form-checkout__issuer" name="issuer" defaultValue="">
-            <option value="" disabled>
-              Banco emisor
-            </option>
-          </select>
-          <select
-            id="form-checkout__installments"
-            name="installments"
-            defaultValue=""
+          {dataRecibida.map((item, index) => (
+            <p key={index} style={{ color: "#fff" }}>
+              {item.nombre}
+            </p>
+          ))}
+          {openClosePagos && (
+            <form
+              id="form-checkout"
+              action="http://localhost:3000/proccess_payment"
+              method="POST"
             >
-            <option value="" disabled>
-              Cuotas
-            </option>
-          </select>
-          <select
-            id="form-checkout__identificationType"
-            name="identificationType"
-            defaultValue=""
-            >
-            <option value="" disabled>
-              Tipo de documento
-            </option>
-          </select>
-          <input
-            type="text"
-            id="form-checkout__identificationNumber"
-            name="identificationNumber"
-            placeholder="Número do documento"
-            />
-          <input
-            type="email"
-            id="form-checkout__email"
-            name="email"
-            placeholder="E-mail"
-            />
+              <div id="form-checkout__cardNumber" className="container"></div>
+              <div
+                id="form-checkout__expirationDate"
+                className="container"
+              ></div>
+              <div id="form-checkout__securityCode" className="container"></div>
+              <input
+                type="text"
+                id="form-checkout__cardholderName"
+                placeholder="Titular de la tarjeta"
+              />
+              <select id="form-checkout__issuer" name="issuer" defaultValue="">
+                <option value="" disabled>
+                  Banco emisor
+                </option>
+              </select>
+              <select
+                id="form-checkout__installments"
+                name="installments"
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Cuotas
+                </option>
+              </select>
+              <select
+                id="form-checkout__identificationType"
+                name="identificationType"
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Tipo de documento
+                </option>
+              </select>
+              <input
+                type="text"
+                id="form-checkout__identificationNumber"
+                name="identificationNumber"
+                placeholder="Número do documento"
+              />
+              <input
+                type="email"
+                id="form-checkout__email"
+                name="email"
+                placeholder="E-mail"
+              />
 
-          <input id="token" name="token" />
-          <input id="paymentMethodId" name="paymentMethodId" type="hidden" />
-          <input
-            id="transactionAmount"
-            name="transactionAmount"
-            type="hidden"
-            value="100"
-            />
-          <input
-            id="description"
-            name="description"
-            type="hidden"
-            value="Nome do Produto"
-            />
+              <input id="token" name="token" />
+              <input
+                id="paymentMethodId"
+                name="paymentMethodId"
+                type="hidden"
+              />
+              <input
+                id="transactionAmount"
+                name="transactionAmount"
+                type="hidden"
+                value="100"
+              />
+              <input
+                id="description"
+                name="description"
+                type="hidden"
+                value="Nome do Produto"
+              />
 
-          <button type="submit" id="form-checkout__submit" onClick={compraDef}>
-            Pagar
-          </button>
-        </form>
-          }
-            </>
+              <button
+                type="submit"
+                id="form-checkout__submit"
+                onClick={compraDef}
+              >
+                Pagar
+              </button>
+            </form>
+          )}
+        </>
       )}
     </section>
   );

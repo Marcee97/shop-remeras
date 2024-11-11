@@ -27,8 +27,14 @@ export const productosDatabase = async (req, res) => {
 
 
 export const dataFormEnvio = async(req, res) => {
-  console.log(req.body)
- try{
+  const direccion = req.body.direccion;
+  const codigoPostal = req.body.codigoPostal;
+  const transactionAmount = req.body.transactionAmount;
+  const articulo = req.body.articulo;
+  const email = req.body.email
+console.log(req.body)
+try{
+ await pool.query('INSERT INTO ventas (total, direccion, articulo, postal, email) VALUES (?, ?, ?, ?, ?)', [transactionAmount, direccion, articulo, codigoPostal, email])
 
    
    res.status(200).send({message:'lionel messi'})
@@ -55,7 +61,6 @@ console.log(req.body.direccionEnvio)
     payment_method_id: req.body.paymentMethodId,
     issuer_id: req.body.issuer,
 
-    
     payer: {
       email: req.body.email,
       
@@ -84,8 +89,7 @@ console.log(req.body.direccionEnvio)
 
     if(response.status === 'approved'){
       console.log(response.transaction_amount)
-      const transactionAmount = response.transaction_amount
-      pool.query('INSERT INTO ventas (total) VALUES (?)', [transactionAmount])
+    
     }
   }catch(err){
     console.log(err)

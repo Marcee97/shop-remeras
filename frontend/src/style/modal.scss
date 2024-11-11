@@ -44,55 +44,29 @@
     }
     .cont-btn-modal-product {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
       margin-top: 1em;
-      padding: 1em;
 
       .btn-comprar-modal-product {
-        padding: 1em;
-        border-radius: 1em;
+        padding: .8em;
+        font-size: .7em;
+        border-radius: .3em;
         border: none;
         font-weight: bold;
         background-color: #ffffff;
       }
-    }
-  }
-  .payment-data {
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    justify-content: center;
-    align-items: start;
-    .errors-modal {
-      color: red;
-      font-size: 0.9em;
-    }
-    input {
-      border: none;
-      border-radius: 5px;
-      padding: 0.5em;
-    }
-    .cont-direccion {
-      display: flex;
-      flex-direction: column;
-      gap: 1em;
-      .select-provincia-modal {
-        border: none;
-        border-radius: 5px;
-        padding: 0.5em;
+      .cont-botones-metodos-de-pago{
+        border-top:1px solid #fff ;
+        margin-top: .3em;
+        padding-top: .9em;
+        width: 90%;
       }
     }
-    .btn-pagar-modal-product {
-      padding: 0.7em;
-      border-radius: 1em;
-      border: none;
-      font-weight: bold;
-      background-color: #ffffff;
-    }
   }
+ 
 }
-
 
 #form-checkout {
   display: flex;
