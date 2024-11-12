@@ -300,31 +300,46 @@ export const Modal = ({ infoModals }) => {
   };
   const [direccion, setDireccion] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
+  const [openFormMP, setOpenFormMP] = useState(false)
+  const [openFormTarjeta, setOpenFormTarjeta] = useState(false)
+  const [paymentMethod, setPaymentMethod] = useState('inicial')
 
   const compraDef = async () => {
     console.log("enviar toda la data");
     console.log(estadoPayment);
   };
-  const despiegoPrueba = () => {
+  const despliegoFormEnvio = (metodo) => {
     setOpenCloseDataEnvio((prevData) => !prevData);
-  };
+    if(metodo === 'MP'){
+setPaymentMethod(metodo)
+console.log('el estado de paymentMethod se cambio a MP')
+    }else{
+      setPaymentMethod(metodo)
+    }
 
-  const formDataEnvio = async () => {
+  };
+ 
+
+  const validateformDataEnvio = async () => {
     if (direccion.length > 3) {
       console.log("direccion correcta");
-      setopenClosePagos((prevData) => !prevData);
+      
       setOpenCloseDataEnvio((prevData) => !prevData);
-      if (!openClosePagos) {
+      if (paymentMethod === 'tarjeta') {
+        setOpenFormTarjeta((prevData) => !prevData)
         inicializarMercadoPago();
+        
+      }else{
+        console.log('Redirige a mercado pago para realizar el pago')
       }
-    } else {
-      console.log("la direccion es demasiado corta");
+    }else{
+      console.log('la data para el envio no esta completa')
     }
   };
 
   return (
     <section className="modal">
-      <div>
+      
         {dataRecibida.map((item, index) => (
           <section key={index} className="modal-cardproduct">
             <p className="btn-back-modal-product" onClick={backShop}>
@@ -374,16 +389,22 @@ export const Modal = ({ infoModals }) => {
 
               <button
                 className="btn-comprar-modal-product"
-                onClick={despiegoPrueba}
+                onClick={()=> despliegoFormEnvio('tarjeta')}
                 >
                 Tarjeta
+              </button>
+              <button
+                className="btn-comprar-modal-product"
+                onClick={()=> despliegoFormEnvio('MP')}
+                >
+                Mercado Pago
               </button>
                 </div>
              
             </div>
           </section>
         ))}
-      </div>
+      
       {openCloseDataEnvio && (
         <div className="cont-form-data-envio">
           <input type="text" placeholder="Nombre" />
@@ -403,97 +424,107 @@ export const Modal = ({ infoModals }) => {
             className="input-postal"
             onChange={(e) => setCodigoPostal(e.target.value)}
           />
-          <button onClick={formDataEnvio}>Aceptar</button>
+          <button onClick={validateformDataEnvio}>Aceptar</button>
         </div>
       )}
-      {openClosePagos && (
+      {(openFormTarjeta || openFormMP) && (
         <>
           {dataRecibida.map((item, index) => (
             <p key={index} style={{ color: "#fff" }}>
               {item.nombre}
             </p>
           ))}
-          {openClosePagos && (
+          {paymentMethod === 'inicial' ? null : paymentMethod === 'MP' ? (console.log('el form de mp en el front')) : (
+
             <form
-              id="form-checkout"
-              action="http://localhost:3000/proccess_payment"
-              method="POST"
+            id="form-checkout" className="form-payment"
+            action="http://localhost:3000/proccess_payment"
+            method="POST"
             >
               <div id="form-checkout__cardNumber" className="container"></div>
               <div
                 id="form-checkout__expirationDate"
                 className="container"
-              ></div>
+                ></div>
               <div id="form-checkout__securityCode" className="container"></div>
               <input
                 type="text"
                 id="form-checkout__cardholderName"
                 placeholder="Titular de la tarjeta"
-              />
-              <select id="form-checkout__issuer" name="issuer" defaultValue="">
+                className="container"
+                />
+              <select id="form-checkout__issuer" name="issuer" defaultValue="" className="select-banco-emisor">
                 <option value="" disabled>
                   Banco emisor
+                </option>
+              </select>
+              
+              
+              <input
+                type="text"
+                id="form-checkout__identificationNumber"
+                name="identificationNumber"
+                placeholder="Número de documento"
+                className="container"
+                />
+              <select
+                id="form-checkout__identificationType"
+                name="identificationType"
+                defaultValue=""
+                
+                >
+                <option value="" disabled>
+                  Tipo de documento
                 </option>
               </select>
               <select
                 id="form-checkout__installments"
                 name="installments"
                 defaultValue=""
-              >
+                >
                 <option value="" disabled>
                   Cuotas
                 </option>
               </select>
-              <select
-                id="form-checkout__identificationType"
-                name="identificationType"
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Tipo de documento
-                </option>
-              </select>
-              <input
-                type="text"
-                id="form-checkout__identificationNumber"
-                name="identificationNumber"
-                placeholder="Número do documento"
-              />
+              
               <input
                 type="email"
                 id="form-checkout__email"
                 name="email"
                 placeholder="E-mail"
-              />
+                className="container"
+                />
 
-              <input id="token" name="token" />
+              <input id="token" name="token" type="hidden"/>
               <input
                 id="paymentMethodId"
                 name="paymentMethodId"
                 type="hidden"
-              />
+                />
               <input
                 id="transactionAmount"
                 name="transactionAmount"
                 type="hidden"
                 value="100"
-              />
+                className="container"
+                />
               <input
                 id="description"
                 name="description"
                 type="hidden"
                 value="Nome do Produto"
-              />
+                />
 
               <button
                 type="submit"
                 id="form-checkout__submit"
                 onClick={compraDef}
-              >
+                >
                 Pagar
               </button>
             </form>
-          )}
+              )
+          }
         </>
       )}
     </section>

@@ -5,10 +5,10 @@
     color: #fff;
     font-size: 1.5em;
 
-    .btn-back-modal-product{
-        display: flex;
-        align-items: center;
-        gap: .3em;
+    .btn-back-modal-product {
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
     }
     .cont-modal-product {
       display: flex;
@@ -50,36 +50,48 @@
       margin-top: 1em;
 
       .btn-comprar-modal-product {
-        padding: .8em;
-        font-size: .7em;
-        border-radius: .3em;
+        padding: 0.8em;
+        font-size: 0.7em;
+        border-radius: 0.3em;
         border: none;
         font-weight: bold;
         background-color: #ffffff;
       }
-      .cont-botones-metodos-de-pago{
-        border-top:1px solid #fff ;
-        margin-top: .3em;
-        padding-top: .9em;
+      .cont-botones-metodos-de-pago {
+        border-top: 1px solid #fff;
+        margin-top: 0.3em;
+        padding-top: 0.9em;
         width: 90%;
       }
     }
+    
   }
+   
+.form-payment {
+ outline: 1px solid #fff;
+ padding: 1.5em .5em;
+ border-radius: 5px;
+ display: flex;
+ flex-direction: column;
+ gap: .7em;
+  .container{
+    color: #000;
+    background-color: #fff;
+    padding: 5px 8px;
+    height: 33px;
+    border: none;
+    display: inline-block;
+    border-radius: 4px;
  
+  }
+  .select-banco-emisor{
+    visibility: hidden;
+  }
+  button{
+padding: 1em;
+border-radius: 5px;
+border: none;
+background-color: #cef8be;
+  }
 }
-
-#form-checkout {
-  display: flex;
-  flex-direction: column;
-  max-width: 600px;
-}
-
-.container {
-  height: 18px;
-  display: inline-block;
-  border: 1px solid rgb(118, 118, 118);
-  border-radius: 2px;
-  padding: 1px 2px;
-  color: #000000;
-  background-color: #fff;
 }
