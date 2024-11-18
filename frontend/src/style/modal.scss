@@ -23,13 +23,19 @@
     .descripcion-modal-product {
       font-size: 0.7em;
       color: #7a7979;
+      padding: 0 0.5em 0 0;
     }
     .cont-preferencias-modal-product {
       margin-top: 1.8em;
       display: flex;
       flex-direction: column;
       gap: 1em;
-
+      .preferencias-modal-product-disponibilidad {
+        color: #7a7979;
+      }
+      .precio-modal-product {
+        font-size: 1em;
+      }
       .label-talle-modal-product {
         font-size: 0.7em;
       }
@@ -58,40 +64,139 @@
         background-color: #ffffff;
       }
       .cont-botones-metodos-de-pago {
-        border-top: 1px solid #fff;
         margin-top: 0.3em;
         padding-top: 0.9em;
         width: 90%;
       }
     }
-    
+
+    .cont-form-encabezado-envio {
+      padding-top: 3em;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+
+      .cont-encabezado-forms {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3em;
+      }
+      .form-encabezado-envio-title {
+        font-size: 0.8;
+        border-bottom: 1px solid rgb(255, 255, 255);
+        width: 80%;
+      }
+      .form-encabezado-subtitle {
+        color: #4d4b4b;
+        font-size: 0.7em;
+        padding-top: 0.3em;
+      }
+      .btn-cambio-metodo-pago {
+        border: none;
+        font-size: 0.7em;
+        padding: 0.3em;
+        border-radius: 5px;
+        width: 40%;
+      }
+      .cont-encabezado-info-pago {
+        border-bottom: 1px solid rgb(255, 255, 255);
+        width: 80%;
+
+        .form-encabezado-title-pago {
+          border-bottom: 1px solid rgb(255, 255, 255);
+          margin-bottom: 8px;
+        }
+        .cont-form-encabezado-detalle {
+        border-bottom:  1px solid #4d4b4b;
+          display: flex;
+          justify-content: space-between;
+          margin: .5em 0;
+          padding: .3em 0;
+          .form-encabezado-pago-detalle-compra {
+            font-size: 0.7em;
+            padding: 1em 0;
+          }
+          .form-encabezado-pago-detalle-img {
+            width: 20%;
+          }
+        }
+      }
+    }
   }
-   
-.form-payment {
- outline: 1px solid #fff;
- padding: 1.5em .5em;
- border-radius: 5px;
- display: flex;
- flex-direction: column;
- gap: .7em;
-  .container{
-    color: #000;
-    background-color: #fff;
-    padding: 5px 8px;
-    height: 33px;
-    border: none;
-    display: inline-block;
-    border-radius: 4px;
- 
+  .cont-form-data-envio {
+    outline: 1px solid #4d4b4b;
+    padding: 2em 1em;
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    border-radius: 5px;
+    .input-form-data-envio {
+      border: none;
+      padding: 1em;
+      border-radius: 5px;
+    }
+    .btn-form-data-envio {
+      font-size: 1em;
+      padding: 0.5em;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+    }
   }
-  .select-banco-emisor{
-    visibility: hidden;
+  .cont-section-payment {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3em;
+    .span-estas-comprando {
+      color: rgb(255, 255, 255);
+    }
+    .cont-message-compra-exitosa {
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+      border: 1px solid rgb(49, 49, 49);
+      padding: 2em 0;
+      .message-compra-exitosa {
+        border: 1px solid green;
+        background: linear-gradient(#40fa5f, #000000);
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        padding: 1em;
+        .btn-message-compra-exitosa {
+          border: none;
+          padding: 0.3em;
+          font-weight: bold;
+          border-radius: 5px;
+        }
+      }
+    }
+    .form-payment {
+      outline: 1px solid #4d4b4b;
+      padding: 1.5em 0.5em;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7em;
+      .container {
+        color: #000;
+        background-color: #fff;
+        padding: 5px 8px;
+        height: 33px;
+        border: none;
+        display: inline-block;
+        border-radius: 4px;
+      }
+      .select-banco-emisor {
+        visibility: hidden;
+      }
+      button {
+        padding: 1em;
+        border-radius: 5px;
+        border: none;
+        background-color: #cef8be;
+      }
+    }
   }
-  button{
-padding: 1em;
-border-radius: 5px;
-border: none;
-background-color: #cef8be;
-  }
-}
 }

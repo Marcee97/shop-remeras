@@ -28,15 +28,22 @@ export const productosDatabase = async (req, res) => {
 
 export const dataFormEnvio = async(req, res) => {
   const direccion = req.body.direccion;
+  const numeroDeCalle = req.body.numeroDeCalle;
   const codigoPostal = req.body.codigoPostal;
+  const localidad = req.body.localidad;
+  const provincia = req.body.provincia;
+  const nombre = req.body.nombre;
+  const apellido = req.body.apellido;
   const transactionAmount = req.body.transactionAmount;
   const articulo = req.body.articulo;
-  const email = req.body.email
+  const email = req.body.email;
+  const id = req.body.idProducto;
 console.log(req.body)
 try{
- await pool.query('INSERT INTO ventas (total, direccion, articulo, postal, email) VALUES (?, ?, ?, ?, ?)', [transactionAmount, direccion, articulo, codigoPostal, email])
+ await pool.query('INSERT INTO ventas (total, direccion,numero, postal, email, localidad, provincia, nombre, apellido, articulo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [transactionAmount, direccion,numeroDeCalle, codigoPostal, email, localidad, provincia, nombre, apellido, articulo])
 
-   
+ await pool.query('UPDATE productos SET cantidad = cantidad - 1 WHERE id = ? AND cantidad > 0', [id]);
+
    res.status(200).send({message:'lionel messi'})
   }catch(err){
     console.error(err)

@@ -245,24 +245,31 @@ export const Modal = ({ infoModals }) => {
               ).value,
             }
           );
+          setPaymentStatus(respons.data);
           if (respons.data === "approved") {
-
             const articulo = infoModals[0].nombre;
-            const email = document.getElementById(
-              "form-checkout__email"
-            ).value;
-            console.log(email, "email del front");
+            const idProducto = infoModals[0].id;
+            const email = document.getElementById("form-checkout__email").value;
+            console.log(
+              respons.data,
+              "el codigo 200 para crear mensaje de pago aproved"
+            );
 
             await axios.post("http://localhost:3000/data_form_envio", {
+              idProducto,
               direccion,
+              numeroDeCalle,
               codigoPostal,
+              nombre,
+              apellido,
+              provincia,
+              localidad,
               transactionAmount: parseFloat(
                 document.getElementById("transactionAmount").value
               ),
               articulo,
-              email
+              email,
             });
-
 
             document.getElementById("form-checkout__cardNumber").textContent =
               "";
@@ -280,8 +287,6 @@ export const Modal = ({ infoModals }) => {
             setBackResponseStatus(true);
             setBackResponseTextStatus(respons.data);
             setLoading(false);
-
-            
           } else {
             console.log("el pago no se aprovo");
             setLoading(false);
@@ -298,11 +303,19 @@ export const Modal = ({ infoModals }) => {
       }
     }
   };
+
+  const [paymentStatus, setPaymentStatus] = useState("");
   const [direccion, setDireccion] = useState("");
+  const [numeroDeCalle, setNumeroDeCalle] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
-  const [openFormMP, setOpenFormMP] = useState(false)
-  const [openFormTarjeta, setOpenFormTarjeta] = useState(false)
-  const [paymentMethod, setPaymentMethod] = useState('inicial')
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [provincia, setProvincia] = useState("");
+  const [localidad, setLocalidad] = useState("");
+  const [openFormMP, setOpenFormMP] = useState(false);
+  const [openFormTarjeta, setOpenFormTarjeta] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("inicial");
+  const formEnvioRef = useRef(null);
 
   const compraDef = async () => {
     console.log("enviar toda la data");
@@ -310,221 +323,327 @@ export const Modal = ({ infoModals }) => {
   };
   const despliegoFormEnvio = (metodo) => {
     setOpenCloseDataEnvio((prevData) => !prevData);
-    if(metodo === 'MP'){
-setPaymentMethod(metodo)
-console.log('el estado de paymentMethod se cambio a MP')
-    }else{
-      setPaymentMethod(metodo)
-    }
+    console.log(infoModals[0].cantidad);
+    setTimeout(() => {
+      if (formEnvioRef.current) {
+        console.log("el useref forms");
+        formEnvioRef.current.scrollIntoView({ behavior: "smooth" });
+        formEnvioRef.current.focus();
+      }
+    }, 0);
+    console.log(metodo);
+    if (metodo === "MP") {
+      setPaymentMethod(metodo);
 
+      console.log("el estado de paymentMethod se cambio a MP");
+    } else {
+      setPaymentMethod(metodo);
+    }
   };
- 
 
   const validateformDataEnvio = async () => {
     if (direccion.length > 3) {
       console.log("direccion correcta");
-      
+
       setOpenCloseDataEnvio((prevData) => !prevData);
-      if (paymentMethod === 'tarjeta') {
-        setOpenFormTarjeta((prevData) => !prevData)
+      if (paymentMethod === "MP") {
+        setOpenFormMP((prevData) => !prevData);
+        console.log("el form de MP redirigido");
+      } else {
+        setOpenFormTarjeta((prevData) => !prevData);
         inicializarMercadoPago();
-        
-      }else{
-        console.log('Redirige a mercado pago para realizar el pago')
       }
-    }else{
-      console.log('la data para el envio no esta completa')
+    } else {
+      console.log("la data para el envio no esta completa");
     }
   };
 
   return (
     <section className="modal">
-      
-        {dataRecibida.map((item, index) => (
-          <section key={index} className="modal-cardproduct">
-            <p className="btn-back-modal-product" onClick={backShop}>
-              <i className="fa-solid fa-arrow-left"></i>Regresar a Shop
+      {dataRecibida.map((item, index) => (
+        <section key={index} className="modal-cardproduct">
+          <p className="btn-back-modal-product" onClick={backShop}>
+            <i className="fa-solid fa-arrow-left"></i>Regresar a Shop
+          </p>
+          <div className="cont-modal-product">
+            <img src={item.imagen} alt="imagen producto modal" />
+            <h5 ref={refProducto}>{item.nombre}</h5>
+            <p className="descripcion-modal-product" ref={refDescripcion}>
+              {item.descripcion}
             </p>
-            <div className="cont-modal-product">
-              <img src={item.imagen} alt="imagen producto modal" />
-              <h5 ref={refProducto}>{item.nombre}</h5>
-              <p className="descripcion-modal-product" ref={refDescripcion}>
-                {item.descripcion}
-              </p>
-            </div>
-            <div className="cont-preferencias-modal-product">
-              <h6 className="precio-modal-product">
-                TOTAL: $ <span ref={refPrecio}>{item.precio}</span>
-              </h6>
+          </div>
+          <div className="cont-preferencias-modal-product">
+            <h6 className="preferencias-modal-product-disponibilidad">
+              Disponibles: {infoModals[0].cantidad}
+            </h6>
+            <h6 className="precio-modal-product">
+              TOTAL: $ <span ref={refPrecio}>{item.precio}</span>
+            </h6>
 
-              <label htmlFor="talle" className="label-talle-modal-product">
-                Talle
-              </label>
-              <select
-                name="talle"
-                id="talle"
-                className="select-talle-modal-product"
-              >
-                <option value="S">S</option>
-                <option value="XL">XL</option>
-                <option value="XXL">XXL</option>
-              </select>
+            <label htmlFor="talle" className="label-talle-modal-product">
+              Talle
+            </label>
+            <select
+              name="talle"
+              id="talle"
+              className="select-talle-modal-product"
+            >
+              <option value="S">S</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
 
-              <label htmlFor="cantidad" className="label-talle-modal-product">
-                Cantidad
-              </label>
-              <select
-                name="cantidad"
-                id="cantidad"
-                className="select-talle-modal-product"
-              >
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-              </select>
-            </div>
+            <label htmlFor="cantidad" className="label-talle-modal-product">
+              Cantidad
+            </label>
+            <select
+              name="cantidad"
+              id="cantidad"
+              className="select-talle-modal-product"
+            >
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </div>
+          {/*----- Seccion de botones metodos de pago ----*/}
+
+          {paymentMethod === "inicial" ? (
             <div className="cont-btn-modal-product">
               <p className="text-metodo-de-pago">Metodo de pago</p>
               <div className="cont-botones-metodos-de-pago">
-
-              <button
-                className="btn-comprar-modal-product"
-                onClick={()=> despliegoFormEnvio('tarjeta')}
+                <button
+                  className="btn-comprar-modal-product"
+                  onClick={() => despliegoFormEnvio("tarjeta")}
                 >
-                Tarjeta
-              </button>
-              <button
-                className="btn-comprar-modal-product"
-                onClick={()=> despliegoFormEnvio('MP')}
+                  Tarjeta
+                </button>
+                <button
+                  className="btn-comprar-modal-product"
+                  onClick={() => despliegoFormEnvio("MP")}
                 >
-                Mercado Pago
-              </button>
-                </div>
-             
+                  Mercado Pago
+                </button>
+              </div>
             </div>
-          </section>
-        ))}
-      
+          ) : (
+            <div className="cont-form-encabezado-envio">
+              {openCloseDataEnvio ? (
+                <div className="cont-encabezado-forms">
+                  <h4 className="form-encabezado-envio-title">
+                    1. Datos para el envio
+                  </h4>
+                  <p className="form-encabezado-subtitle">
+                    Con esta info, nos aseguraremos de que tu remera llegue
+                    directo a tu casa!
+                  </p>
+                </div>
+              ) : paymentStatus === "approved" ? null : (
+                <div className="cont-encabezado-info-pago">
+                  <h4 className="form-encabezado-title-pago">
+                    Estas comprando
+                  </h4>
+                  
+                  {paymentStatus === "approved" ? null : (
+                    <div>
+                      {dataRecibida.map((item, index) => (
+                        <div className="cont-form-encabezado-detalle">
+                          <p
+                            key={index}
+                            className="form-encabezado-pago-detalle-compra"
+                          >
+                         {item.nombre}
+                          </p>
+                          <img
+                            src={item.imagen}
+                            alt="Imagen de remera seleccionada en detalle de compra"
+                            className="form-encabezado-pago-detalle-img"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    
+                  )}
+                  <p className="form-encabezado-subtitle">
+                    Ingrese los datos de su tarjeta para finalizar su compra.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+      ))}
+
       {openCloseDataEnvio && (
-        <div className="cont-form-data-envio">
-          <input type="text" placeholder="Nombre" />
-          <input type="text" placeholder="Apellido" />
-          <input type="text" placeholder="Provincia" />
-          <input type="text" placeholder="Localidad" />
+        <div className="cont-form-data-envio" ref={formEnvioRef}>
+          <input
+            type="text"
+            placeholder="Nombre"
+            className="input-form-data-envio"
+            onChange={(e) => setNombre(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Apellido"
+            onChange={(e) => setApellido(e.target.value)}
+            className="input-form-data-envio"
+          />
+          <input
+            type="text"
+            placeholder="Provincia"
+            onChange={(e) => setProvincia(e.target.value)}
+            className="input-form-data-envio"
+          />
+          <input
+            type="text"
+            placeholder="Localidad"
+            onChange={(e) => setLocalidad(e.target.value)}
+            className="input-form-data-envio"
+          />
           <input
             type="text"
             placeholder="Calle"
-            className="input-direccion"
             onChange={(e) => setDireccion(e.target.value)}
+            className="input-form-data-envio"
           />
-          <input type="number" name="" className="input-numero-calle" placeholder="Numero" />
+          <input
+            type="number"
+            onChange={(e) => setNumeroDeCalle(e.target.value)}
+            placeholder="Numero"
+            className="input-form-data-envio"
+          />
           <input
             type="number"
             placeholder="Codigo Postal"
-            className="input-postal"
             onChange={(e) => setCodigoPostal(e.target.value)}
+            className="input-form-data-envio"
           />
-          <button onClick={validateformDataEnvio}>Aceptar</button>
+          <button
+            onClick={validateformDataEnvio}
+            className="btn-form-data-envio"
+          >
+            Aceptar
+          </button>
         </div>
       )}
       {(openFormTarjeta || openFormMP) && (
         <>
-          {dataRecibida.map((item, index) => (
-            <p key={index} style={{ color: "#fff" }}>
-              {item.nombre}
-            </p>
-          ))}
-          {paymentMethod === 'inicial' ? null : paymentMethod === 'MP' ? (console.log('el form de mp en el front')) : (
-
-            <form
-            id="form-checkout" className="form-payment"
-            action="http://localhost:3000/proccess_payment"
-            method="POST"
-            >
-              <div id="form-checkout__cardNumber" className="container"></div>
-              <div
-                id="form-checkout__expirationDate"
-                className="container"
+          <div className="cont-section-payment">
+            {paymentMethod === "inicial" ? null : paymentMethod === "MP" ? (
+              <p style={{ color: "red" }}>EL form de MP</p>
+            ) : paymentStatus === "approved" ? (
+              <div className="cont-message-compra-exitosa">
+                {dataRecibida.map((item, index) => (
+                  <div key={index} className="message-compra-exitosa">
+                    <h5 style={{ color: "#fff" }}>Compra Exitosa</h5>
+                    <p style={{ color: "#fff" }}>Compraste {item.nombre}</p>
+                    <strong>Pagaste:{item.precio}</strong>
+                    <button
+                      className="btn-message-compra-exitosa"
+                      onClick={() => navigate("/")}
+                    >
+                      Volver a la tienda
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <form
+                id="form-checkout"
+                className="form-payment"
+                action="http://localhost:3000/proccess_payment"
+                method="POST"
+              >
+                <div id="form-checkout__cardNumber" className="container"></div>
+                <div
+                  id="form-checkout__expirationDate"
+                  className="container"
                 ></div>
-              <div id="form-checkout__securityCode" className="container"></div>
-              <input
-                type="text"
-                id="form-checkout__cardholderName"
-                placeholder="Titular de la tarjeta"
-                className="container"
+                <div
+                  id="form-checkout__securityCode"
+                  className="container"
+                ></div>
+                <input
+                  type="text"
+                  id="form-checkout__cardholderName"
+                  placeholder="Titular de la tarjeta"
+                  className="container"
                 />
-              <select id="form-checkout__issuer" name="issuer" defaultValue="" className="select-banco-emisor">
-                <option value="" disabled>
-                  Banco emisor
-                </option>
-              </select>
-              
-              
-              <input
-                type="text"
-                id="form-checkout__identificationNumber"
-                name="identificationNumber"
-                placeholder="Número de documento"
-                className="container"
+                <select
+                  id="form-checkout__issuer"
+                  name="issuer"
+                  defaultValue=""
+                  className="select-banco-emisor"
+                >
+                  <option value="" disabled>
+                    Banco emisor
+                  </option>
+                </select>
+
+                <input
+                  type="text"
+                  id="form-checkout__identificationNumber"
+                  name="identificationNumber"
+                  placeholder="Número de documento"
+                  className="container"
                 />
-              <select
-                id="form-checkout__identificationType"
-                name="identificationType"
-                defaultValue=""
-                
+                <select
+                  id="form-checkout__identificationType"
+                  name="identificationType"
+                  defaultValue=""
                 >
-                <option value="" disabled>
-                  Tipo de documento
-                </option>
-              </select>
-              <select
-                id="form-checkout__installments"
-                name="installments"
-                defaultValue=""
+                  <option value="" disabled>
+                    Tipo de documento
+                  </option>
+                </select>
+                <select
+                  id="form-checkout__installments"
+                  name="installments"
+                  defaultValue=""
                 >
-                <option value="" disabled>
-                  Cuotas
-                </option>
-              </select>
-              
-              <input
-                type="email"
-                id="form-checkout__email"
-                name="email"
-                placeholder="E-mail"
-                className="container"
+                  <option value="" disabled>
+                    Cuotas
+                  </option>
+                </select>
+
+                <input
+                  type="email"
+                  id="form-checkout__email"
+                  name="email"
+                  placeholder="E-mail"
+                  className="container"
                 />
 
-              <input id="token" name="token" type="hidden"/>
-              <input
-                id="paymentMethodId"
-                name="paymentMethodId"
-                type="hidden"
+                <input id="token" name="token" type="hidden" />
+                <input
+                  id="paymentMethodId"
+                  name="paymentMethodId"
+                  type="hidden"
                 />
-              <input
-                id="transactionAmount"
-                name="transactionAmount"
-                type="hidden"
-                value="100"
-                className="container"
+                <input
+                  id="transactionAmount"
+                  name="transactionAmount"
+                  type="hidden"
+                  value={infoModals[0].precio}
+                  className="container"
                 />
-              <input
-                id="description"
-                name="description"
-                type="hidden"
-                value="Nome do Produto"
+                <input
+                  id="description"
+                  name="description"
+                  type="hidden"
+                  value="Nome do Produto"
                 />
 
-              <button
-                type="submit"
-                id="form-checkout__submit"
-                onClick={compraDef}
+                <button
+                  type="submit"
+                  id="form-checkout__submit"
+                  onClick={compraDef}
                 >
-                Pagar
-              </button>
-            </form>
-              )
-          }
+                  Pagar
+                </button>
+              </form>
+            )}
+          </div>
         </>
       )}
     </section>

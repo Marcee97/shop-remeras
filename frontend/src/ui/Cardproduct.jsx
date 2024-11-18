@@ -38,6 +38,7 @@ export const Cardproduct = ({infoModal}) => {
               />
               </div>
             <strong className="precio-cardproduct"><span>${items.precio}</span></strong>
+          
         </div>
       ))}
       </div>
