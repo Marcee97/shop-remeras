@@ -3,10 +3,15 @@ import { App } from "./App.jsx";
 import {BrowserRouter} from "react-router-dom";
 import "./index.css";
 
+import { MyProvider } from "./context/MyProvider.jsx";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   
     <BrowserRouter>
+    <MyProvider>
+
       <App />
+    </MyProvider>
     </BrowserRouter>
   
 );

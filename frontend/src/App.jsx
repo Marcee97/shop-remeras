@@ -1,7 +1,7 @@
 import { Cardproduct } from "./ui/Cardproduct";
 import { Modal } from "./ui/Modal";
 import { useState } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "../src/App.css";
 import { NavBar } from "./ui/NavBar";
 import { Footer } from "./ui/Footer";
@@ -11,15 +11,10 @@ import { MenuSlide } from "./ui/MenuSlide";
 import { Payment } from "./ui/Payment";
 
 export const App = () => {
-  const [infoModal, setInfoModal] = useState([]);
+  
 
-  const navigate = useNavigate();
-  const addElement = (items) => {
-    setInfoModal([]);
-    setInfoModal((prevInfo) => [...prevInfo, items]);
-console.log('messi')
-    navigate("/modal");
-  };
+  
+ 
 
 
 
@@ -51,11 +46,11 @@ const menuSlideOn = ()=> {
           path="/"
           element={
             <MainLayout>
-              <Cardproduct infoModal={addElement} />
+              <Cardproduct/>
             </MainLayout>
           }
         />
-        <Route path="/modal" element={<Modal infoModals={infoModal} />} />
+        <Route path="/modal" element={<Modal/>} />
         <Route path="/success" element={<Success />} />
       </Routes>
     </>

@@ -13,18 +13,20 @@
     .cont-modal-product {
       display: flex;
       flex-direction: column;
-      gap: 1em;
+      gap: .3em;
       margin-top: 1.3em;
       img {
         width: 80%;
         margin: auto;
       }
+      .precio-modal-product{
+        font-size: .8em;
+        font-weight: bold;
+        color: #9e9d9d;
+
+      }
     }
-    .descripcion-modal-product {
-      font-size: 0.7em;
-      color: #7a7979;
-      padding: 0 0.5em 0 0;
-    }
+    
     .cont-preferencias-modal-product {
       margin-top: 1.8em;
       display: flex;
@@ -33,19 +35,39 @@
       .preferencias-modal-product-disponibilidad {
         color: #7a7979;
       }
-      .precio-modal-product {
-        font-size: 1em;
-      }
-      .label-talle-modal-product {
-        font-size: 0.7em;
-      }
-      .select-talle-modal-product {
-        width: 60px;
-        padding: 0.4em;
-        font-weight: bold;
-        border: none;
-        border-radius: 5px;
-        font-size: 0.7em;
+     
+      .section-botones-talles {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin-top: .5em;
+        gap: .6em;
+        .header-seleccionar-talle{
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          .talle-title{
+            font-size: .7em;
+
+          }
+          .guia-talles{
+            text-decoration: underline;
+            font-size: .7em;
+
+          }
+        }
+        .cont-botones-talles{
+          display: flex;
+          gap: 0.5em;
+          .btn-talle {
+            font-size: 0.8em;
+            padding: 0.5em 1.5em;
+            border: 1px solid #fff;
+            color: #fff;
+            border-radius: 5px;
+            background: #0f0f0f;
+          }
+        }
       }
     }
     .cont-btn-modal-product {
@@ -107,11 +129,11 @@
           margin-bottom: 8px;
         }
         .cont-form-encabezado-detalle {
-        border-bottom:  1px solid #4d4b4b;
+          border-bottom: 1px solid #4d4b4b;
           display: flex;
           justify-content: space-between;
-          margin: .5em 0;
-          padding: .3em 0;
+          margin: 0.5em 0;
+          padding: 0.3em 0;
           .form-encabezado-pago-detalle-compra {
             font-size: 0.7em;
             padding: 1em 0;
@@ -121,6 +143,18 @@
           }
         }
       }
+    }
+    .btn-change-talle-pago{
+      width: 100%;
+      font-size: .8em;
+      padding: .6em;
+      border-radius: 5px;
+      border: none;
+      font-weight: bold;
+      background: #0f0f0f;
+      color: #fff;
+      font-family: sans-serif;
+
     }
   }
   .cont-form-data-envio {

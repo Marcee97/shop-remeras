@@ -1,32 +1,26 @@
 import { MercadoPagoConfig, Payment } from "mercadopago";
+import mercadopago from "mercadopago";
+import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 import { pool } from "../database.js";
 import dotenv from "dotenv";
-dotenv.config()
+dotenv.config();
 
-
-
-
-
-   
 // 5031 7557 3453 0604 Tarjeta de prueba
 
-
-
+//-------Base de datos Dirigida al Front --------
 
 export const productosDatabase = async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM productos");
     res.json(rows);
-    
   } catch (error) {
-    console.log(error, 'error peticion productos a base de datos');
+    console.log(error, "error peticion productos a base de datos");
   }
 };
 
-
-export const dataFormEnvio = async(req, res) => {
+export const dataFormEnvio = async (req, res) => {
   const direccion = req.body.direccion;
   const numeroDeCalle = req.body.numeroDeCalle;
   const codigoPostal = req.body.codigoPostal;
@@ -38,68 +32,120 @@ export const dataFormEnvio = async(req, res) => {
   const articulo = req.body.articulo;
   const email = req.body.email;
   const id = req.body.idProducto;
-console.log(req.body)
-try{
- await pool.query('INSERT INTO ventas (total, direccion,numero, postal, email, localidad, provincia, nombre, apellido, articulo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [transactionAmount, direccion,numeroDeCalle, codigoPostal, email, localidad, provincia, nombre, apellido, articulo])
+  console.log(req.body);
+  try {
+    await pool.query(
+      "INSERT INTO ventas (total, direccion,numero, postal, email, localidad, provincia, nombre, apellido, articulo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        transactionAmount,
+        direccion,
+        numeroDeCalle,
+        codigoPostal,
+        email,
+        localidad,
+        provincia,
+        nombre,
+        apellido,
+        articulo,
+      ]
+    );
 
- await pool.query('UPDATE productos SET cantidad = cantidad - 1 WHERE id = ? AND cantidad > 0', [id]);
+    await pool.query(
+      "UPDATE productos SET cantidad = cantidad - 1 WHERE id = ? AND cantidad > 0",
+      [id]
+    );
 
-   res.status(200).send({message:'lionel messi'})
-  }catch(err){
-    console.error(err)
+    res.status(200).send({ message: "lionel messi" });
+  } catch (err) {
+    console.error(err);
   }
-}
+};
 
 //5031 7557 3453 0604
-export const proccessPayment = async(req, res) => {
-  
-console.log(req.body.direccionEnvio)
-  const uuid = uuidv4()
-  const client = new MercadoPagoConfig({ accessToken: 'TEST-8019716289741291-100417-27c12e4b06655c0a09c1476629e602e6-699862682', options: { timeout: 1000, idempotencyKey: uuid } });
 
-  // Step 3: Initialize the API object
+// ------Pago con tarjeta individual -----
+
+export const proccessPayment = async (req, res) => {
+  console.log(req.body.direccionEnvio);
+  const uuid = uuidv4();
+  const client = new MercadoPagoConfig({
+    accessToken:
+      "TEST-8019716289741291-100417-27c12e4b06655c0a09c1476629e602e6-699862682",
+    options: { timeout: 1000, idempotencyKey: uuid },
+  });
+
   const payment = new Payment(client);
-  
-  // Step 4: Create the request object
+
   const body = {
     transaction_amount: Number(req.body.transactionAmount),
-    description:  req.body.description,
+    description: req.body.description,
     installments: Number(req.body.installments),
     payment_method_id: req.body.paymentMethodId,
     issuer_id: req.body.issuer,
 
     payer: {
       email: req.body.email,
-      
-      identification:{
+
+      identification: {
         type: req.body.identificationType,
-        number: req.body.identificationNumber
-      }
+        number: req.body.identificationNumber,
+      },
     },
     token: req.body.token,
-    
-    
   };
-  const tokens = req.body.token
-  console.log(tokens)
-  // Step 5: Create request options object - Optional
+  const tokens = req.body.token;
+  console.log(tokens);
+
   const requestOptions = {
     idempotencyKey: uuid,
   };
-  
-  try{
 
+  try {
     const response = await payment.create({ body, requestOptions });
-    res.status(200).json(response.status)
-    console.log(response)
-    console.log(response.status)
+    res.status(200).json(response.status);
+    console.log(response);
+    console.log(response.status);
 
-    if(response.status === 'approved'){
-      console.log(response.transaction_amount)
-    
+    if (response.status === "approved") {
+      console.log(response.transaction_amount);
     }
-  }catch(err){
-    console.log(err)
-    res.status(500).json({err})
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err });
   }
-}
+};
+
+
+export const walletMercadopago = async (req, res) => {
+  const { title, unitPrice, cantidad } = req.body;
+
+  const preference = {
+    items: [
+      {
+        title: title,
+        quantity: parseInt(cantidad, 10),
+        unit_price: parseFloat(unitPrice),
+      },
+    ],
+    purpose: "wallet_purchase",
+  };
+
+  try {
+    const response = await axios.post(
+      "https://api.mercadopago.com/checkout/preferences",
+      preference,
+      {
+        headers: {
+          Authorization: `Bearer TEST-8019716289741291-100417-27c12e4b06655c0a09c1476629e602e6-699862682 `,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+console.log(response)
+    res.status(200).json({ preferenceId: response.data.id });
+
+  } catch (error) {
+    console.error("Error creando la preferencia:", error.response?.data || error);
+    res.status(500).json({ error: "Error al crear la preferencia" });
+  }
+};

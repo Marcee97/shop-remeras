@@ -3,6 +3,7 @@ import {
   dataFormEnvio,
   proccessPayment,
   productosDatabase,
+  walletMercadopago,
 } from "../controllers/payment.controllers.js";
 import { addProduct } from "../controllers/web.controllers.js";
 
@@ -17,5 +18,7 @@ router.post("/addproduct", addProduct);
 router.post('/data_form_envio', dataFormEnvio)
 
 router.post("/proccess_payment", proccessPayment);
+
+router.post('/wallet_payment', walletMercadopago)
 
 export default router;

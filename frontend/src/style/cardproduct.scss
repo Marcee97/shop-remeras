@@ -25,9 +25,10 @@
       min-height: 265px;
       display: flex;
       flex-direction: column;
-      justify-content: end;
+      justify-content: space-between;
       padding: 0.1em;
-      background-color: #00000080;
+      background-color: #000000d2;
+      outline: 1px solid rgba(0, 0, 0, 0.89);
 
       .icon-addcar-cardproduct {
         position: absolute;
