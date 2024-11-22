@@ -1,13 +1,11 @@
 import { MercadoPagoConfig, Payment } from "mercadopago";
-import mercadopago from "mercadopago";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-
 import { pool } from "../database.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-// 5031 7557 3453 0604 Tarjeta de prueba
+
 
 //-------Base de datos Dirigida al Front --------
 
@@ -21,7 +19,10 @@ export const productosDatabase = async (req, res) => {
 };
 
 export const dataFormEnvio = async (req, res) => {
-  const direccion = req.body.direccion;
+
+
+
+ const direccion = req.body.direccion;
   const numeroDeCalle = req.body.numeroDeCalle;
   const codigoPostal = req.body.codigoPostal;
   const localidad = req.body.localidad;
@@ -33,6 +34,7 @@ export const dataFormEnvio = async (req, res) => {
   const email = req.body.email;
   const id = req.body.idProducto;
   console.log(req.body);
+  
   try {
     await pool.query(
       "INSERT INTO ventas (total, direccion,numero, postal, email, localidad, provincia, nombre, apellido, articulo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -59,6 +61,7 @@ export const dataFormEnvio = async (req, res) => {
   } catch (err) {
     console.error(err);
   }
+    
 };
 
 //5031 7557 3453 0604

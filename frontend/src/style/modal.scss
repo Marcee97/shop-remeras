@@ -101,134 +101,85 @@
         gap: 1em;
 
         .form-envio-desplegable-title {
-          border: 1px solid rgb(255, 255, 255);
-          padding: 1em 2.1em;
+          border: 1px solid #ffffff;
+          width: 76%;
+          padding: 0.9em;
+          display: flex;
+          justify-content: space-between;
+          font-size: 1.1em;
+          background: #0f0f0f;
+
           .material-symbols-outlined {
             vertical-align: middle;
+          }
+        }
+
+        .activate {
+          animation-name: buttonpay;
+          animation-duration: 0.5s;
+          animation-iteration-count: 4;
+        }
+        @keyframes buttonpay {
+          0% {
+            border: 1px solid #ffffff;
+          }
+          50% {
+            border: 1px solid #555555;
+          }
+          100% {
+            border: 1px solid #ffffff;
           }
         }
         .btn-cripto {
           border: 1px solid #fff;
           padding: 1em;
+          background: #0f0f0f;
         }
       }
-      .cont-info-adicional{
+      .cont-info-adicional {
         display: flex;
         flex-direction: column;
         gap: 1em;
-        font-size: .7em;
+        font-size: 0.7em;
         color: #c2c1c1;
-        .info-adicional{
+        .info-adicional {
           display: flex;
-          gap: .5em;
-          .camion-ventas{
+          gap: 0.5em;
+          .camion-ventas {
             transform: rotateY(180deg);
           }
         }
-        
       }
-    }
-    .cont-btn-modal-product {
-      display: flex;
-      flex-direction: column;
-      justify-content: start;
-      align-items: start;
-      margin-top: 1em;
-
-      .btn-comprar-modal-product {
-        padding: 0.8em;
-        font-size: 0.7em;
-        border-radius: 0.3em;
-        border: none;
-        font-weight: bold;
-        background-color: #ffffff;
-      }
-      .cont-botones-metodos-de-pago {
-        margin-top: 0.3em;
-        padding-top: 0.9em;
-        width: 90%;
-      }
-    }
-
-    .cont-form-encabezado-envio {
-      padding-top: 3em;
-      display: flex;
-      flex-direction: column;
-      gap: 1em;
-
-      .cont-encabezado-forms {
-        display: flex;
-        flex-direction: column;
-        gap: 0.3em;
-      }
-      .form-encabezado-envio-title {
-        font-size: 0.8;
-        border-bottom: 1px solid rgb(255, 255, 255);
-        width: 80%;
-      }
-      .form-encabezado-subtitle {
-        color: #4d4b4b;
-        font-size: 0.7em;
-        padding-top: 0.3em;
-      }
-      .btn-cambio-metodo-pago {
-        border: none;
-        font-size: 0.7em;
-        padding: 0.3em;
-        border-radius: 5px;
-        width: 40%;
-      }
-      .cont-encabezado-info-pago {
-        border-bottom: 1px solid rgb(255, 255, 255);
-        width: 80%;
-
-        .form-encabezado-title-pago {
-          border-bottom: 1px solid rgb(255, 255, 255);
-          margin-bottom: 8px;
-        }
-        .cont-form-encabezado-detalle {
-          border-bottom: 1px solid #4d4b4b;
-          display: flex;
-          justify-content: space-between;
-          margin: 0.5em 0;
-          padding: 0.3em 0;
-          .form-encabezado-pago-detalle-compra {
-            font-size: 0.7em;
-            padding: 1em 0;
-          }
-          .form-encabezado-pago-detalle-img {
-            width: 20%;
-          }
-        }
-      }
-    }
-    .btn-change-talle-pago {
-      width: 100%;
-      font-size: 0.8em;
-      padding: 0.6em;
-      border-radius: 5px;
-      border: none;
-      font-weight: bold;
-      background: #0f0f0f;
-      color: #fff;
-      font-family: sans-serif;
     }
   }
   .cont-form-data-envio {
-    outline: 1px solid #4d4b4b;
-    padding: 2em 1em;
-    margin-top: 1em;
+    
+    padding: 3em .5em 1em .5em;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+          
+          background: linear-gradient( #000 2%, #0f0f0f 20%);
     border-radius: 5px;
+
+    .form-data-title{
+
+    }
+    .form-data-subtitle{
+      color: rgb(117, 117, 117);
+      font-size: .7em;
+    }
+    .message-errors{
+color: red;
+font-size: .7em;
+    }
     .input-form-data-envio {
       border: none;
       padding: 1em;
       border-radius: 5px;
     }
     .btn-form-data-envio {
-      font-size: 1em;
+      font-size: .8em;
       padding: 0.5em;
       border: none;
       font-weight: bold;

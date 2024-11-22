@@ -9,6 +9,7 @@ import { Success } from "./ui/Success";
 import { Hero } from "./ui/Hero";
 import { MenuSlide } from "./ui/MenuSlide";
 import { Payment } from "./ui/Payment";
+import { ScrollTop } from "./helpers/ScrollTop";
 
 export const App = () => {
   
@@ -41,6 +42,7 @@ const menuSlideOn = ()=> {
 
   return (
     <>
+    <ScrollTop/>
       <Routes>
         <Route
           path="/"
