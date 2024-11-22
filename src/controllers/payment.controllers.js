@@ -115,37 +115,3 @@ export const proccessPayment = async (req, res) => {
   }
 };
 
-
-export const walletMercadopago = async (req, res) => {
-  const { title, unitPrice, cantidad } = req.body;
-
-  const preference = {
-    items: [
-      {
-        title: title,
-        quantity: parseInt(cantidad, 10),
-        unit_price: parseFloat(unitPrice),
-      },
-    ],
-    purpose: "wallet_purchase",
-  };
-
-  try {
-    const response = await axios.post(
-      "https://api.mercadopago.com/checkout/preferences",
-      preference,
-      {
-        headers: {
-          Authorization: `Bearer TEST-8019716289741291-100417-27c12e4b06655c0a09c1476629e602e6-699862682 `,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-console.log(response)
-    res.status(200).json({ preferenceId: response.data.id });
-
-  } catch (error) {
-    console.error("Error creando la preferencia:", error.response?.data || error);
-    res.status(500).json({ error: "Error al crear la preferencia" });
-  }
-};

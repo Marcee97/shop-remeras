@@ -1,5 +1,5 @@
 .modal {
-  padding: 0.4em;
+  padding: 0 0.4em 0.4em 0.4em;
 
   .modal-cardproduct {
     color: #fff;
@@ -10,53 +10,73 @@
       align-items: center;
       gap: 0.3em;
     }
+
     .cont-modal-product {
       display: flex;
       flex-direction: column;
-      gap: .3em;
-      margin-top: 1.3em;
-      img {
-        width: 80%;
-        margin: auto;
+      gap: 0.3em;
+      margin-top: 0.3em;
+
+      .modal-carrousel {
+        position: relative;
+        overflow: hidden;
+        height: 18em;
+
+        .cont-img-carrousel {
+          position: absolute;
+          display: flex;
+          width: 100%;
+          transition: 1s all ease;
+
+          img {
+            width: 100%;
+          }
+        }
+        .cont-btns-carrousel {
+          display: flex;
+          justify-content: space-between;
+          position: absolute;
+          margin-top: 58%;
+          width: 100%;
+
+          span {
+            font-size: 1.5em;
+          }
+        }
       }
-      .precio-modal-product{
-        font-size: .8em;
+
+      .precio-modal-product {
+        font-size: 0.8em;
         font-weight: bold;
         color: #9e9d9d;
-
       }
     }
-    
+
     .cont-preferencias-modal-product {
       margin-top: 1.8em;
       display: flex;
       flex-direction: column;
       gap: 1em;
-      .preferencias-modal-product-disponibilidad {
-        color: #7a7979;
-      }
-     
+
       .section-botones-talles {
         display: flex;
         flex-direction: column;
         align-items: start;
-        margin-top: .5em;
-        gap: .6em;
-        .header-seleccionar-talle{
+        margin-top: 0.5em;
+        gap: 0.6em;
+        .header-seleccionar-talle {
           display: flex;
           justify-content: space-between;
           width: 100%;
-          .talle-title{
-            font-size: .7em;
-
+          .talle-title {
+            font-size: 0.7em;
           }
-          .guia-talles{
+          .guia-talles {
             text-decoration: underline;
-            font-size: .7em;
-
+            font-size: 0.7em;
           }
         }
-        .cont-botones-talles{
+        .cont-botones-talles {
           display: flex;
           gap: 0.5em;
           .btn-talle {
@@ -67,7 +87,45 @@
             border-radius: 5px;
             background: #0f0f0f;
           }
+          .btn-talle-activo {
+            background: #aaaaaa;
+          }
         }
+      }
+      .cont-form-envio-desplegable {
+        overflow: hidden;
+        padding: 0.1em;
+        transition: 0.5s all ease;
+        font-size: 0.8em;
+        display: flex;
+        gap: 1em;
+
+        .form-envio-desplegable-title {
+          border: 1px solid rgb(255, 255, 255);
+          padding: 1em 2.1em;
+          .material-symbols-outlined {
+            vertical-align: middle;
+          }
+        }
+        .btn-cripto {
+          border: 1px solid #fff;
+          padding: 1em;
+        }
+      }
+      .cont-info-adicional{
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        font-size: .7em;
+        color: #c2c1c1;
+        .info-adicional{
+          display: flex;
+          gap: .5em;
+          .camion-ventas{
+            transform: rotateY(180deg);
+          }
+        }
+        
       }
     }
     .cont-btn-modal-product {
@@ -144,17 +202,16 @@
         }
       }
     }
-    .btn-change-talle-pago{
+    .btn-change-talle-pago {
       width: 100%;
-      font-size: .8em;
-      padding: .6em;
+      font-size: 0.8em;
+      padding: 0.6em;
       border-radius: 5px;
       border: none;
       font-weight: bold;
       background: #0f0f0f;
       color: #fff;
       font-family: sans-serif;
-
     }
   }
   .cont-form-data-envio {

@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import "../style/modal.scss";
-import { useNavigate } from "react-router-dom";
-import { loadMercadoPago } from "@mercadopago/sdk-js";
 
 import axios from "axios";
 import ElContexto from "../context/ProductContext.jsx";
@@ -9,29 +7,7 @@ import ElContexto from "../context/ProductContext.jsx";
 export const Modal = () => {
   const { productoSeleccionado } = useContext(ElContexto);
 
-  const [dataRecibida, setDataRecibida] = useState([]);
-  const [openClosePagos, setopenClosePagos] = useState(false);
-  const [openCloseDataEnvio, setOpenCloseDataEnvio] = useState(false);
-  const [estadoPayment, setEstadoPayment] = useState("");
-  const [articulo, setArticulo] = useState("");
-  const refProducto = useRef(null);
-  const refPrecio = useRef(null);
-  const refDescripcion = useRef(null);
-
-  const [errors, setErrors] = useState([]);
-
-  const navigate = useNavigate();
-  const backShop = () => {
-    navigate("/");
-  };
-
-  const [loading, setLoading] = useState(false);
-  const [backResponse, setBackResponse] = useState(false);
-  const [backResponseStatus, setBackResponseStatus] = useState(false);
-  const [backResponseTextStatus, setBackResponseTextStatus] = useState("");
   const [email, setEmail] = useState("");
-
-  const [paymentStatus, setPaymentStatus] = useState("");
   const [direccion, setDireccion] = useState("");
   const [numeroDeCalle, setNumeroDeCalle] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
@@ -39,154 +15,174 @@ export const Modal = () => {
   const [apellido, setApellido] = useState("");
   const [provincia, setProvincia] = useState("");
   const [localidad, setLocalidad] = useState("");
-  const [openFormMP, setOpenFormMP] = useState(false);
-  const [openFormTarjeta, setOpenFormTarjeta] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("inicial");
-  const formEnvioRef = useRef(null);
 
-  const despliegoFormEnvio = (metodo) => {
-    setOpenCloseDataEnvio((prevData) => !prevData);
-    console.log(infoModals[0].cantidad);
-    setTimeout(() => {
-      if (formEnvioRef.current) {
-        console.log("el useref forms");
-        formEnvioRef.current.scrollIntoView({ behavior: "smooth" });
-        formEnvioRef.current.focus();
-      }
-    }, 0);
-    console.log(metodo);
-    if (metodo === "MP") {
-      setPaymentMethod(metodo);
+  const refImageCarrousel = useRef(null);
 
-      console.log("el estado de paymentMethod se cambio a MP");
-    } else {
-      setPaymentMethod(metodo);
+  let i = 0;
+
+  const carrousel = (dir) => {
+    const carrousel = refImageCarrousel.current;
+    const totalScroll = carrousel.children.length;
+
+    if (dir === "mas") {
+      i = (i + 1) % totalScroll;
+    } else if (dir === "menos") {
+      i = (i - 1 + totalScroll) % totalScroll;
     }
-  };
 
-  const validateformDataEnvio = async () => {
-    if (direccion.length > 3) {
-      console.log("direccion correcta");
-    } else {
-      console.log("la data de envio tiene algun error");
+    const resultado = i * 100;
+    carrousel.style.transform = `translateX(-${resultado}%)`;
+  };
+  const transformArray = productoSeleccionado.map((row) => ({
+    ...row,
+    imagenes: row.imagenes.split(","),
+  }));
+
+  const [selectTalle, setSelectTalle] = useState("inicial");
+  const [formEnvio, setFormEnvio] = useState(false);
+
+  const tallesDisponibles = ["S", "XL", "XXL"];
+const refButtonMulti = useRef(null)
+  useEffect(()=> {
+    if(selectTalle !== 'inicial'){
+
+      const buttonMulti = refButtonMulti.current
+      buttonMulti.textContent = 'Completar Compra'
+      console.log('el cambio de teto')
     }
-  };
-
-  //TEST-aa57b093-8dbb-4593-bbeb-f016e89d1138
-
-  useEffect(() => {
-    const walletMercadoPago = async () => {
-      const response = await axios.post(
-        "http://localhost:3000/wallet_payment",
-        {
-          title: "remeras",
-          unitPrice: 1221,
-          cantidad: 2,
-        }
-      );
-      console.log(response);
-      const { preferenceId } = response.data;
-      await loadMercadoPago();
-      const mp = new window.MercadoPago(
-        "TEST-aa57b093-8dbb-4593-bbeb-f016e89d1138"
-      );
-
-      mp.bricks().create("wallet", "wallet_container", {
-        initialization: {
-          preferenceId: preferenceId,
-        },
-      });
-    };
-    walletMercadoPago();
-  }, []);
+  }, [selectTalle])
 
   return (
     <section className="modal">
-      <section className="modal-cardproduct">
-        <p className="btn-back-modal-product" onClick={backShop}>
-          <i className="fa-solid fa-arrow-left"></i>Regresar a Shop
-        </p>
-        <div className="cont-modal-product">
-          <img src={productoSeleccionado.imagen} alt="imagen producto modal" />
-          <h5 ref={refProducto}>{productoSeleccionado.nombre}</h5>
-          <h6 className="precio-modal-product">
-            $ <span ref={refPrecio}>{productoSeleccionado.precio}</span>
-          </h6>
-        </div>
+      <div className="modal-cardproduct">
+        {transformArray.map((items, index) => (
+          <div className="cont-modal-product" key={index}>
+            <div className="modal-carrousel" key={index}>
+              <div className="cont-img-carrousel" ref={refImageCarrousel}>
+                {items.imagenes.map((imagen, imgIndex) => (
+                  <img src={imagen} alt="fotos productos" key={imgIndex} />
+                ))}
+              </div>
+              <div className="cont-btns-carrousel">
+                <span
+                  className="material-symbols-outlined"
+                  onClick={() => carrousel("menos")}
+                >
+                  chevron_left
+                </span>
+                <span
+                  className="material-symbols-outlined"
+                  onClick={() => carrousel("mas")}
+                >
+                  chevron_right
+                </span>
+              </div>
+            </div>
+            <h5>{items.nombre}</h5>
+            <h6 className="precio-modal-product">
+              $ <span>{items.precio}</span>
+            </h6>
+            <h6 className="preferencias-modal-product-disponibilidad">
+              Disponibles: {items.cantidad}
+            </h6>
+          </div>
+        ))}
         <div className="cont-preferencias-modal-product">
           <div className="section-botones-talles">
             <header className="header-seleccionar-talle">
-              <strong className="talle-title">Seleccionar Talle</strong>
+              <strong className="talle-title">Talles</strong>
+
               <p className="guia-talles">Guia de talles</p>
             </header>
 
             <div className="cont-botones-talles">
-              <button className="btn-talle">X</button>
-              <button className="btn-talle">XL</button>
-              <button className="btn-talle">XXL</button>
+              {tallesDisponibles.map((talle) => (
+                <button
+                  key={talle}
+                  className={`btn-talle ${
+                    selectTalle === talle ? "btn-talle-activo" : ""
+                  }`}
+                  onClick={() => setSelectTalle(talle)}
+                >
+                  {talle.toUpperCase()}
+                </button>
+              ))}
             </div>
           </div>
-          <h6 className="preferencias-modal-product-disponibilidad">
-            Disponibles: {productoSeleccionado.cantidad}
-          </h6>
-        </div>
-        {/*----- Seccion de botones metodos de pago ----*/}
 
-        <button className="btn-change-talle-pago">Seleccionar Talle</button>
-      </section>
+          {/*----- Formulario Para Los Envios -----*/}
 
-      {openCloseDataEnvio && (
-        <div className="cont-form-data-envio" ref={formEnvioRef}>
-          <input
-            type="text"
-            placeholder="Nombre"
-            className="input-form-data-envio"
-            onChange={(e) => setNombre(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Apellido"
-            onChange={(e) => setApellido(e.target.value)}
-            className="input-form-data-envio"
-          />
-          <input
-            type="text"
-            placeholder="Provincia"
-            onChange={(e) => setProvincia(e.target.value)}
-            className="input-form-data-envio"
-          />
-          <input
-            type="text"
-            placeholder="Localidad"
-            onChange={(e) => setLocalidad(e.target.value)}
-            className="input-form-data-envio"
-          />
-          <input
-            type="text"
-            placeholder="Calle"
-            onChange={(e) => setDireccion(e.target.value)}
-            className="input-form-data-envio"
-          />
-          <input
-            type="number"
-            onChange={(e) => setNumeroDeCalle(e.target.value)}
-            placeholder="Numero"
-            className="input-form-data-envio"
-          />
-          <input
-            type="number"
-            placeholder="Codigo Postal"
-            onChange={(e) => setCodigoPostal(e.target.value)}
-            className="input-form-data-envio"
-          />
-          <button
-            onClick={validateformDataEnvio}
-            className="btn-form-data-envio"
-          >
-            Aceptar
-          </button>
+          <div className="cont-form-envio-desplegable">
+            <strong className="form-envio-desplegable-title" ref={refButtonMulti}>
+              Seleccioná el talle{" "}
+              <span className="material-symbols-outlined">arrow_forward</span>
+            </strong>
+            <span className="btn-cripto">&</span>
+          </div>
+          <div className="cont-info-adicional">
+            <div className="info-adicional">
+              <span className="material-symbols-outlined">local_shipping</span>
+              <p>El envio ya esta incluido en el precio final</p>
+            </div>
+            <div className="info-adicional">
+              <span className="material-symbols-outlined camion-ventas">
+                local_shipping
+              </span>
+              <p>
+                {" "}
+                Devoluciones Gratis ¿No es tu talle? Podes devolverlo en un
+                plazo de dos dias
+              </p>
+            </div>
+          </div>
+          <div className="cont-form-data-envio">
+            <input
+              type="text"
+              placeholder="Nombre"
+              className="input-form-data-envio"
+              onChange={(e) => setNombre(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Apellido"
+              onChange={(e) => setApellido(e.target.value)}
+              className="input-form-data-envio"
+            />
+            <input
+              type="text"
+              placeholder="Provincia"
+              onChange={(e) => setProvincia(e.target.value)}
+              className="input-form-data-envio"
+            />
+            <input
+              type="text"
+              placeholder="Localidad"
+              onChange={(e) => setLocalidad(e.target.value)}
+              className="input-form-data-envio"
+            />
+            <input
+              type="text"
+              placeholder="Calle"
+              onChange={(e) => setDireccion(e.target.value)}
+              className="input-form-data-envio"
+            />
+            <input
+              type="number"
+              onChange={(e) => setNumeroDeCalle(e.target.value)}
+              placeholder="Numero"
+              className="input-form-data-envio"
+            />
+            <input
+              type="number"
+              placeholder="Codigo Postal"
+              onChange={(e) => setCodigoPostal(e.target.value)}
+              className="input-form-data-envio"
+            />
+            <button className="btn-form-data-envio">Aceptar</button>
+          </div>
         </div>
-      )}
+        {/*----- Seccion de Data De envio y pago ----*/}
+      </div>
     </section>
   );
 };

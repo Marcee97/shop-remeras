@@ -1,19 +1,19 @@
 import { pool } from "../database.js"
 
 
-
-
-export const addProduct = async(req, res) => {
-
+export const modalProduct = async(req, res) => {
     try{
 
-        const nombre = req.body.nombre;
-        const precio = req.body.precio;
-        const descripcion = req.body.descripcion;
-        const imagen = req.body.imagen;
-        
-        const response = await pool.query('INSERT INTO productos (nombre, precio, descripcion, imagen) VALUES ($1, $2, $3, $4)',[nombre, precio, descripcion, imagen])
-    }catch(error){
-        console.log(error, 'error')
+        const idProducto = req.body.id
+        console.log(idProducto)
+        const [rows] = await pool.query('SELECT productos.nombre, productos.precio, GROUP_CONCAT(imagenes.url_imagen) AS imagenes FROM productos JOIN imagenes ON productos.id = imagenes.id_imagen WHERE productos.id = ? GROUP BY productos.id', [idProducto])
+        res.status(200).json(rows)
+        console.log(rows)
+    }catch(err){
+        console.error(err)
     }
-}
+    }
+
+
+
+//'SELECT productos.nombre, productos.precio, imagenes.url_imagen FROM productos JOIN imagenes ON productos.id = imagenes.id_imagen'

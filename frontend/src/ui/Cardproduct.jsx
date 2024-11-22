@@ -11,12 +11,16 @@ export const Cardproduct = () => {
   
 
 
-const sendProductoModal = (producto)=> {
-setproductoSeleccionado(producto)
+const peticionProductsModal = async(id)=> {
+  const response = await client.post('/modal-products',{
+id
+  })
+setproductoSeleccionado(response.data)
 navigate('/modal')
+
+  console.log(response)
+  
 }
-
-
 
   return (
     <section className="cardproduct">
@@ -30,7 +34,7 @@ navigate('/modal')
           <div
             key={index}
             className="cuerpo-cardproduct"
-            onClick={() => sendProductoModal(items)}
+            onClick={()=> peticionProductsModal(items.id)}
           >
             <div>
               <img
