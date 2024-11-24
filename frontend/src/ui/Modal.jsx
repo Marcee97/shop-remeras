@@ -3,8 +3,10 @@ import "../style/modal.scss";
 import ElContexto from "../context/ProductContext.jsx";
 import client from "../api/axios.js";
 import { z } from "zod";
+import { WalletComponent } from "./WalletComponent.jsx";
+
 export const Modal = () => {
-  const { productoSeleccionado } = useContext(ElContexto);
+  const { productoSeleccionado, setPreferenceId } = useContext(ElContexto);
 
   const [email, setEmail] = useState("");
   const [calle, setCalle] = useState("");
@@ -55,7 +57,6 @@ export const Modal = () => {
   const refNombreFormEnvio = useRef(null);
 
   const despliegoFormEnvio = () => {
-    console.log("lionel");
     const buttonMulti = refButtonMulti.current;
     if (buttonMulti.textContent === "Completar Compra") {
       console.log(openCloseFormEnvio);
@@ -75,15 +76,31 @@ export const Modal = () => {
   }, [openCloseFormEnvio]);
 
   const userSchema = z.object({
-    nombre: z.string().min(3, { message: "El Nombre debe contener al menos 3 letras" }),
-    apellido: z.string().min(2, {message: "El Apellido debe contener al menos 2 letras"}),
-    localidad: z.string().min(2, {message: "La Localidad debe contenr al menos 2 letras"}),
-    calle: z.string().min(2, {message: "La Calle debe contener al menos 2 letras"}),
-    numeroDeCalle: z.number().min(2, {message: "El numero de calle debe contener al menos 2 numeros"}),
-    codigoPostal: z.number().min(2, {message: "El codigo postal debe contener al menos 2 numeros"})
+    nombre: z
+      .string()
+      .min(3, { message: "El Nombre debe contener al menos 3 letras" }),
+    apellido: z
+      .string()
+      .min(2, { message: "El Apellido debe contener al menos 2 letras" }),
+    localidad: z
+      .string()
+      .min(2, { message: "La Localidad debe contenr al menos 2 letras" }),
+    calle: z
+      .string()
+      .min(2, { message: "La Calle debe contener al menos 2 letras" }),
+    numeroDeCalle: z
+      .number()
+      .min(2, {
+        message: "El numero de calle debe contener al menos 2 numeros",
+      }),
+    codigoPostal: z
+      .number()
+      .min(2, { message: "El codigo postal debe contener al menos 2 numeros" }),
   });
-const [errores, setErrores] = useState([])
-  const validateFormEnvio = (event) => {
+  const [errores, setErrores] = useState([]);
+  const [openCloseSectionPay, setOpenCloseSectionPay] = useState(false);
+
+  const validateFormEnvio = async (event) => {
     event.preventDefault();
 
     const formData = {
@@ -97,14 +114,32 @@ const [errores, setErrores] = useState([])
 
     try {
       const validData = userSchema.parse(formData);
-      console.log(validData, 'datos validos')
-      setErrores([])
+      console.log(validData, "datos validos");
+      setErrores([]);
+
+      const unitPrice = productoSeleccionado[0].precio;
+      const quantity = productoSeleccionado[0].cantidad;
+      const title = productoSeleccionado[0].nombre;
+
+      const response = await client.post("/payment-proccess", {
+        unitPrice,
+        quantity,
+        title,
+      });
+      const { preferenceId } = response.data;
+      setPreferenceId(preferenceId);
+      setTimeout(() => {
+        setOpenCloseSectionPay((prevState) => !prevState);
+      }, 700);
+      console.log(preferenceId, "el preferenceId en front");
     } catch (error) {
       console.log(error.errors);
-      setErrores(error.errors)
+      setErrores(error.errors);
     }
   };
 
+  //const dataPayment = async()=> {}
+  console.log(productoSeleccionado[0].precio, "el Precio");
   return (
     <section className="modal">
       <div className="modal-cardproduct">
@@ -183,10 +218,13 @@ const [errores, setErrores] = useState([])
               <p className="form-data-subtitle">
                 Usaremos esta info para hacerte llegar el envio.
               </p>
-              {errores.length > 0 && errores.map((item, index) => (
-                <p key={index} className="message-errors">{item.message}</p>
-              ))}
-              
+              {errores.length > 0 &&
+                errores.map((item, index) => (
+                  <p key={index} className="message-errors">
+                    {item.message}
+                  </p>
+                ))}
+
               <input
                 type="text"
                 placeholder="Nombre"
@@ -236,6 +274,17 @@ const [errores, setErrores] = useState([])
               >
                 Aceptar
               </button>
+            </div>
+          )}
+          {openCloseSectionPay && (
+            <div className="cont-metodo-de-pago">
+              <p style={{ fontSize: ".6em" }}>
+                Usamos MercadoPago para manejar los pagos de forma segura. Al
+                presionar el botón de pago, serás redirigido a MercadoPago,
+                donde podrás elegir el método de pago que prefieras: débito,
+                crédito o dinero disponible.{" "}
+              </p>
+              <WalletComponent />
             </div>
           )}
           <div className="cont-info-adicional">

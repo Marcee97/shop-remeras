@@ -8,6 +8,7 @@ export const MyProvider = ({ children }) => {
  
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setproductoSeleccionado] = useState([]);
+  const [preferenceId, setPreferenceId] = useState('')
 
   useEffect(() => {
     const peticionProducts = async () => {
@@ -26,7 +27,9 @@ export const MyProvider = ({ children }) => {
         productos,
         setProductos,
         setproductoSeleccionado,
-        productoSeleccionado
+        productoSeleccionado,
+        setPreferenceId,
+        preferenceId
       }}
     >
       {children}
