@@ -88,17 +88,19 @@ export const Modal = () => {
     calle: z
       .string()
       .min(2, { message: "La Calle debe contener al menos 2 letras" }),
-    numeroDeCalle: z
-      .number()
-      .min(2, {
-        message: "El numero de calle debe contener al menos 2 numeros",
-      }),
+    numeroDeCalle: z.number().min(2, {
+      message: "El numero de calle debe contener al menos 2 numeros",
+    }),
     codigoPostal: z
       .number()
       .min(2, { message: "El codigo postal debe contener al menos 2 numeros" }),
   });
+
+  const refContMethodPay = useRef(null);
   const [errores, setErrores] = useState([]);
   const [openCloseSectionPay, setOpenCloseSectionPay] = useState(false);
+  const [formDataCompleto, setFormDataCompleto] = useState(false);
+  const [formDataAnimation, setFormDataAnimation] = useState(false);
 
   const validateFormEnvio = async (event) => {
     event.preventDefault();
@@ -128,9 +130,20 @@ export const Modal = () => {
       });
       const { preferenceId } = response.data;
       setPreferenceId(preferenceId);
+
+      setFormDataAnimation((prevData) => !prevData);
+
+      setFormDataCompleto((prevState) => !prevState);
       setTimeout(() => {
         setOpenCloseSectionPay((prevState) => !prevState);
-      }, 700);
+      }, 800);
+
+      const formDataEnvio = refFormDataEnvio.current;
+
+      setTimeout(() => {
+        refContMethodPay.current.scrollIntoView({ behavior: "smooth" });
+      }, 900);
+
       console.log(preferenceId, "el preferenceId en front");
     } catch (error) {
       console.log(error.errors);
@@ -138,8 +151,9 @@ export const Modal = () => {
     }
   };
 
-  //const dataPayment = async()=> {}
-  console.log(productoSeleccionado[0].precio, "el Precio");
+  console.log(transformArray);
+
+  //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <section className="modal">
       <div className="modal-cardproduct">
@@ -213,7 +227,14 @@ export const Modal = () => {
           </div>
 
           {openCloseFormEnvio && (
-            <div className="cont-form-data-envio" ref={refFormDataEnvio}>
+            <div
+              className={
+                formDataAnimation
+                  ? "cont-form-data-envio completado"
+                  : "cont-form-data-envio"
+              }
+              ref={refFormDataEnvio}
+            >
               <h4 className="form-data-title">Datos de envio</h4>
               <p className="form-data-subtitle">
                 Usaremos esta info para hacerte llegar el envio.
@@ -228,48 +249,80 @@ export const Modal = () => {
               <input
                 type="text"
                 placeholder="Nombre"
-                className="input-form-data-envio"
+                className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "input-form-data-envio"
+                }
                 onChange={(e) => setNombre(e.target.value)}
                 ref={refNombreFormEnvio}
               />
               <input
                 type="text"
                 placeholder="Apellido"
+                className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "input-form-data-envio"
+                }
                 onChange={(e) => setApellido(e.target.value)}
-                className="input-form-data-envio"
               />
               <input
                 type="text"
                 placeholder="Provincia"
+                className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "input-form-data-envio"
+                }
                 onChange={(e) => setProvincia(e.target.value)}
-                className="input-form-data-envio"
               />
               <input
                 type="text"
                 placeholder="Localidad"
+                className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "input-form-data-envio"
+                }
                 onChange={(e) => setLocalidad(e.target.value)}
-                className="input-form-data-envio"
               />
               <input
                 type="text"
                 placeholder="Calle"
+                className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "input-form-data-envio"
+                }
                 onChange={(e) => setCalle(e.target.value)}
-                className="input-form-data-envio"
               />
               <input
                 type="number"
+                className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "input-form-data-envio"
+                }
                 onChange={(e) => setNumeroDeCalle(e.target.value)}
                 placeholder="Numero"
-                className="input-form-data-envio"
               />
               <input
                 type="number"
+                className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "input-form-data-envio"
+                }
                 placeholder="Codigo Postal"
                 onChange={(e) => setCodigoPostal(e.target.value)}
-                className="input-form-data-envio"
               />
               <button
-                className="btn-form-data-envio"
+                className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "btn-form-data-envio"
+                }
                 onClick={validateFormEnvio}
               >
                 Aceptar
@@ -277,13 +330,34 @@ export const Modal = () => {
             </div>
           )}
           {openCloseSectionPay && (
-            <div className="cont-metodo-de-pago">
+            <div
+              className={
+                openCloseSectionPay
+                  ? "cont-metodo-de-pago animation-payment"
+                  : "cont-metodo-de-pago "
+              }
+              ref={refContMethodPay}
+            >
+              <h4>Finalizar Compra</h4>
+
               <p style={{ fontSize: ".6em" }}>
                 Usamos MercadoPago para manejar los pagos de forma segura. Al
                 presionar el botón de pago, serás redirigido a MercadoPago,
                 donde podrás elegir el método de pago que prefieras: débito,
                 crédito o dinero disponible.{" "}
               </p>
+
+              {transformArray.map((items, index) => (
+                <div className="cont-info-payment" key={index}>
+                  <img
+                    src={items.imagenes[0]}
+                    alt="img payment"
+                    className="img-info-payment"
+                  />
+                  <p className="payment-product">{items.nombre}</p>
+                </div>
+              ))}
+
               <WalletComponent />
             </div>
           )}
