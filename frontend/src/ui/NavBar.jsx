@@ -16,7 +16,7 @@ const funcionMenuslide = ()=> {
       <span className="material-symbols-outlined icon-home" >
 home
 </span>
-<h1 className="titulo"><span>A</span><span>C</span></h1>
+<h1 className="titulo"><span>N</span><span>S</span></h1>
 
 <span className="material-symbols-outlined btn-menu" onClick={funcionMenuslide}>
 menu

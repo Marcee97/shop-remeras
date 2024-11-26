@@ -1,12 +1,10 @@
-
-
 import { MercadoPagoConfig, Preference, Payment } from "mercadopago";
 
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { pool } from "../database.js";
 import dotenv from "dotenv";
-import { response } from "express";
+import { json, response } from "express";
 dotenv.config();
 
 //-------Base de datos Dirigida al Front --------
@@ -67,7 +65,7 @@ export const dataFormEnvio = async (req, res) => {
 // ------Pago con tarjeta individual -----
 
 export const proccessPayment = async (req, res) => {
- /* console.log(req.body.direccionEnvio);
+  /* console.log(req.body.direccionEnvio);
   const uuid = uuidv4();
   const client = new MercadoPagoConfig({
     accessToken:
@@ -121,8 +119,35 @@ export const paymentProccess = async (req, res) => {
   try {
     console.log(req.body);
 
-    const title = req.body.title;
-    const unitPrice = req.body.unitPrice;
+    
+    const {
+      nombre,
+      apellido,
+      provincia,
+      localidad,
+      calle,
+      numeroDeCalle,
+      codigoPostal,
+      unitPrice,
+      title,
+      email
+    } = req.body;
+
+    const shippingData = {
+      nombre,
+      apellido,
+      provincia,
+      localidad,
+      calle,
+      numeroDeCalle,
+      codigoPostal,
+      title,
+      email
+    };
+
+    const shippingDataSerial = JSON.stringify(shippingData);
+
+    console.log(nombre, apellido);
 
     const client = new MercadoPagoConfig({
       accessToken:
@@ -140,53 +165,70 @@ export const paymentProccess = async (req, res) => {
             unit_price: unitPrice,
           },
         ],
+        external_reference: shippingDataSerial,
+
         back_urls: {
-          success: "http://localhost:3000/success",
+          success: "http://localhost:5173/",
           failure: "http://localhost:3000/pending",
           pending: "http://localhost:3000/failure",
         },
         auto_return: "approved",
-        notification_url: 'https://cakes-alarm-picking-dubai.trycloudflare.com/webhook'
+        notification_url:
+          "https://phil-amenities-cast-blvd.trycloudflare.com/webhook",
       },
-      
     });
 
     const preferenceId = response.id;
     console.log(response);
-   return res.status(200).json({ preferenceId });
+    return res.status(200).json({ preferenceId });
   } catch (error) {
     console.log(error);
-    res.status(500).send('Error En endpoint paymeproccess')
+    res.status(500).send("Error En endpoint paymeproccess");
   }
 };
+
+
 //5031 7557 3453 0604
 
-export const webhook = async(req, res)=> {
-  try{
-
-
+export const webhook = async (req, res) => {
+  try {
     const client = new MercadoPagoConfig({
       accessToken:
         "APP_USR-1640851723532033-081209-4649082d7ab35fa373147d3be490c839-1940967055",
     });
 
-const payment = new Payment(client)
+    const payment = new Payment(client);
 
-   
-    const dataPayment = await payment.get({id: req.query['data.id']})
+    const dataPayment = await payment.get({ id: req.query["data.id"] });
 
-    console.log(dataPayment.status, 'el webhooj')
-    
-    return res.status(200).send('Data recibida')
+    console.log(dataPayment, "el webhooj");
+    const shippingNotSerial = JSON.parse(dataPayment.external_reference);
+    const {transaction_amount} = dataPayment
+console.log(transaction_amount,'ak la transaction')
+    const {
+      nombre,
+      apellido,
+      provincia,
+      localidad,
+      calle,
+      numeroDeCalle,
+      codigoPostal,
+      title,
+      email
+    } = shippingNotSerial
 
-  }catch(err){
-    console.log(err)
-    res.status(500).send('error en el webhook backend')
+
+console.log(nombre, apellido)
+
+    await pool.query('INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?)',[nombre, apellido, provincia, localidad, calle, numeroDeCalle, codigoPostal,email, transaction_amount, title])
+    console.log(shippingNotSerial);
+
+    return res.status(200).send("Data recibida");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("error en el webhook backend");
   }
-}
-
-
-
+};
 
 
 

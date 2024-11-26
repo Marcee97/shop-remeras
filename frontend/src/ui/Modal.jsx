@@ -127,6 +127,16 @@ export const Modal = () => {
         unitPrice,
         quantity,
         title,
+        nombre,
+        apellido,
+        provincia,
+        localidad,
+        calle,
+        numeroDeCalle,
+        codigoPostal,
+        title,
+        email
+
       });
       const { preferenceId } = response.data;
       setPreferenceId(preferenceId);
@@ -151,8 +161,21 @@ export const Modal = () => {
     }
   };
 
-  console.log(transformArray);
+const compraFinalizada = async()=> {
 
+  
+
+  const response  = await client.post('http://localhost:3000/data-base',{
+    nombre,
+    apellido,
+    provincia,
+    localidad,
+    calle,
+    numeroDeCalle,
+    codigoPostal
+
+  })
+}
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <section className="modal">
@@ -267,6 +290,13 @@ export const Modal = () => {
                 }
                 onChange={(e) => setApellido(e.target.value)}
               />
+              <input type="email" placeholder="Email"  className={
+                  formDataCompleto
+                    ? "input-form-data-envio nones"
+                    : "input-form-data-envio"
+                }
+                onChange={(e) => setEmail(e.target.value)}
+                />
               <input
                 type="text"
                 placeholder="Provincia"
