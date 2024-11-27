@@ -135,8 +135,8 @@ export const Modal = () => {
         numeroDeCalle,
         codigoPostal,
         title,
-        email
-
+        email,
+        selectTalle
       });
       const { preferenceId } = response.data;
       setPreferenceId(preferenceId);
@@ -161,21 +161,7 @@ export const Modal = () => {
     }
   };
 
-const compraFinalizada = async()=> {
 
-  
-
-  const response  = await client.post('http://localhost:3000/data-base',{
-    nombre,
-    apellido,
-    provincia,
-    localidad,
-    calle,
-    numeroDeCalle,
-    codigoPostal
-
-  })
-}
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <section className="modal">
