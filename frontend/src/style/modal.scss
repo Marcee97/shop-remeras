@@ -20,7 +20,8 @@
       .modal-carrousel {
         position: relative;
         overflow: hidden;
-        height: 18em;
+        height: 21em;
+
 
         .cont-img-carrousel {
           position: absolute;
@@ -78,7 +79,7 @@
         }
         .cont-botones-talles {
           display: flex;
-          gap: 0.5em;
+          gap: 0.8em;
           .btn-talle {
             font-size: 0.8em;
             padding: 0.5em 1.5em;
@@ -93,21 +94,36 @@
         }
       }
       .cont-form-envio-desplegable {
-        overflow: hidden;
-        padding: 0.1em;
         transition: 0.5s all ease;
         font-size: 0.8em;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
         gap: 1em;
-
-        .form-envio-desplegable-title {
+        .btn-guia-desplegable {
+          background: #0f0f0f;
+          display: flex;
+          justify-content: space-between;
+          width: 79%;
           border: 1px solid #ffffff;
+          padding: .8em;
+          background: #0f0f0f;
+          font-size: 1.2em;
+        }
+        .prueba-flecha {
+          transition: 0.6s all ease;
+          transform: rotate(-90deg);
+        }
+
+        .arrow-rotate {
+          transform: rotate(90deg);
+        }
+        .form-envio-desplegable-title {
           width: 76%;
-          padding: 0.9em;
+          padding: 0.5em;
           display: flex;
           justify-content: space-between;
           font-size: 1.1em;
-          background: #0f0f0f;
 
           .material-symbols-outlined {
             vertical-align: middle;
@@ -132,7 +148,7 @@
         }
         .btn-cripto {
           border: 1px solid #fff;
-          padding: 1em;
+          padding: .9em;
           background: #0f0f0f;
         }
       }
@@ -161,14 +177,26 @@
     background: linear-gradient(#000 2%, #0f0f0f 20%);
     border-radius: 5px;
     transition: 1s all ease;
-    max-height: 900px;
+
+    height: 28em;
 
     .form-data-title {
+      font-size: 0.9em;
+    }
+
+    .btn-editar-form-envio {
+      font-size: 0.8em;
+      border: none;
+      width: 30%;
+      padding: 0.3em;
+      border-radius: 5px;
+      background: #0f0f0f;
+      border: 1px solid #fff;
+      color: #fff;
     }
     .form-data-subtitle {
       color: rgb(117, 117, 117);
       font-size: 0.7em;
-      display: none;
     }
     .message-errors {
       color: red;
@@ -189,18 +217,20 @@
   }
 
   .completado {
-    animation: completedform 0.5s ease forwards;
+    animation: completedform 0.9s ease forwards;
   }
 
   @keyframes completedform {
     0% {
-      height: 500px;
+      max-height: 800px;
     }
     100% {
-      height: 3em;
-      background-color: #0f0f0f;
+      height: 4.5em;
+      background: #0f0f0f;
+      outline: 1px solid rgb(255, 255, 255);
     }
   }
+
 
   .nones {
     display: none;
@@ -213,27 +243,86 @@
     background-color: #0f0f0f;
     border-radius: 5px;
     overflow: hidden;
-padding: 1.5em .5em .5em .5em;
-
-    .cont-info-payment{
-      outline: 1px solid rgb(255, 255, 255);
-      padding: .3em;
-      display: flex;
-      align-items: center;
-      justify-content: start;
-      gap: .3em;
+    padding: 1.5em 0.2em 0.5em 0.2em;
+    .title-cont-metodo-de-pago {
+      margin-left: 5px;
+    }
+    .cont-metodo-de-pago-info {
+      padding: 0.3em;
+    }
+    .metodo-de-pago-info {
+      font-size: 0.8em;
+      max-height: 4em;
+      transition: 1s all ease;
+      overflow: hidden;
+      border-left: 1px solid #fff;
+      padding: 0.4em;
       border-radius: 5px;
-      .img-info-payment{
-        width: 17%;
+    }
+    .info-active {
+      max-height: 22em;
+    }
+    .arrow-mas-info {
+      margin: auto;
+      background-color: #0f0f0f;
+      border: 1px solid #fff;
+      color: #fff;
+      margin: 15px;
+      border-radius: 9px;
+      margin-left: 45%;
+    }
+    .section-info-payment {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
+      padding: 1.5em 0.2em;
+      position: relative;
+      .title-info-payment {
+        color: rgb(204, 204, 204);
+        background-color: #0f0f0f;
+        padding: 0 5px;
+
+        position: absolute;
+        top: -15px;
       }
-      .payment-product{
-        font-size: .7em;
+      .cont-info-payment {
+        outline: 1px solid rgb(143, 142, 142);
+        padding: 0.3em;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 0.3em;
+        border-radius: 5px;
+        .img-info-payment {
+          width: 21%;
+        }
+       
+        .cont-detalle-info {
+          font-size: 1.1em;
+          display: flex;
+          flex-direction: column;
+          gap: .3em;
+          p{
+            font-size: .8em;
+          }
+        }
+        .cont-talle-edit{
+          
+          display: flex;
+          gap: 1em;
+        }
       }
+    }
+    .btn-mercadopago {
+      height: 110px;
+      width: 100%;
     }
   }
 
   .animation-payment {
-    animation: openMethodPay 0.5s ease forwards;
+    animation: openMethodPay 0.9s ease forwards;
   }
 
   @keyframes openMethodPay {
@@ -241,7 +330,7 @@ padding: 1.5em .5em .5em .5em;
       max-height: 0;
     }
     100% {
-      max-height: 15em;
+      max-height: 55em;
     }
   }
 }

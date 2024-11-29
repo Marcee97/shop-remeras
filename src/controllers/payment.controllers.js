@@ -130,7 +130,8 @@ export const paymentProccess = async (req, res) => {
       codigoPostal,
       unitPrice,
       title,
-      email
+      email,
+      selectTalle
     } = req.body;
 
     const shippingData = {
@@ -142,7 +143,8 @@ export const paymentProccess = async (req, res) => {
       numeroDeCalle,
       codigoPostal,
       title,
-      email
+      email,
+      selectTalle
     };
 
     const shippingDataSerial = JSON.stringify(shippingData);
@@ -174,7 +176,7 @@ export const paymentProccess = async (req, res) => {
         },
         auto_return: "approved",
         notification_url:
-          "https://phil-amenities-cast-blvd.trycloudflare.com/webhook",
+          "https://avoid-waiting-nightlife-construct.trycloudflare.com/webhook",
       },
     });
 
@@ -214,13 +216,14 @@ console.log(transaction_amount,'ak la transaction')
       numeroDeCalle,
       codigoPostal,
       title,
-      email
+      email,
+      selectTalle
     } = shippingNotSerial
 
 
 console.log(nombre, apellido)
 
-    await pool.query('INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?)',[nombre, apellido, provincia, localidad, calle, numeroDeCalle, codigoPostal,email, transaction_amount, title])
+    await pool.query('INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo, talle) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)',[nombre, apellido, provincia, localidad, calle, numeroDeCalle, codigoPostal,email, transaction_amount, title, selectTalle])
     console.log(shippingNotSerial);
 
     return res.status(200).send("Data recibida");
