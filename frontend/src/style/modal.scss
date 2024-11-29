@@ -178,7 +178,7 @@
     border-radius: 5px;
     transition: 1s all ease;
 
-    height: 28em;
+    height: 25em;
 
     .form-data-title {
       font-size: 0.9em;
@@ -257,7 +257,6 @@
       overflow: hidden;
       border-left: 1px solid #fff;
       padding: 0.4em;
-      border-radius: 5px;
     }
     .info-active {
       max-height: 22em;
@@ -275,12 +274,12 @@
       display: flex;
       flex-direction: column;
       gap: 1em;
-      border-top: 1px solid #fff;
-      border-left: 1px solid #fff;
+      border-top: 1px solid #747474;
+      border-left: 1px solid #747474;
       padding: 1.5em 0.2em;
       position: relative;
       .title-info-payment {
-        color: rgb(204, 204, 204);
+        color: rgb(255, 255, 255);
         background-color: #0f0f0f;
         padding: 0 5px;
 
@@ -288,7 +287,9 @@
         top: -15px;
       }
       .cont-info-payment {
-        outline: 1px solid rgb(143, 142, 142);
+        outline: 1px solid rgb(255, 255, 255);
+        background-color: rgb(8, 8, 8);
+
         padding: 0.3em;
         display: flex;
         align-items: center;
@@ -300,18 +301,28 @@
         }
        
         .cont-detalle-info {
-          font-size: 1.1em;
+          font-size: 1.2em;
           display: flex;
           flex-direction: column;
-          gap: .3em;
+          gap: .8em;
+          border-left: 1px solid #7c7c7c;
+          padding: 0 0 0 .3em;
           p{
             font-size: .8em;
           }
         }
         .cont-talle-edit{
-          
           display: flex;
+          justify-content: space-between;
+          align-items: center;
           gap: 1em;
+          width: 100%;
+          .btn-edit-talle{
+            border: 1px solid #fff;
+            border-radius: 5px;
+            padding: .2em .9em;
+            
+          }
         }
       }
     }
