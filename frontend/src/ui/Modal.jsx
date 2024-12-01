@@ -4,6 +4,7 @@ import ElContexto from "../context/ProductContext.jsx";
 import client from "../api/axios.js";
 import { z } from "zod";
 import { WalletComponent } from "./WalletComponent.jsx";
+import { Footer } from "./Footer.jsx";
 
 export const Modal = () => {
   const { productoSeleccionado, setPreferenceId } = useContext(ElContexto);
@@ -44,11 +45,16 @@ export const Modal = () => {
 
   const tallesDisponibles = ["S", "XL", "XXL"];
   const refButtonMulti = useRef(null);
+  const refArrowGuia = useRef(null);
+  const refBtnGuiaDesplegable = useRef(null);
   useEffect(() => {
     if (selectTalle !== "inicial") {
       const buttonMulti = refButtonMulti.current;
-      buttonMulti.textContent = "Completar Compra";
-      buttonMulti.classList.add("activate");
+      const arrowGuia = refArrowGuia.current;
+      const btnGuiaDesplegable = refBtnGuiaDesplegable.current;
+      buttonMulti.textContent = "Completar compra";
+      btnGuiaDesplegable.classList.add("activate");
+      arrowGuia.classList.add("arrow-rotate");
       buttonMulti.scrollIntoView({ behavior: "smooth" });
     }
   }, [selectTalle]);
@@ -58,7 +64,7 @@ export const Modal = () => {
 
   const despliegoFormEnvio = () => {
     const buttonMulti = refButtonMulti.current;
-    if (buttonMulti.textContent === "Completar Compra") {
+    if (buttonMulti.textContent === "Completar compra") {
       console.log(openCloseFormEnvio);
       setOpenCloseFormEnvio((prevState) => !prevState);
     }
@@ -101,7 +107,10 @@ export const Modal = () => {
   const [openCloseSectionPay, setOpenCloseSectionPay] = useState(false);
   const [formDataCompleto, setFormDataCompleto] = useState(false);
   const [formDataAnimation, setFormDataAnimation] = useState(false);
+  const refSubtitleFormEnvio = useRef(null);
+  const refTituloFormEnvio = useRef(null);
 
+  //------------- validacion de formulario de envio ---------------
   const validateFormEnvio = async (event) => {
     event.preventDefault();
 
@@ -136,23 +145,29 @@ export const Modal = () => {
         codigoPostal,
         title,
         email,
-        selectTalle
+        selectTalle,
       });
       const { preferenceId } = response.data;
       setPreferenceId(preferenceId);
+      const subtitleFormEnvio = refSubtitleFormEnvio.current;
+      const tituloFormEnvio = refTituloFormEnvio.current;
 
+      setTimeout(() => {
+        setFormDataCompleto((prevState) => !prevState);
+        tituloFormEnvio.textContent = "Datos de envio Completo";
+        subtitleFormEnvio.style.display = "none";
+      }, 1000);
       setFormDataAnimation((prevData) => !prevData);
 
-      setFormDataCompleto((prevState) => !prevState);
       setTimeout(() => {
         setOpenCloseSectionPay((prevState) => !prevState);
-      }, 800);
+      }, 2000);
 
       const formDataEnvio = refFormDataEnvio.current;
 
       setTimeout(() => {
         refContMethodPay.current.scrollIntoView({ behavior: "smooth" });
-      }, 900);
+      }, 2200);
 
       console.log(preferenceId, "el preferenceId en front");
     } catch (error) {
@@ -161,9 +176,18 @@ export const Modal = () => {
     }
   };
 
+  const [openInfoMetodoDePago, setOpenInfoMetodoDePago] = useState(true);
+
+  const editFormEnvio = () => {
+    setFormDataAnimation((prevState) => !prevState);
+    setOpenCloseSectionPay((prevState) => !prevState);
+  };
+
+  const editTalle = () => {};
 
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
+    <>
     <section className="modal">
       <div className="modal-cardproduct">
         {transformArray.map((items, index) => (
@@ -178,13 +202,13 @@ export const Modal = () => {
                 <span
                   className="material-symbols-outlined"
                   onClick={() => carrousel("menos")}
-                >
+                  >
                   chevron_left
                 </span>
                 <span
                   className="material-symbols-outlined"
                   onClick={() => carrousel("mas")}
-                >
+                  >
                   chevron_right
                 </span>
               </div>
@@ -214,7 +238,7 @@ export const Modal = () => {
                     selectTalle === talle ? "btn-talle-activo" : ""
                   }`}
                   onClick={() => setSelectTalle(talle)}
-                >
+                  >
                   {talle.toUpperCase()}
                 </button>
               ))}
@@ -224,28 +248,46 @@ export const Modal = () => {
           {/*----- Formulario Para Los Envios -----*/}
 
           <div className="cont-form-envio-desplegable">
-            <strong
-              className="form-envio-desplegable-title"
-              ref={refButtonMulti}
+            <div
+              className="btn-guia-desplegable"
               onClick={despliegoFormEnvio}
-            >
-              Seleccioná el talle{" "}
-              <span className="material-symbols-outlined">arrow_forward</span>
-            </strong>
-            <span className="btn-cripto">&</span>
+              ref={refBtnGuiaDesplegable}
+              >
+              <strong ref={refButtonMulti}>Seleccioná el talle</strong>
+              <span
+                className="material-symbols-outlined prueba-flecha"
+                ref={refArrowGuia}
+                >
+                arrow_forward
+              </span>
+            </div>
+            <p className="btn-cripto">
+              <span className="material-symbols-outlined">favorite</span>
+            </p>
           </div>
 
           {openCloseFormEnvio && (
             <div
-              className={
-                formDataAnimation
-                  ? "cont-form-data-envio completado"
-                  : "cont-form-data-envio"
-              }
+            className={
+              formDataAnimation
+              ? "cont-form-data-envio completado"
+              : "cont-form-data-envio"
+            }
               ref={refFormDataEnvio}
-            >
-              <h4 className="form-data-title">Datos de envio</h4>
-              <p className="form-data-subtitle">
+              >
+              <h4 className="form-data-title" ref={refTituloFormEnvio}>
+                Datos de envio
+              </h4>
+              {formDataAnimation ? (
+                <button className="btn-editar-form-envio" onClick={editFormEnvio}>
+                Editar
+              </button>
+                 ) : (
+                   console.log('messi')
+                   
+                  )
+                }
+              <p className="form-data-subtitle" ref={refSubtitleFormEnvio}>
                 Usaremos esta info para hacerte llegar el envio.
               </p>
               {errores.length > 0 &&
@@ -258,129 +300,121 @@ export const Modal = () => {
               <input
                 type="text"
                 placeholder="Nombre"
-                className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "input-form-data-envio"
-                }
+                className={"input-form-data-envio"}
                 onChange={(e) => setNombre(e.target.value)}
                 ref={refNombreFormEnvio}
-              />
+                />
               <input
                 type="text"
                 placeholder="Apellido"
-                className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "input-form-data-envio"
-                }
+                className={"input-form-data-envio"}
                 onChange={(e) => setApellido(e.target.value)}
-              />
-              <input type="email" placeholder="Email"  className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "input-form-data-envio"
-                }
+                />
+              <input
+                type="email"
+                placeholder="alan_turing@example.com"
+                className={"input-form-data-envio"}
                 onChange={(e) => setEmail(e.target.value)}
                 />
               <input
                 type="text"
                 placeholder="Provincia"
-                className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "input-form-data-envio"
-                }
+                className={"input-form-data-envio"}
                 onChange={(e) => setProvincia(e.target.value)}
-              />
+                />
               <input
                 type="text"
                 placeholder="Localidad"
-                className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "input-form-data-envio"
-                }
+                className={"input-form-data-envio"}
                 onChange={(e) => setLocalidad(e.target.value)}
-              />
+                />
               <input
                 type="text"
                 placeholder="Calle"
-                className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "input-form-data-envio"
-                }
+                className={"input-form-data-envio"}
                 onChange={(e) => setCalle(e.target.value)}
-              />
+                />
               <input
                 type="number"
-                className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "input-form-data-envio"
-                }
+                className={"input-form-data-envio"}
                 onChange={(e) => setNumeroDeCalle(e.target.value)}
                 placeholder="Numero"
-              />
+                />
               <input
                 type="number"
-                className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "input-form-data-envio"
-                }
+                className={"input-form-data-envio"}
                 placeholder="Codigo Postal"
                 onChange={(e) => setCodigoPostal(e.target.value)}
-              />
+                />
               <button
-                className={
-                  formDataCompleto
-                    ? "input-form-data-envio nones"
-                    : "btn-form-data-envio"
-                }
+                className={"btn-form-data-envio"}
                 onClick={validateFormEnvio}
-              >
+                >
                 Aceptar
               </button>
             </div>
           )}
           {openCloseSectionPay && (
             <div
-              className={
-                openCloseSectionPay
-                  ? "cont-metodo-de-pago animation-payment"
-                  : "cont-metodo-de-pago "
-              }
+            className={
+              openCloseSectionPay
+              ? "cont-metodo-de-pago animation-payment"
+              : "cont-metodo-de-pago "
+            }
               ref={refContMethodPay}
-            >
-              <h4>Finalizar Compra</h4>
-
-              <p style={{ fontSize: ".6em" }}>
-                Usamos MercadoPago para manejar los pagos de forma segura. Al
-                presionar el botón de pago, serás redirigido a MercadoPago,
-                donde podrás elegir el método de pago que prefieras: débito,
-                crédito o dinero disponible.{" "}
-              </p>
-
-              {transformArray.map((items, index) => (
-                <div className="cont-info-payment" key={index}>
-                  <img
-                    src={items.imagenes[0]}
-                    alt="img payment"
-                    className="img-info-payment"
-                  />
-                  <p className="payment-product">{items.nombre}</p>
-                </div>
-              ))}
-
-              <WalletComponent />
+              >
+              <h4 className="title-cont-metodo-de-pago">Finalizar Compra</h4>
+              <div className="cont-metodo-de-pago-info">
+                <p
+                  className={
+                    openInfoMetodoDePago
+                    ? "metodo-de-pago-info"
+                    : "metodo-de-pago-info info-active"
+                  }
+                  >
+                  Usamos MercadoPago para manejar los pagos de forma segura. Al
+                  presionar el botón de pago, serás redirigido a MercadoPago,
+                  donde podrás elegir el método de pago que prefieras: débito,
+                  crédito o dinero disponible.{" "}
+                </p>
+                <span
+                  className="material-symbols-outlined arrow-mas-info"
+                  onClick={() =>
+                    setOpenInfoMetodoDePago((prevState) => !prevState)
+                  }
+                  >
+                  arrow_drop_down
+                </span>
+              </div>
+              <div className="section-info-payment">
+                <h4 className="title-info-payment">Detalle</h4>
+                {transformArray.map((items, index) => (
+                  <div className="cont-info-payment" key={index}>
+                    <img
+                      src={items.imagenes[0]}
+                      alt="img payment"
+                      className="img-info-payment"
+                      />
+                    <div className="cont-detalle-info">
+                      <h6 className="payment-product">{items.nombre}</h6>
+                      <p>${items.precio}</p>
+                      <div className="cont-talle-edit">
+                        <p>Talle:{selectTalle}</p>
+                        <p className="btn-edit-talle">Cambiar talle</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="btn-mercadopago">
+                <WalletComponent />
+              </div>
             </div>
           )}
           <div className="cont-info-adicional">
             <div className="info-adicional">
               <span className="material-symbols-outlined">local_shipping</span>
-              <p>El envio ya esta incluido en el precio final</p>
+              <p>Hacemos envios a todo el pais.</p>
             </div>
             <div className="info-adicional">
               <span className="material-symbols-outlined camion-ventas">
@@ -397,5 +431,7 @@ export const Modal = () => {
         {/*----- Seccion de Data De envio y pago ----*/}
       </div>
     </section>
+    <Footer/>
+          </>
   );
 };

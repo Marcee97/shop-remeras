@@ -1,10 +1,9 @@
 import { MercadoPagoConfig, Preference, Payment } from "mercadopago";
 
-import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+
 import { pool } from "../database.js";
 import dotenv from "dotenv";
-import { json, response } from "express";
+import brevo from "@getbrevo/brevo";
 dotenv.config();
 
 //-------Base de datos Dirigida al Front --------
@@ -149,11 +148,11 @@ export const paymentProccess = async (req, res) => {
 
     const shippingDataSerial = JSON.stringify(shippingData);
 
-    console.log(nombre, apellido);
+    const tokenMP = process.env.TOKEN_MERCADO_PAGO_API
+console.log(tokenMP)
 
     const client = new MercadoPagoConfig({
-      accessToken:
-        "APP_USR-1640851723532033-081209-4649082d7ab35fa373147d3be490c839-1940967055",
+      accessToken:tokenMP,
     });
 
     const preference = new Preference(client);
@@ -176,7 +175,7 @@ export const paymentProccess = async (req, res) => {
         },
         auto_return: "approved",
         notification_url:
-          "https://regular-cartoons-gig-cheque.trycloudflare.com/webhook",
+          "https://workplace-completion-sp-quiz.trycloudflare.com/webhook",
       },
     });
 
@@ -189,17 +188,16 @@ export const paymentProccess = async (req, res) => {
   }
 };
 
-
 //5031 7557 3453 0604
-
-
-
 
 export const webhook = async (req, res) => {
   try {
+
+    const tokenMP = process.env.TOKEN_MERCADO_PAGO_API
+console.log(tokenMP)
+
     const client = new MercadoPagoConfig({
-      accessToken:
-        "APP_USR-1640851723532033-081209-4649082d7ab35fa373147d3be490c839-1940967055",
+      accessToken:tokenMP,
     });
 
     const payment = new Payment(client);
@@ -228,6 +226,37 @@ console.log(nombre, apellido)
 
     await pool.query('INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo, talle) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)',[nombre, apellido, provincia, localidad, calle, numeroDeCalle, codigoPostal,email, transaction_amount, title, selectTalle])
     console.log(shippingNotSerial);
+
+
+
+    
+const apiKey = process.env.APY_KEY_BREVO_EMAILS
+
+const apiInstance = new brevo.TransactionalEmailsApi();
+
+
+apiInstance.setApiKey(
+  brevo.TransactionalEmailsApiApiKeys.apiKey,
+  apiKey
+)
+
+
+const sendSmtpEmail = new brevo.SendSmtpEmail();
+
+sendSmtpEmail.subject = "ShopRemeras";
+sendSmtpEmail.to = [
+  {"email": email, "name": nombre}
+]
+sendSmtpEmail.htmlContent = "<html><body><h1>Verificacion de compra gracias Crack</h1><p>Sabias que cuando Einstein recibio el premio nobel Mirta legrand estaba viva</p></body></html>"
+
+sendSmtpEmail.sender = {
+  name: "Litoss",
+  email: "marceloquadrilatero@gmail.com"
+}
+const result = await apiInstance.sendTransacEmail(sendSmtpEmail)
+
+console.log(result)
+
 
     return res.status(200).send("Data recibida");
   } catch (err) {
