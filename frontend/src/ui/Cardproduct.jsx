@@ -6,46 +6,37 @@ import elContexto from "../context/ProductContext.jsx";
 import { useNavigate } from "react-router-dom";
 
 export const Cardproduct = () => {
-  const navigate = useNavigate()
-  const { productos, setProductos, setproductoSeleccionado } = useContext(elContexto);
-  
+  const navigate = useNavigate();
+  const { productos, setProductos, setproductoSeleccionado } =
+    useContext(elContexto);
 
+  const peticionProductsModal = async (id) => {
+    const response = await client.post("/modal-products", {
+      id,
+    });
+    setproductoSeleccionado(response.data);
+    navigate("/modal");
 
-const peticionProductsModal = async(id)=> {
-  const response = await client.post('/modal-products',{
-id
-  })
-setproductoSeleccionado(response.data)
-navigate('/modal')
-
-  console.log(response)
-  
-}
+    console.log(response);
+  };
 
   return (
     <section className="cardproduct">
-      <img
-        src="https://i.pinimg.com/474x/4d/f0/e5/4df0e5099af1430f7edde806b8cc1a3e.jpg"
-        alt="background productos"
-        className="fondo-products"
-      />
-      <div className="cont-products">
+      <div className="section-from-articles">
         {productos.map((items, index) => (
-          <div
-            key={index}
-            className="cuerpo-cardproduct"
-            onClick={()=> peticionProductsModal(items.id)}
-          >
-            <div>
+          <div className="cont-article">
+            <header className="article-header">
               <img
                 src={items.imagen}
-                alt="imagen de producto"
-                className="img-cardproduct"
+                className="img-from-article"
+                alt="imagen de producto en el catalogo de muestra"
               />
-            </div>
-            <strong className="precio-cardproduct">
-              <span>${items.precio}</span>
-            </strong>
+              <strong className="article-precio">$ {items.precio}</strong>
+            </header>
+            <article className="article" key={index}>
+          <h6>Disponibles ({items.cantidad})</h6>
+              <p>{items.nombre}</p>
+            </article>
           </div>
         ))}
       </div>

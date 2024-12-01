@@ -25,6 +25,7 @@ export const Hero = () => {
           </ul>
         </div>
       </div>
+      <p style={{color: "red"}}>Aca deberia decir algo mas</p>
     </section>
   );
 };
