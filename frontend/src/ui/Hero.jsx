@@ -24,8 +24,12 @@ export const Hero = () => {
             <li><i className="fa-brands fa-x-twitter"></i></li>
           </ul>
         </div>
+        <div className="cont-marca-btn">
+
+        <p className="btn-catalogo">Ver todo</p>
+        </div>
       </div>
-      <p style={{color: "red"}}>Aca deberia decir algo mas</p>
+      <h5 style={{color: "red"}}>Aca deberia decir algo mas</h5>
     </section>
   );
 };

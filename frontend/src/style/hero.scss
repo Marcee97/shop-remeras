@@ -1,9 +1,8 @@
 .hero {
-  margin-bottom: 2em;
   .cont-hero {
     position: relative;
     width: 100%;
-    height: 110vh;
+    height: 100vh;
     overflow: hidden;
     img {
       mask-image: linear-gradient(
@@ -16,6 +15,19 @@
   
       position: absolute;
       width: 100%;
+    }
+    .cont-marca-btn{
+display: flex;
+height: 100%;
+
+
+      .btn-catalogo{
+        position: relative;
+        color:rgb(255, 255, 255);
+        margin: auto;
+        border: 1px solid #fff;
+        padding: .5em 3em;
+      }
     }
     .texto-hero {
       width: 100%;
