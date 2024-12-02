@@ -1,0 +1,133 @@
+.hero .cont-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: sans-serif;
+
+}
+
+.hero .cont-hero img {
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 4%,
+    rgba(0, 0, 0, 1) 35%,
+    rgba(0, 0, 0, 1) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  position: absolute;
+  width: 100%;
+}
+
+.hero .cont-hero .cont-marca-btn {
+  display: flex;
+  height: 100%;
+}
+
+.hero .cont-hero .cont-marca-btn .btn-catalogo {
+  position: relative;
+  background-color: #00000086;
+  color: #ffffff;
+  margin: auto;
+  padding: 0.7em;
+  width: 35%;
+  display: flex;
+  align-items: center;
+  border-radius: 18px;
+  justify-content: center;
+  gap: 1em;
+  font-weight: bold;
+}
+
+.hero .cont-hero .texto-hero {
+  width: 100%;
+  height: 27%;
+  z-index: 45;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  font-size: 1.7em;
+  padding: 1em;
+  gap: 1em;
+}
+
+.hero .cont-hero .texto-hero .cube-container {
+  perspective: 2800px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  color: #fff;
+  padding: 1em 0 0 0;
+}
+
+.hero .cont-hero .texto-hero .cube-container .cube {
+  width: 100%;
+  height: 0%;
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: rotateCube 8s infinite ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero .cont-hero .texto-hero .cube-container .cube .face {
+  position: absolute;
+  width: 170px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  padding: 0.4em;
+  backface-visibility: hidden;
+}
+
+.hero .cont-hero .texto-hero .cube-container .cube .cara-uno {
+  transform: rotateX(0deg) translateZ(25px);
+  background-color: #ffffff0e;
+}
+
+.hero .cont-hero .texto-hero .cube-container .cube .cara-dos {
+  transform: rotateX(90deg) translateZ(25px);
+  background-color: #ffffff0e;
+}
+
+.hero .cont-hero .texto-hero .cube-container .cube .cara-tres {
+  transform: rotateX(180deg) translateZ(25px);
+  background-color: #ffffff0e;
+}
+
+.hero .cont-hero .texto-hero .cube-container .cube .cara-cuatro {
+  transform: rotateX(270deg) translateZ(25px);
+  background-color: #ffffff0e;
+}
+
+.hero .cont-hero .texto-hero .nombre-de-la-marca {
+  color: rgb(255, 255, 255);
+  font-family: monospace;
+  text-shadow: 8px 7px 5px #000;
+}
+.hero .encabezado-shop{
+ color: red;
+}
+
+@keyframes rotateCube {
+  0% {
+    transform: rotateX(0deg);
+  }
+  25% {
+    transform: rotateX(90deg);
+  }
+  50% {
+    transform: rotateX(180deg);
+  }
+  75% {
+    transform: rotateX(270deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
+}

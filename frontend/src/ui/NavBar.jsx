@@ -1,6 +1,5 @@
-import "../style/navbar.scss";
 import { useState } from "react";
-
+import "../css/components/navbar.css"
 
 export const NavBar = ({activeSlide}) => {
 

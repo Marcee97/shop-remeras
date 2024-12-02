@@ -2,21 +2,14 @@ import { Cardproduct } from "./ui/Cardproduct";
 import { Modal } from "./ui/Modal";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import "../src/App.css";
 import { NavBar } from "./ui/NavBar";
 import { Footer } from "./ui/Footer";
-import { Success } from "./ui/Success";
 import { Hero } from "./ui/Hero";
 import { MenuSlide } from "./ui/MenuSlide";
-import { Payment } from "./ui/Payment";
 import { ScrollTop } from "./helpers/ScrollTop";
-
+import "../src/app.css"
 export const App = () => {
   
-
-  
- 
-
 
 
   const MainLayout = ({ children }) => {
@@ -32,7 +25,7 @@ const menuSlideOn = ()=> {
         <MenuSlide openCloseSlide={onSlide}/>
         <Hero/>
         {children}
-        <Payment/>
+     
         <Footer />
       </>
     );
@@ -53,7 +46,7 @@ const menuSlideOn = ()=> {
           }
         />
         <Route path="/modal" element={<Modal/>} />
-        <Route path="/success" element={<Success />} />
+       
       </Routes>
     </>
   );

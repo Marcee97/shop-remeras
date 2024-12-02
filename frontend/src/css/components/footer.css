@@ -4,8 +4,7 @@
   justify-content: center;
   gap: 2em;
   padding: 2em;
-  p{
-    
-    font-family: monospace;
-  }
+  background-color: #000000;
+  font-family: monospace;
+  
 }

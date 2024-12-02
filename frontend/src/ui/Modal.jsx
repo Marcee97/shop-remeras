@@ -1,11 +1,10 @@
 import { useEffect, useState, useRef, useContext } from "react";
-import "../style/modal.scss";
 import ElContexto from "../context/ProductContext.jsx";
 import client from "../api/axios.js";
 import { z } from "zod";
 import { WalletComponent } from "./WalletComponent.jsx";
 import { Footer } from "./Footer.jsx";
-
+import "../css/components/modal.css"
 export const Modal = () => {
   const { productoSeleccionado, setPreferenceId } = useContext(ElContexto);
 
@@ -365,6 +364,11 @@ export const Modal = () => {
               >
               <h4 className="title-cont-metodo-de-pago">Finalizar Compra</h4>
               <div className="cont-metodo-de-pago-info">
+                <h5 className={openInfoMetodoDePago ? "btn-como-pagar" : "info-active-btn-pagar"} onClick={() =>
+                    setOpenInfoMetodoDePago((prevState) => !prevState)
+                  }>¿Como pagar? <span class="material-symbols-outlined">
+                  keyboard_arrow_down
+                  </span></h5>
                 <p
                   className={
                     openInfoMetodoDePago
@@ -377,14 +381,7 @@ export const Modal = () => {
                   donde podrás elegir el método de pago que prefieras: débito,
                   crédito o dinero disponible.{" "}
                 </p>
-                <span
-                  className="material-symbols-outlined arrow-mas-info"
-                  onClick={() =>
-                    setOpenInfoMetodoDePago((prevState) => !prevState)
-                  }
-                  >
-                  arrow_drop_down
-                </span>
+                
               </div>
               <div className="section-info-payment">
                 <h4 className="title-info-payment">Detalle</h4>

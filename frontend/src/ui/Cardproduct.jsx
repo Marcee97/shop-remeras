@@ -1,10 +1,9 @@
-import "../style/cardproduct.scss";
 import client from "../api/axios.js";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import elContexto from "../context/ProductContext.jsx";
 import { useNavigate } from "react-router-dom";
-
+import "../css/components/cardproduct.css"
 export const Cardproduct = () => {
   const navigate = useNavigate();
   const { productos, setProductos, setproductoSeleccionado } =
@@ -24,7 +23,7 @@ export const Cardproduct = () => {
     <section className="cardproduct">
       <div className="section-from-articles">
         {productos.map((items, index) => (
-          <div className="cont-article">
+          <div className="cont-article" onClick={()=> peticionProductsModal(index + 1)} key={index}>
             <header className="article-header">
               <img
                 src={items.imagen}

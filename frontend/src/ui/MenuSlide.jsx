@@ -1,6 +1,5 @@
-import "../style/menuslide.scss";
 import { useEffect, useRef, useState } from "react";
-
+import "../css/components/menuslide.css"
 export const MenuSlide = ({ openCloseSlide }) => {
   const refMenuSlide = useRef(null);
   const [closeSlide, setCloseSlide] = useState(true);

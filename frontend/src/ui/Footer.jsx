@@ -1,5 +1,4 @@
-import "../style/footer.scss";
-
+import "../css/components/footer.css"
 export const Footer = () => {
   return (
     <section className="footer">

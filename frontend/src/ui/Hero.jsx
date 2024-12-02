@@ -1,5 +1,4 @@
-import "../style/hero.scss";
-
+import "../css/components/hero.css";
 export const Hero = () => {
   return (
     <section className="hero">
@@ -18,18 +17,19 @@ export const Hero = () => {
               <div className="face cara-cuatro">Envios</div>
             </div>
           </div>
-          <ul className="ul-hero-redes-sociales">
-            <li><i className="fa-brands fa-instagram"></i></li>
-            <li><i className="fa-brands fa-tiktok"></i></li>
-            <li><i className="fa-brands fa-x-twitter"></i></li>
-          </ul>
+          <h1 className="nombre-de-la-marca">NotSocial</h1>
         </div>
         <div className="cont-marca-btn">
-
-        <p className="btn-catalogo">Ver todo</p>
+          <p className="btn-catalogo">
+            Ver todo{" "}
+            <span className="material-symbols-outlined">arrow_right_alt</span>
+          </p>
         </div>
       </div>
-      <h5 style={{color: "red"}}>Aca deberia decir algo mas</h5>
+      <div className="encabezado-shop">
+
+        <h5>No contamos con un local fisico</h5>
+      </div>
     </section>
   );
 };
