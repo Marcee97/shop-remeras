@@ -7,8 +7,9 @@ import {
   productosDatabase,
   success,
   webhook,
+
 } from "../controllers/payment.controllers.js";
-import { modalProduct } from "../controllers/web.controllers.js";
+import { modalProduct, tallesProducts } from "../controllers/web.controllers.js";
 
 const router = Router();
 
@@ -25,6 +26,8 @@ router.post('/data_form_envio', dataFormEnvio)
 router.post('/modal-products', modalProduct)
 
 router.post('/payment-proccess', paymentProccess)
+
+router.get('/talles', tallesProducts)
 
 router.post('/webhook', webhook)
 

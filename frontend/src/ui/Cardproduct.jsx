@@ -39,6 +39,7 @@ export const Cardproduct = () => {
           </div>
         ))}
       </div>
+      
     </section>
   );
 };

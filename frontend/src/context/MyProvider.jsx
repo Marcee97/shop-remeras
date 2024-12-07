@@ -9,6 +9,7 @@ export const MyProvider = ({ children }) => {
   const [productos, setProductos] = useState([]);
   const [productoSeleccionado, setproductoSeleccionado] = useState([]);
   const [preferenceId, setPreferenceId] = useState('')
+  const [openCloseGuiaDeTalles, setOpenCloseGuiaDeTalles] = useState(false)
 
   useEffect(() => {
     const peticionProducts = async () => {
@@ -19,7 +20,7 @@ export const MyProvider = ({ children }) => {
 
     peticionProducts();
   }, []);
-
+console.log(openCloseGuiaDeTalles)
   
   return (
     <ElContexto.Provider
@@ -29,7 +30,9 @@ export const MyProvider = ({ children }) => {
         setproductoSeleccionado,
         productoSeleccionado,
         setPreferenceId,
-        preferenceId
+        preferenceId,
+        setOpenCloseGuiaDeTalles,
+        openCloseGuiaDeTalles
       }}
     >
       {children}

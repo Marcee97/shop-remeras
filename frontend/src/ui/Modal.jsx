@@ -5,8 +5,10 @@ import { z } from "zod";
 import { WalletComponent } from "./WalletComponent.jsx";
 import { Footer } from "./Footer.jsx";
 import "../css/components/modal.css"
+import { GuiaDeTalles } from "./GuiaDeTalles.jsx";
 export const Modal = () => {
-  const { productoSeleccionado, setPreferenceId } = useContext(ElContexto);
+        
+        const { productoSeleccionado, setPreferenceId, setOpenCloseGuiaDeTalles, openCloseGuiaDeTalles} = useContext(ElContexto);
 
   const [email, setEmail] = useState("");
   const [calle, setCalle] = useState("");
@@ -34,11 +36,11 @@ export const Modal = () => {
     const resultado = i * 100;
     carrousel.style.transform = `translateX(-${resultado}%)`;
   };
-  const transformArray = productoSeleccionado.map((row) => ({
-    ...row,
-    imagenes: row.imagenes.split(","),
-  }));
 
+  const transformArray = productoSeleccionado.map((rows) => ({
+    ...rows,
+    imagenes: rows.imagenes.split(","),
+  }));
   const [selectTalle, setSelectTalle] = useState("inicial");
   const [openCloseFormEnvio, setOpenCloseFormEnvio] = useState(false);
 
@@ -182,7 +184,7 @@ export const Modal = () => {
     setOpenCloseSectionPay((prevState) => !prevState);
   };
 
-  const editTalle = () => {};
+ 
 
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
@@ -219,14 +221,15 @@ export const Modal = () => {
             <h6 className="preferencias-modal-product-disponibilidad">
               Disponibles: {items.cantidad}
             </h6>
+            <GuiaDeTalles/>
           </div>
         ))}
-        <div className="cont-preferencias-modal-product">
+        <div className={openCloseGuiaDeTalles ? "cont-preferencias-modal-product openguia" : "cont-preferencias-modal-product"}>
           <div className="section-botones-talles">
             <header className="header-seleccionar-talle">
               <strong className="talle-title">Talles</strong>
 
-              <p className="guia-talles">Guia de talles</p>
+              <p className="guia-talles" onClick={() => setOpenCloseGuiaDeTalles(prevState => !prevState) }>Guia de talles</p>
             </header>
 
             <div className="cont-botones-talles">
