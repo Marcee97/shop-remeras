@@ -29,14 +29,14 @@ export const GuiaDeTalles = () => {
           <div className="cont-cuadro-img" key={index}>
             <p className="seccion-talles-title">Talle: {guiaSeleccionada}</p>
             <div className="medidas-cuadro">
-              <p className="medida-cuello">
+              <p className="medida-cuello centimetros">
                 Cuello <br /> {medidas.cuello}cm
               </p>
 
-              <p className="medida-alto">
+              <p className="medida-alto centimetros">
                 Alto <br /> {medidas.alto}cm
               </p>
-              <p className="medida-manga">
+              <p className="medida-manga centimetros">
                 Manga <br /> {medidas.manga}cm
               </p>
 
@@ -50,10 +50,10 @@ export const GuiaDeTalles = () => {
                 />
                 <span className="ancho-remera"></span>
               </div>
-              <p className="medida-de-ancho">Ancho {medidas.ancho}cm</p>
+              <p className="medida-de-ancho centimetros">Ancho {medidas.ancho}cm</p>
             </div>
             <div className="guia-talles-control-de-talles">
-              <h6>Elegi talle</h6>
+              <h6>Ver medidas</h6>
               <div className="cont-de-botones">
                 {transformArray.map((producto, index) => (
                   <div key={index}>
@@ -72,7 +72,7 @@ export const GuiaDeTalles = () => {
                 ))}
               </div>
               <button className="btn-back" onClick={()=> setOpenCloseGuiaDeTalles(prevState => !prevState)}>
-                <span className="material-symbols-outlined">undo</span>
+                Volver
               </button>
             </div>
           </div>

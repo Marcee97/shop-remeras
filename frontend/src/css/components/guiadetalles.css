@@ -5,6 +5,7 @@
   font-family: monospace;
   transform: translateX(0%);
   transition: .5s all ease;
+background: linear-gradient(transparent, #0000008f);
 
 }
 
@@ -153,7 +154,9 @@
     border-radius: 5px;
     background: transparent;
     color: #fff;
+    padding: .3em 4.8em;
     border: 1px solid #fff;
+    margin-top: 2em;
 }
 
 .activo{

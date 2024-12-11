@@ -369,7 +369,7 @@ export const Modal = () => {
               <div className="cont-metodo-de-pago-info">
                 <h5 className={openInfoMetodoDePago ? "btn-como-pagar" : "info-active-btn-pagar"} onClick={() =>
                     setOpenInfoMetodoDePago((prevState) => !prevState)
-                  }>¿Como pagar? <span class="material-symbols-outlined">
+                  }>¿Como pagar? <span className="material-symbols-outlined">
                   keyboard_arrow_down
                   </span></h5>
                 <p
@@ -396,11 +396,11 @@ export const Modal = () => {
                       className="img-info-payment"
                       />
                     <div className="cont-detalle-info">
-                      <h6 className="payment-product">{items.nombre}</h6>
-                      <p>${items.precio}</p>
+                      <p className="payment-product">{items.nombre}</p>
+                      <p>Total: {items.precio}</p>
                       <div className="cont-talle-edit">
-                        <p>Talle:{selectTalle}</p>
-                        <p className="btn-edit-talle">Cambiar talle</p>
+                        <p>Talle: {selectTalle}</p>
+                        <p className="btn-edit-talle">Editar</p>
                       </div>
                     </div>
                   </div>
