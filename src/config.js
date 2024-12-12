@@ -1,9 +1,9 @@
-export const PORT = process.env.PORT || 3000
+export const PORT = process.env.PORT || 3000;
 
-export const PG_PORT = process.env.PG_PORT || 3306
-export const PG_HOST = process.env.PG_HOST || 'localhost'
-export const PG_USER = process.env.PG_USER || 'root'
-export const PG_PASSWORD = process.env.PG_PASSWORD || 'redondos86'
-export const PG_DATABASE = process.env.PG_DATABASE || 'payment'
+export const MYSQL_PORT = process.env.MYSQL_PORT || 3306;
+export const MYSQL_HOST = process.env.MYSQL_HOST || "localhost";
+export const MYSQL_USER = process.env.MYSQL_USER || "root";
+export const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || "redondos86";
+export const MYSQL_DATABASE = process.env.MYSQL_DATABASE || "payment";
 
-export const ORIGIN = process.env.ORIGIN || 'http://localhost:5173'
+export const ORIGIN = process.env.ORIGIN || "http://localhost:5173";

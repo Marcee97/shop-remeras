@@ -20,6 +20,15 @@ export const modalProduct = async(req, res) => {
 
     }
 
+    export const login = async(req, res) => {
+ 
+ 
+// If your app is served through a proxy
+// trust the proxy to allow us to read the `X-Forwarded-*` headers
+app.set("trust proxy", true)
+app.use("/auth/*", ExpressAuth({ providers: [] }))
+    }
+
 
 
 //'SELECT productos.nombre, productos.precio, imagenes.url_imagen FROM productos JOIN imagenes ON productos.id = imagenes.id_imagen'

@@ -1,13 +1,17 @@
-import { PG_DATABASE, PG_HOST, PG_PASSWORD, PG_PORT, PG_USER } from "./config.js";
+import {
+  MYSQL_DATABASE,
+  MYSQL_HOST,
+  MYSQL_PASSWORD,
+  MYSQL_PORT,
+  MYSQL_USER,
+} from "./config.js";
 
-import mysql from 'mysql2/promise';
+import mysql from "mysql2/promise";
 
 export const pool = mysql.createPool({
-    host: PG_HOST,
-    database: PG_DATABASE,
-    password: PG_PASSWORD,
-    port: PG_PORT,
-    user: PG_USER
-
-})
-
+  host: MYSQL_HOST,
+  database: MYSQL_DATABASE,
+  password: MYSQL_PASSWORD,
+  port: MYSQL_PORT,
+  user: MYSQL_USER,
+});
