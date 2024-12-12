@@ -28,13 +28,14 @@
   position: relative;
   overflow: hidden;
   height: 21em;
+
 }
 
 .modal .modal-cardproduct .cont-modal-product .modal-carrousel .cont-img-carrousel {
   position: absolute;
   display: flex;
   width: 100%;
-  transition: 1s all ease;
+  transition: .5s all ease;
 }
 
 .modal .modal-cardproduct .cont-modal-product .modal-carrousel .cont-img-carrousel img {
