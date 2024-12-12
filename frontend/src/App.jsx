@@ -7,7 +7,6 @@ import { Footer } from "./ui/Footer";
 import { Hero } from "./ui/Hero";
 import { MenuSlide } from "./ui/MenuSlide";
 import { ScrollTop } from "./helpers/ScrollTop";
-import "../src/app.css"
 export const App = () => {
   
 
