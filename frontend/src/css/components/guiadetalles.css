@@ -1,22 +1,23 @@
 .guia-de-talles {
-  position: absolute;
+  position: fixed;
   height: 100vh;
   width: 100%;
   font-family: monospace;
   transform: translateX(0%);
   transition: 0.5s all ease;
   background: linear-gradient(#0000009f, transparent);
-  top: -55px;
+  top: 0;
+  z-index: 80;
 }
 
 .slide {
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   font-family: monospace;
   transform: translateX(100%);
   transition: 0.5s all ease;
-  top: -55px;
+  top: 0;
 }
 
 .section-guia-de-talles {
@@ -24,6 +25,7 @@
 }
 
 .cont-cuadro-img {
+
   background-color: #000000ab;
   position: absolute;
   padding: 0.3em;
@@ -41,6 +43,8 @@
   border-radius: 5px;
   position: relative;
   max-height: 27em;
+  width: 99%;
+margin-left: -2px;
 }
 
 .cuadro-img {

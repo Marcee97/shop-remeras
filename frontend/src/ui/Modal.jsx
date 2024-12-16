@@ -4,12 +4,16 @@ import client from "../api/axios.js";
 import { z } from "zod";
 import { WalletComponent } from "./WalletComponent.jsx";
 import { Footer } from "./Footer.jsx";
-import "../css/components/modal.css"
+import "../css/components/modal.css";
 import { GuiaDeTalles } from "./GuiaDeTalles.jsx";
 import { NavBar } from "./NavBar.jsx";
 export const Modal = () => {
-        
-        const { productoSeleccionado, setPreferenceId, setOpenCloseGuiaDeTalles, openCloseGuiaDeTalles} = useContext(ElContexto);
+  const {
+    productoSeleccionado,
+    setPreferenceId,
+    setOpenCloseGuiaDeTalles,
+    openCloseGuiaDeTalles,
+  } = useContext(ElContexto);
 
   const [email, setEmail] = useState("");
   const [calle, setCalle] = useState("");
@@ -19,6 +23,8 @@ export const Modal = () => {
   const [apellido, setApellido] = useState("");
   const [provincia, setProvincia] = useState("");
   const [localidad, setLocalidad] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingFront, setLoadingFront] = useState(false)
 
   const refImageCarrousel = useRef(null);
 
@@ -34,7 +40,7 @@ export const Modal = () => {
       i = (i - 1 + totalScroll) % totalScroll;
     }
 
-    const resultado = i * 100;
+    const resultado = i * 50;
     carrousel.style.transform = `translateX(-${resultado}%)`;
   };
 
@@ -158,20 +164,23 @@ export const Modal = () => {
         setFormDataCompleto((prevState) => !prevState);
         tituloFormEnvio.textContent = "Datos de envio Completo";
         subtitleFormEnvio.style.display = "none";
-      }, 1000);
+      }, 200);
       setFormDataAnimation((prevData) => !prevData);
 
       setTimeout(() => {
         setOpenCloseSectionPay((prevState) => !prevState);
-      }, 2000);
+      }, 2500);
 
       const formDataEnvio = refFormDataEnvio.current;
 
       setTimeout(() => {
         refContMethodPay.current.scrollIntoView({ behavior: "smooth" });
-      }, 2200);
+      }, 5200);
 
-      console.log(preferenceId, "el preferenceId en front");
+     
+      setTimeout(() => {
+        setIsLoading((prevState) => !prevState);
+      }, 4000);
     } catch (error) {
       console.log(error.errors);
       setErrores(error.errors);
@@ -184,256 +193,289 @@ export const Modal = () => {
     setFormDataAnimation((prevState) => !prevState);
     setOpenCloseSectionPay((prevState) => !prevState);
   };
+const refEspacioBtnMercadopago = useRef(null)
+  useEffect(()=>{
+const espacioBtnMercadopago = refEspacioBtnMercadopago.current
+setTimeout(()=> {
+  espacioBtnMercadopago.style.height = "110px"
 
- 
-
+}, 1500)
+  }, [isLoading])
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <>
-    <section className="modal">
-      <NavBar/>
-      <div className="modal-cardproduct">
-        {transformArray.map((items, index) => (
-          <div className="cont-modal-product" key={index}>
-            <div className="modal-carrousel" key={index}>
-              <div className="cont-img-carrousel" ref={refImageCarrousel}>
-                {items.imagenes.map((imagen, imgIndex) => (
-                  <img src={imagen} alt="fotos productos" key={imgIndex} />
-                ))}
+      <section className="modal">
+        <NavBar />
+        <div className="modal-cardproduct">
+          {transformArray.map((items, index) => (
+            <div className="cont-modal-product" key={index}>
+              <div className="modal-carrousel" key={index}>
+                <div className="cont-img-carrousel" ref={refImageCarrousel}>
+                  {items.imagenes.map((imagen, imgIndex) => (
+                    <div className="div-img">
+                      <img src={imagen} alt="fotos productos" key={imgIndex} />
+                    </div>
+                  ))}
+                </div>
+                <div className="cont-btns-carrousel">
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={() => carrousel("menos")}
+                  >
+                    chevron_left
+                  </span>
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={() => carrousel("mas")}
+                  >
+                    chevron_right
+                  </span>
+                </div>
               </div>
-              <div className="cont-btns-carrousel">
-                <span
-                  className="material-symbols-outlined"
-                  onClick={() => carrousel("menos")}
-                  >
-                  chevron_left
-                </span>
-                <span
-                  className="material-symbols-outlined"
-                  onClick={() => carrousel("mas")}
-                  >
-                  chevron_right
-                </span>
-              </div>
+              <h5>{items.nombre}</h5>
+              <h6 className="precio-modal-product">
+                $ <span>{items.precio}</span>
+              </h6>
+              <h6 className="preferencias-modal-product-disponibilidad">
+                Disponibles: {items.cantidad}
+              </h6>
+              <GuiaDeTalles />
             </div>
-            <h5>{items.nombre}</h5>
-            <h6 className="precio-modal-product">
-              $ <span>{items.precio}</span>
-            </h6>
-            <h6 className="preferencias-modal-product-disponibilidad">
-              Disponibles: {items.cantidad}
-            </h6>
-            <GuiaDeTalles/>
-          </div>
-        ))}
-        <div className={openCloseGuiaDeTalles ? "cont-preferencias-modal-product openguia" : "cont-preferencias-modal-product"}>
-          <div className="section-botones-talles">
-            <header className="header-seleccionar-talle">
-              <strong className="talle-title">Talles</strong>
-
-              <p className="guia-talles" onClick={() => setOpenCloseGuiaDeTalles(prevState => !prevState) }>Guia de talles</p>
-            </header>
-
-            <div className="cont-botones-talles">
-              {tallesDisponibles.map((talle) => (
-                <button
-                  key={talle}
-                  className={`btn-talle ${
-                    selectTalle === talle ? "btn-talle-activo" : ""
-                  }`}
-                  onClick={() => setSelectTalle(talle)}
-                  >
-                  {talle.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/*----- Formulario Para Los Envios -----*/}
-
-          <div className="cont-form-envio-desplegable">
-            <div
-              className="btn-guia-desplegable"
-              onClick={despliegoFormEnvio}
-              ref={refBtnGuiaDesplegable}
-              >
-              <strong ref={refButtonMulti}>Seleccioná el talle</strong>
-              <span
-                className="material-symbols-outlined prueba-flecha"
-                ref={refArrowGuia}
-                >
-                arrow_forward
-              </span>
-            </div>
-            <p className="btn-cripto">
-              <span className="material-symbols-outlined">favorite</span>
-            </p>
-          </div>
-
-          {openCloseFormEnvio && (
-            <div
+          ))}
+          <div
             className={
-              formDataAnimation
-              ? "cont-form-data-envio completado"
-              : "cont-form-data-envio"
+              openCloseGuiaDeTalles
+                ? "cont-preferencias-modal-product openguia"
+                : "cont-preferencias-modal-product"
             }
-              ref={refFormDataEnvio}
-              >
-              <h4 className="form-data-title" ref={refTituloFormEnvio}>
-                Datos de envio
-              </h4>
-              {formDataAnimation ? (
-                <button className="btn-editar-form-envio" onClick={editFormEnvio}>
-                Editar
-              </button>
-                 ) : (
-                   console.log('messi')
-                   
-                  )
-                }
-              <p className="form-data-subtitle" ref={refSubtitleFormEnvio}>
-                Usaremos esta info para hacerte llegar el envio.
-              </p>
-              {errores.length > 0 &&
-                errores.map((item, index) => (
-                  <p key={index} className="message-errors">
-                    {item.message}
-                  </p>
-                ))}
+          >
+            <div className="section-botones-talles">
+              <header className="header-seleccionar-talle">
+                <strong className="talle-title">Talles</strong>
 
-              <input
-                type="text"
-                placeholder="Nombre"
-                className={"input-form-data-envio"}
-                onChange={(e) => setNombre(e.target.value)}
-                ref={refNombreFormEnvio}
-                />
-              <input
-                type="text"
-                placeholder="Apellido"
-                className={"input-form-data-envio"}
-                onChange={(e) => setApellido(e.target.value)}
-                />
-              <input
-                type="email"
-                placeholder="alan_turing@example.com"
-                className={"input-form-data-envio"}
-                onChange={(e) => setEmail(e.target.value)}
-                />
-              <input
-                type="text"
-                placeholder="Provincia"
-                className={"input-form-data-envio"}
-                onChange={(e) => setProvincia(e.target.value)}
-                />
-              <input
-                type="text"
-                placeholder="Localidad"
-                className={"input-form-data-envio"}
-                onChange={(e) => setLocalidad(e.target.value)}
-                />
-              <input
-                type="text"
-                placeholder="Calle"
-                className={"input-form-data-envio"}
-                onChange={(e) => setCalle(e.target.value)}
-                />
-              <input
-                type="number"
-                className={"input-form-data-envio"}
-                onChange={(e) => setNumeroDeCalle(e.target.value)}
-                placeholder="Numero"
-                />
-              <input
-                type="number"
-                className={"input-form-data-envio"}
-                placeholder="Codigo Postal"
-                onChange={(e) => setCodigoPostal(e.target.value)}
-                />
-              <button
-                className={"btn-form-data-envio"}
-                onClick={validateFormEnvio}
-                >
-                Aceptar
-              </button>
-            </div>
-          )}
-          {openCloseSectionPay && (
-            <div
-            className={
-              openCloseSectionPay
-              ? "cont-metodo-de-pago animation-payment"
-              : "cont-metodo-de-pago "
-            }
-              ref={refContMethodPay}
-              >
-              <h4 className="title-cont-metodo-de-pago">Finalizar Compra</h4>
-              <div className="cont-metodo-de-pago-info">
-                <h5 className={openInfoMetodoDePago ? "btn-como-pagar" : "info-active-btn-pagar"} onClick={() =>
-                    setOpenInfoMetodoDePago((prevState) => !prevState)
-                  }>¿Como pagar? <span className="material-symbols-outlined">
-                  keyboard_arrow_down
-                  </span></h5>
                 <p
-                  className={
-                    openInfoMetodoDePago
-                    ? "metodo-de-pago-info"
-                    : "metodo-de-pago-info info-active"
+                  className="guia-talles"
+                  onClick={() =>
+                    setOpenCloseGuiaDeTalles((prevState) => !prevState)
                   }
-                  >
-                  Usamos MercadoPago para manejar los pagos de forma segura. Al
-                  presionar el botón de pago, serás redirigido a MercadoPago,
-                  donde podrás elegir el método de pago que prefieras: débito,
-                  crédito o dinero disponible.{" "}
+                >
+                  <span class="material-symbols-outlined">
+                    settings_accessibility
+                  </span>
+                  Guia de talles
                 </p>
-                
+              </header>
+              <div className="cont-botones-talles">
+                {tallesDisponibles.map((talle) => (
+                  <button
+                    key={talle}
+                    className={`btn-talle ${
+                      selectTalle === talle ? "btn-talle-activo" : ""
+                    }`}
+                    onClick={() => setSelectTalle(talle)}
+                  >
+                    {talle.toUpperCase()}
+                  </button>
+                ))}
               </div>
-              <div className="section-info-payment">
-                <h4 className="title-info-payment">Detalle</h4>
-                {transformArray.map((items, index) => (
-                  <div className="cont-info-payment" key={index}>
-                    <img
-                      src={items.imagenes[0]}
-                      alt="img payment"
-                      className="img-info-payment"
+            </div>
+
+            {/*----- Formulario Para Los Envios -----*/}
+
+            <div className="cont-form-envio-desplegable">
+              <div
+                className="btn-guia-desplegable"
+                onClick={despliegoFormEnvio}
+                ref={refBtnGuiaDesplegable}
+              >
+                <strong ref={refButtonMulti}>Seleccioná el talle</strong>
+                <span
+                  className="material-symbols-outlined prueba-flecha"
+                  ref={refArrowGuia}
+                >
+                  arrow_forward
+                </span>
+              </div>
+              <p className="btn-cripto">
+                <span className="material-symbols-outlined">favorite</span>
+              </p>
+            </div>
+
+            {openCloseFormEnvio && (
+              <div
+                className={
+                  formDataAnimation
+                    ? "cont-form-data-envio completado"
+                    : "cont-form-data-envio"
+                }
+                ref={refFormDataEnvio}
+              >
+                <h4 className="form-data-title" ref={refTituloFormEnvio}>
+                  Datos de envio
+                </h4>
+                {formDataAnimation ? (
+                  <button
+                    className="btn-editar-form-envio"
+                    onClick={editFormEnvio}
+                  >
+                    Editar
+                  </button>
+                ) : (
+                  console.log("messi")
+                )}
+                <p className="form-data-subtitle" ref={refSubtitleFormEnvio}>
+                  Usaremos esta info para hacerte llegar el envio.
+                </p>
+                {errores.length > 0 &&
+                  errores.map((item, index) => (
+                    <p key={index} className="message-errors">
+                      {item.message}
+                    </p>
+                  ))}
+
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  className={"input-form-data-envio"}
+                  onChange={(e) => setNombre(e.target.value)}
+                  ref={refNombreFormEnvio}
+                />
+                <input
+                  type="text"
+                  placeholder="Apellido"
+                  className={"input-form-data-envio"}
+                  onChange={(e) => setApellido(e.target.value)}
+                />
+                <input
+                  type="email"
+                  placeholder="alan_turing@example.com"
+                  className={"input-form-data-envio"}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Provincia"
+                  className={"input-form-data-envio"}
+                  onChange={(e) => setProvincia(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Localidad"
+                  className={"input-form-data-envio"}
+                  onChange={(e) => setLocalidad(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Calle"
+                  className={"input-form-data-envio"}
+                  onChange={(e) => setCalle(e.target.value)}
+                />
+                <input
+                  type="number"
+                  className={"input-form-data-envio"}
+                  onChange={(e) => setNumeroDeCalle(e.target.value)}
+                  placeholder="Numero"
+                />
+                <input
+                  type="number"
+                  className={"input-form-data-envio"}
+                  placeholder="Codigo Postal"
+                  onChange={(e) => setCodigoPostal(e.target.value)}
+                />
+                <button
+                  className={"btn-form-data-envio"}
+                  onClick={validateFormEnvio}
+                >
+                  Aceptar
+                </button>
+              </div>
+            )}
+            {openCloseSectionPay && (
+              <div
+                className={
+                  openCloseSectionPay
+                    ? "cont-metodo-de-pago animation-payment"
+                    : "cont-metodo-de-pago "
+                }
+                ref={refContMethodPay}
+              >
+                <h4 className="title-cont-metodo-de-pago">Finalizar Compra</h4>
+                <div className="cont-metodo-de-pago-info">
+                  <h5
+                    className={
+                      openInfoMetodoDePago
+                        ? "btn-como-pagar"
+                        : "info-active-btn-pagar"
+                    }
+                    onClick={() =>
+                      setOpenInfoMetodoDePago((prevState) => !prevState)
+                    }
+                  >
+                    ¿Como pagar?{" "}
+                    <span className="material-symbols-outlined">
+                      keyboard_arrow_down
+                    </span>
+                  </h5>
+                  <p
+                    className={
+                      openInfoMetodoDePago
+                        ? "metodo-de-pago-info"
+                        : "metodo-de-pago-info info-active"
+                    }
+                  >
+                    Usamos MercadoPago para manejar los pagos de forma segura.
+                    Al presionar el botón de pago, serás redirigido a
+                    MercadoPago, donde podrás elegir el método de pago que
+                    prefieras: débito, crédito o dinero disponible.{" "}
+                  </p>
+                </div>
+                <div className="section-info-payment">
+                  <h4 className="title-info-payment">Detalle</h4>
+                  {transformArray.map((items, index) => (
+                    <div className="cont-info-payment" key={index}>
+                      <img
+                        src={items.imagenes[0]}
+                        alt="img payment"
+                        className="img-info-payment"
                       />
-                    <div className="cont-detalle-info">
-                      <p className="payment-product">{items.nombre}</p>
-                      <p>Total: {items.precio}</p>
-                      <div className="cont-talle-edit">
-                        <p>Talle: {selectTalle}</p>
-                        <p className="btn-edit-talle">Editar</p>
+                      <div className="cont-detalle-info">
+                        <p className="payment-product">{items.nombre}</p>
+                        <p>Total: {items.precio}</p>
+                        <div className="cont-talle-edit">
+                          <p>Talle: {selectTalle}</p>
+                          <p className="btn-edit-talle">Editar</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className={isLoading ? "cont-btn-mercadopago" : "cont-btn-mercadopago visiblee"} ref={refEspacioBtnMercadopago}>
+                  {isLoading ? <WalletComponent /> : <p className="loading-pay">Cargando</p>}</div>
               </div>
-              <div className="btn-mercadopago">
-                <WalletComponent />
+            )}
+            <div className="cont-info-adicional">
+              <div className="info-adicional">
+                <span className="material-symbols-outlined">
+                  local_shipping
+                </span>
+                <p>Hacemos envios a todo el pais.</p>
               </div>
-            </div>
-          )}
-          <div className="cont-info-adicional">
-            <div className="info-adicional">
-              <span className="material-symbols-outlined">local_shipping</span>
-              <p>Hacemos envios a todo el pais.</p>
-            </div>
-            <div className="info-adicional">
-              <span className="material-symbols-outlined camion-ventas">
-                local_shipping
-              </span>
-              <p>
-                {" "}
-                Devoluciones Gratis ¿No es tu talle? Podes devolverlo en un
-                plazo de dos dias
-              </p>
+              <div className="info-adicional">
+                <span className="material-symbols-outlined camion-ventas">
+                  local_shipping
+                </span>
+                <p>
+                  {" "}
+                  Devoluciones Gratis ¿No es tu talle? Podes devolverlo en un
+                  plazo de dos dias
+                </p>
+              </div>
             </div>
           </div>
+          {/*----- Seccion de Data De envio y pago ----*/}
         </div>
-        {/*----- Seccion de Data De envio y pago ----*/}
-      </div>
-    </section>
-    <Footer/>
-          </>
+      </section>
+      <Footer />
+    </>
   );
 };

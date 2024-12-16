@@ -3,6 +3,8 @@
   background: #000000;
   font-family: sans-serif;
   overflow: hidden;
+  max-width: 28em;
+  margin: auto;
 }
 
 .modal .modal-cardproduct {
@@ -27,31 +29,56 @@
 .modal .modal-cardproduct .cont-modal-product .modal-carrousel {
   position: relative;
   overflow: hidden;
-  height: 22em;
-  max-height: 21em;
-
+  max-height: 16em;
+  max-width: 18em;
 }
 
-.modal .modal-cardproduct .cont-modal-product .modal-carrousel .cont-img-carrousel {
-  position: absolute;
+.modal
+  .modal-cardproduct
+  .cont-modal-product
+  .modal-carrousel
+  .cont-img-carrousel {
   display: flex;
-  width: 100%;
-  transition: .5s all ease;
+  width: calc(400% / 2);
+  transition: 0.5s all ease;
+}
+.modal
+  .modal-cardproduct
+  .cont-modal-product
+  .modal-carrousel
+  .cont-img-carrousel
+  .div-img {
+  display: flex;
+  justify-content: center;
 }
 
-.modal .modal-cardproduct .cont-modal-product .modal-carrousel .cont-img-carrousel img {
-  width: 100%;
+.modal
+  .modal-cardproduct
+  .cont-modal-product
+  .modal-carrousel
+  .cont-img-carrousel
+  img {
+  width: 80%;
 }
 
-.modal .modal-cardproduct .cont-modal-product .modal-carrousel .cont-btns-carrousel {
+.modal
+  .modal-cardproduct
+  .cont-modal-product
+  .modal-carrousel
+  .cont-btns-carrousel {
   display: flex;
   justify-content: space-between;
   position: absolute;
-  margin-top: 58%;
+  top: 50%;
   width: 100%;
 }
 
-.modal .modal-cardproduct .cont-modal-product .modal-carrousel .cont-btns-carrousel span {
+.modal
+  .modal-cardproduct
+  .cont-modal-product
+  .modal-carrousel
+  .cont-btns-carrousel
+  span {
   font-size: 1.5em;
 }
 
@@ -62,18 +89,19 @@
 }
 
 .modal .modal-cardproduct .cont-preferencias-modal-product {
-  margin-top: .8em;
+  margin-top: 0.8em;
   display: flex;
   flex-direction: column;
   gap: 1em;
-  
 }
-.openguia{
+.openguia {
   filter: blur(45px);
-
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .section-botones-talles {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .section-botones-talles {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -81,27 +109,51 @@
   gap: 0.6em;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .section-botones-talles .header-seleccionar-talle {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .section-botones-talles
+  .header-seleccionar-talle {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .section-botones-talles .header-seleccionar-talle .talle-title {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .section-botones-talles
+  .header-seleccionar-talle
+  .talle-title {
   font-size: 0.7em;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .section-botones-talles .header-seleccionar-talle .guia-talles {
-  text-decoration: underline;
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .section-botones-talles
+  .header-seleccionar-talle
+  .guia-talles {
   font-size: 0.7em;
+  display: flex;
+  align-items: center;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .section-botones-talles .cont-botones-talles {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .section-botones-talles
+  .cont-botones-talles {
   display: flex;
   gap: 0.8em;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .section-botones-talles .cont-botones-talles .btn-talle {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .section-botones-talles
+  .cont-botones-talles
+  .btn-talle {
   font-size: 0.8em;
   padding: 0.5em 1.5em;
   border: 1px solid #fff;
@@ -110,11 +162,19 @@
   background: #0f0f0f;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .section-botones-talles .cont-botones-talles .btn-talle-activo {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .section-botones-talles
+  .cont-botones-talles
+  .btn-talle-activo {
   background: #aaaaaa;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-form-envio-desplegable {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-form-envio-desplegable {
   transition: 0.5s all ease;
   font-size: 0.8em;
   display: flex;
@@ -123,7 +183,11 @@
   gap: 1em;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-form-envio-desplegable .btn-guia-desplegable {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-form-envio-desplegable
+  .btn-guia-desplegable {
   background: #0f0f0f;
   display: flex;
   justify-content: space-between;
@@ -133,16 +197,28 @@
   font-size: 1.2em;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-form-envio-desplegable .prueba-flecha {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-form-envio-desplegable
+  .prueba-flecha {
   transition: 0.6s all ease;
   transform: rotate(-90deg);
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-form-envio-desplegable .arrow-rotate {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-form-envio-desplegable
+  .arrow-rotate {
   transform: rotate(90deg);
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-form-envio-desplegable .form-envio-desplegable-title {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-form-envio-desplegable
+  .form-envio-desplegable-title {
   width: 76%;
   padding: 0.5em;
   display: flex;
@@ -150,11 +226,20 @@
   font-size: 1.1em;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-form-envio-desplegable .form-envio-desplegable-title .material-symbols-outlined {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-form-envio-desplegable
+  .form-envio-desplegable-title
+  .material-symbols-outlined {
   vertical-align: middle;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-form-envio-desplegable .activate {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-form-envio-desplegable
+  .activate {
   animation-name: buttonpay;
   animation-duration: 0.5s;
   animation-iteration-count: 4;
@@ -172,14 +257,20 @@
   }
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-form-envio-desplegable .btn-cripto {
-
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-form-envio-desplegable
+  .btn-cripto {
   border: 1px solid #ffffff;
   padding: 0.9em;
   background: #0f0f0f;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-info-adicional {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-info-adicional {
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -187,12 +278,21 @@
   color: #c2c1c1;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-info-adicional .info-adicional {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-info-adicional
+  .info-adicional {
   display: flex;
   gap: 0.5em;
 }
 
-.modal .modal-cardproduct .cont-preferencias-modal-product .cont-info-adicional .info-adicional .camion-ventas {
+.modal
+  .modal-cardproduct
+  .cont-preferencias-modal-product
+  .cont-info-adicional
+  .info-adicional
+  .camion-ventas {
   transform: rotateY(180deg);
 }
 
@@ -219,7 +319,7 @@
   padding: 0.3em;
   border-radius: 5px;
   background: #0f0f0f;
-  border:1px solid #2c2c2c;
+  border: 1px solid #2c2c2c;
   color: #fff;
 }
 
@@ -260,7 +360,6 @@
     height: 4.5em;
     background: #0f0f0f;
     border: 1px solid #2c2c2c;
-
   }
 }
 
@@ -268,9 +367,7 @@
   display: none;
 }
 
-
 /* ...   Seccion de metodo de pago   ... */
-
 
 .modal .cont-metodo-de-pago {
   display: flex;
@@ -279,9 +376,9 @@
   gap: 1em;
   background-color: #000000;
   border-radius: 5px;
-  border:1px solid #2c2c2c;
+  border: 1px solid #2c2c2c;
   overflow: hidden;
-  padding: 1.5em 0.2em 0.5em 0.2em;
+  padding-top: 1em;
 }
 
 .modal .cont-metodo-de-pago .title-cont-metodo-de-pago {
@@ -290,37 +387,35 @@
 
 .modal .cont-metodo-de-pago .cont-metodo-de-pago-info {
   padding: 0.3em;
-  
 }
 
 .modal .cont-metodo-de-pago .metodo-de-pago-info {
-  margin-top: .5em;
+  margin-top: 0.5em;
   font-size: 0.8em;
   max-height: 0;
-  transition: .2s all ease;
+  transition: 0.2s all ease;
   overflow: hidden;
   border-left: 1px solid #fff;
-  padding-left: .4em;
+  padding-left: 0.4em;
 }
 
-.modal .cont-metodo-de-pago .cont-metodo-de-pago-info .btn-como-pagar{
+.modal .cont-metodo-de-pago .cont-metodo-de-pago-info .btn-como-pagar {
   border-top: 1px solid #2c2c2c;
   border-left: 1px solid #2c2c2c;
   border-right: 1px solid #2c2c2c;
-border-bottom: 1px solid #2c2c2c;
-  padding: .5em;
+  border-bottom: 1px solid #2c2c2c;
+  padding: 0.5em;
   display: flex;
   justify-content: space-between;
 }
-.info-active-btn-pagar{
+.info-active-btn-pagar {
   border-top: 1px solid rgb(255, 255, 255);
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
-  padding: .5em;
+  padding: 0.5em;
   display: flex;
   justify-content: space-between;
-  
-  }
+}
 
 .modal .cont-metodo-de-pago .metodo-de-pago-info.info-active {
   max-height: 22em;
@@ -348,7 +443,7 @@ border-bottom: 1px solid #2c2c2c;
 
 .modal .cont-metodo-de-pago .section-info-payment .cont-info-payment {
   outline: 1px solid rgb(73, 73, 73);
-font-size: .9em;
+  font-size: 0.9em;
   background-color: rgb(8, 8, 8);
   padding: 0.2em;
   display: flex;
@@ -358,11 +453,19 @@ font-size: .9em;
   border-radius: 5px;
 }
 
-.modal .cont-metodo-de-pago .section-info-payment .cont-info-payment .img-info-payment {
+.modal
+  .cont-metodo-de-pago
+  .section-info-payment
+  .cont-info-payment
+  .img-info-payment {
   width: 21%;
 }
 
-.modal .cont-metodo-de-pago .section-info-payment .cont-info-payment .cont-detalle-info {
+.modal
+  .cont-metodo-de-pago
+  .section-info-payment
+  .cont-info-payment
+  .cont-detalle-info {
   font-size: 1.1em;
   display: flex;
   flex-direction: column;
@@ -371,11 +474,20 @@ font-size: .9em;
   padding: 0 0 0 0.3em;
 }
 
-.modal .cont-metodo-de-pago .section-info-payment .cont-info-payment .cont-detalle-info p {
+.modal
+  .cont-metodo-de-pago
+  .section-info-payment
+  .cont-info-payment
+  .cont-detalle-info
+  p {
   font-size: 0.8em;
 }
 
-.modal .cont-metodo-de-pago .section-info-payment .cont-info-payment .cont-talle-edit {
+.modal
+  .cont-metodo-de-pago
+  .section-info-payment
+  .cont-info-payment
+  .cont-talle-edit {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -383,20 +495,36 @@ font-size: .9em;
   width: 100%;
 }
 
-.modal .cont-metodo-de-pago .section-info-payment .cont-info-payment .cont-talle-edit .btn-edit-talle {
-  border: 1px solid #fff;
+.modal
+  .cont-metodo-de-pago
+  .section-info-payment
+  .cont-info-payment
+  .cont-talle-edit
+  .btn-edit-talle {
+  border: 1px solid #363636;
   border-radius: 5px;
   padding: 0.4em 0.6em;
-  font-size: .7em;
+  font-size: 0.7em;
 }
 
-.modal .cont-metodo-de-pago .btn-mercadopago {
+.modal .cont-metodo-de-pago .cont-btn-mercadopago {
+  height: 110px;
+  overflow: hidden;
+  width: 100%;
+  transition: 1s all ease;
+  background-color: #000;
+  height: 0;
+
+}
+
+
+.loading-pay {
   height: 110px;
   width: 100%;
 }
 
 .modal .animation-payment {
-  animation: openMethodPay 0.9s ease forwards;
+  animation: openMethodPay .5s ease-in forwards;
 }
 
 @keyframes openMethodPay {

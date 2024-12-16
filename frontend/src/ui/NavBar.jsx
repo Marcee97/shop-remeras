@@ -15,8 +15,6 @@ const funcionMenuslide = ()=> {
 
 
 
-
-
 const refNavbar = useRef(null)
 const refBtnHome = useRef(null)
 const refBtnMenu = useRef(null)
@@ -29,7 +27,9 @@ const menuStyle = ()=> {
     btnHome.style.visibility = "hidden"
     btnMenu.style.visibility = "hidden"
     navbar.style.background = "#00000036"
-    navbar.style.border = " 1px solid rgba(34, 33, 33, 0.67)"
+    navbar.style.fontSize = "1em"
+    navbar.style.marginBottom = "1em"
+    navbar.style.border = " 1px solid #222121"
   } else{
     const navbar = refNavbar.current
   }
