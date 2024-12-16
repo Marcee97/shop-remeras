@@ -27,7 +27,8 @@
 .modal .modal-cardproduct .cont-modal-product .modal-carrousel {
   position: relative;
   overflow: hidden;
-  height: 21em;
+  height: 22em;
+  max-height: 21em;
 
 }
 
@@ -61,7 +62,7 @@
 }
 
 .modal .modal-cardproduct .cont-preferencias-modal-product {
-  margin-top: 1.8em;
+  margin-top: .8em;
   display: flex;
   flex-direction: column;
   gap: 1em;

@@ -6,6 +6,7 @@ import { WalletComponent } from "./WalletComponent.jsx";
 import { Footer } from "./Footer.jsx";
 import "../css/components/modal.css"
 import { GuiaDeTalles } from "./GuiaDeTalles.jsx";
+import { NavBar } from "./NavBar.jsx";
 export const Modal = () => {
         
         const { productoSeleccionado, setPreferenceId, setOpenCloseGuiaDeTalles, openCloseGuiaDeTalles} = useContext(ElContexto);
@@ -190,6 +191,7 @@ export const Modal = () => {
   return (
     <>
     <section className="modal">
+      <NavBar/>
       <div className="modal-cardproduct">
         {transformArray.map((items, index) => (
           <div className="cont-modal-product" key={index}>

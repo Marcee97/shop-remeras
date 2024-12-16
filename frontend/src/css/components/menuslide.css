@@ -50,7 +50,7 @@
 .menu-slide .cont-menu-opciones-slide .contenido {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.8s ease;
+  transition:  0.8s ease;
   font-size: 0.6em;
   color: #9b9a9a;
   padding-left: .8em;
@@ -59,4 +59,8 @@
 
 .menu-slide .cont-menu-opciones-slide .contenido.activo {
   max-height: 300px;
+}
+
+.activo{
+  background-color: #02020200;
 }

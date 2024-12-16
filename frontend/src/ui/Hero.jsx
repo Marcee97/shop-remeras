@@ -1,5 +1,28 @@
+import { useRef } from "react";
+
 import "../css/components/hero.css";
+import ElContexto from "../context/ProductContext";
+import { useContext } from "react";
 export const Hero = () => {
+
+const {refCatalogo} = useContext(ElContexto)
+
+const btnVerTodo = ()=> {
+
+
+if(refCatalogo.current){
+  console.log('lionel messi')
+  refCatalogo.current.focus()
+}
+
+}
+
+
+
+
+
+
+
   return (
     <section className="hero">
       <div className="cont-hero">
@@ -19,7 +42,7 @@ export const Hero = () => {
           </div>
           <h1 className="nombre-de-la-marca">NotSocial</h1>
         </div>
-        <div className="cont-marca-btn">
+        <div className="cont-marca-btn" onClick={btnVerTodo}>
           <p className="btn-catalogo">
             Ver todo{" "}
             <span className="material-symbols-outlined">arrow_right_alt</span>
@@ -28,7 +51,7 @@ export const Hero = () => {
       </div>
       <div className="encabezado-shop">
 
-        <h5>No contamos con un local fisico</h5>
+        <h5>aca deberia haber algo mas</h5>
       </div>
     </section>
   );

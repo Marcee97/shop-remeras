@@ -45,7 +45,7 @@ export const MenuSlide = ({ openCloseSlide }) => {
         </h5>
         <div className={`contenido ${opcioSeleccionada === 1 ? "activo" : ""}`}>
           <p>
-          Somos un emprendimiento joven y apasionado. Aunque estamos dando nuestros primeros pasos, cada diseño que creamos está pensado para ofrecerte algo único y especial. Operamos 100% en línea, lo que nos permite enfocarnos en brindarte la mejor experiencia sin necesidad de un local físico. ¡Explora nuestros diseños y encuentra el que mejor te represente!
+          No contamos con un local fisico
           </p>
         </div>
         <h5 onClick={() => renderOpcion(2)}>Sorteos <span className={opcioSeleccionada === 2 ? "material-symbols-outlined arrow-rotate" : "material-symbols-outlined"}>chevron_right</span></h5>
@@ -58,7 +58,7 @@ export const MenuSlide = ({ openCloseSlide }) => {
             <span>WhatsApp:</span> 3385-***-****
           </p>
           <p>
-            <span>Email:</span> tuvieja@gmail.com
+            <span>Email:</span> shop@gmail.com
           </p>
         </div>
         <h5 onClick={() => renderOpcion(4)}>Como comprar <span className={opcioSeleccionada === 4 ? "material-symbols-outlined arrow-rotate" : "material-symbols-outlined"}>chevron_right</span></h5>

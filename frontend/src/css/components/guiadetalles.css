@@ -1,26 +1,26 @@
 .guia-de-talles {
   position: absolute;
-  height:100vh;
+  height: 100vh;
   width: 100%;
   font-family: monospace;
   transform: translateX(0%);
-  transition: .5s all ease;
-background: linear-gradient(transparent, #0000008f);
-
+  transition: 0.5s all ease;
+  background: linear-gradient(#0000009f, transparent);
+  top: -55px;
 }
 
-.slide{
-    position: absolute;
-  height:100%;
+.slide {
+  position: absolute;
+  height: 100%;
   width: 100%;
   font-family: monospace;
   transform: translateX(100%);
-  transition: .5s all ease;
-
+  transition: 0.5s all ease;
+  top: -55px;
 }
 
 .section-guia-de-talles {
-    height: 100%;
+  height: 100%;
 }
 
 .cont-cuadro-img {
@@ -30,12 +30,10 @@ background: linear-gradient(transparent, #0000008f);
   width: 100%;
   height: 100%;
   backdrop-filter: blur(209px);
-
 }
-.seccion-talles-title{
-    color: #ffffff;
-    font-size: 1.7em;
-
+.seccion-talles-title {
+  color: #ffffff;
+  font-size: 1.7em;
 }
 .medidas-cuadro {
   padding: 2.2em;
@@ -43,7 +41,6 @@ background: linear-gradient(transparent, #0000008f);
   border-radius: 5px;
   position: relative;
   max-height: 27em;
-
 }
 
 .cuadro-img {
@@ -55,9 +52,6 @@ background: linear-gradient(transparent, #0000008f);
   background-color: #00000009;
   max-height: 23em;
   max-width: 21em;
-
-
-
 }
 .cuello {
   width: 22%;
@@ -67,15 +61,14 @@ background: linear-gradient(transparent, #0000008f);
   left: 49%;
   transform: translate(-50%, -50%);
 }
-.manga{
-    border-top: 1px dashed #fff;
+.manga {
+  border-top: 1px dashed #fff;
 
-    width: 19%;
-    position: absolute;
-    top: 40%;
-    left: 82%;
-    transform: rotate(-28deg);
-
+  width: 19%;
+  position: absolute;
+  top: 40%;
+  left: 82%;
+  transform: rotate(-28deg);
 }
 .ancho-remera {
   width: 64%;
@@ -96,28 +89,27 @@ background: linear-gradient(transparent, #0000008f);
   transform: translate(-50%, -10%);
 }
 
-.medida-alto{
-    position: absolute;
-    font-size: .8em;
-    left: 0;
-    top: 50%;
-    transform: translate(6%, -50%);
+.medida-alto {
+  position: absolute;
+  font-size: 0.8em;
+  left: 0;
+  top: 50%;
+  transform: translate(6%, -50%);
 }
-.medida-cuello{
-    position: absolute;
-    font-size: .7em;
-    top: 1.2%;
-    left: 50%;
+.medida-cuello {
+  position: absolute;
+  font-size: 0.7em;
+  top: 1.2%;
+  left: 50%;
   transform: translate(-50%, -5%);
 }
-.medida-manga{
-    position: absolute;
-    top: 49%;
-    left: 84%;
-    transform: translate(-50%, -50%);
-    z-index: 55;
-    font-size: .8em;
-
+.medida-manga {
+  position: absolute;
+  top: 49%;
+  left: 84%;
+  transform: translate(-50%, -50%);
+  z-index: 55;
+  font-size: 0.8em;
 }
 
 .img-remera-seccion-de-talles {
@@ -127,38 +119,37 @@ background: linear-gradient(transparent, #0000008f);
   max-width: 24em;
 }
 
+.guia-talles-control-de-talles {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8em;
+  padding: 0.4em;
+  gap: 0.2em;
+}
+.cont-de-botones {
+  display: flex;
+}
+.btn-talles {
+  background: transparent;
+  font-size: 0.5em;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 0.3em 1.4em;
+}
+.btn-back {
+  font-size: 0.5em;
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+  padding: 0.3em 4.8em;
+  border: 1px solid #fff;
+  margin-top: 2em;
+}
 
-.guia-talles-control-de-talles{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;    
-    font-size: 1.8em;
-    padding: .4em;
-    gap: .2em;
-}
-.cont-de-botones{
-    display: flex;
-}
-.btn-talles{
-    background: transparent;
-    font-size: .5em;
-    border-radius: 5px;
-    border: 1px solid #fff;
-    color: #fff;
-    padding: .3em 1.4em;
-}
-.btn-back{
-    font-size: .5em;
-    border-radius: 5px;
-    background: transparent;
-    color: #fff;
-    padding: .3em 4.8em;
-    border: 1px solid #fff;
-    margin-top: 2em;
-}
-
-.activo{
-    background-color: #ffffff28;
+.activo {
+  background-color: #ffffff28;
 }

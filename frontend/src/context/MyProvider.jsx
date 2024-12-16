@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ElContexto from "./ProductContext";
 
 import client from "../api/axios";
@@ -10,7 +10,7 @@ export const MyProvider = ({ children }) => {
   const [productoSeleccionado, setproductoSeleccionado] = useState([]);
   const [preferenceId, setPreferenceId] = useState('')
   const [openCloseGuiaDeTalles, setOpenCloseGuiaDeTalles] = useState(false)
-
+const refCatalogo = useRef(null)
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
@@ -32,7 +32,8 @@ console.log(openCloseGuiaDeTalles)
         setPreferenceId,
         preferenceId,
         setOpenCloseGuiaDeTalles,
-        openCloseGuiaDeTalles
+        openCloseGuiaDeTalles,
+        refCatalogo
       }}
     >
       {children}
