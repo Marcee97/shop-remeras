@@ -24,7 +24,7 @@ export const Modal = () => {
   const [provincia, setProvincia] = useState("");
   const [localidad, setLocalidad] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingFront, setLoadingFront] = useState(false)
+  const [loadingFront, setLoadingFront] = useState(false);
 
   const refImageCarrousel = useRef(null);
 
@@ -177,7 +177,6 @@ export const Modal = () => {
         refContMethodPay.current.scrollIntoView({ behavior: "smooth" });
       }, 5200);
 
-     
       setTimeout(() => {
         setIsLoading((prevState) => !prevState);
       }, 4000);
@@ -193,14 +192,13 @@ export const Modal = () => {
     setFormDataAnimation((prevState) => !prevState);
     setOpenCloseSectionPay((prevState) => !prevState);
   };
-const refEspacioBtnMercadopago = useRef(null)
-  useEffect(()=>{
-const espacioBtnMercadopago = refEspacioBtnMercadopago.current
-setTimeout(()=> {
-  espacioBtnMercadopago.style.height = "110px"
-
-}, 1500)
-  }, [isLoading])
+  const refEspacioBtnMercadopago = useRef(null);
+  useEffect(() => {
+    const espacioBtnMercadopago = refEspacioBtnMercadopago.current;
+    setTimeout(() => {
+      espacioBtnMercadopago.style.height = "110px";
+    }, 1500);
+  }, [isLoading]);
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <>
@@ -209,10 +207,10 @@ setTimeout(()=> {
         <div className="modal-cardproduct">
           {transformArray.map((items, index) => (
             <div className="cont-modal-product" key={index}>
-              <div className="modal-carrousel" key={index}>
+              <div className="modal-carrousel">
                 <div className="cont-img-carrousel" ref={refImageCarrousel}>
                   {items.imagenes.map((imagen, imgIndex) => (
-                    <div className="div-img">
+                    <div className="div-img" key={imgIndex}>
                       <img src={imagen} alt="fotos productos" key={imgIndex} />
                     </div>
                   ))}
@@ -259,7 +257,7 @@ setTimeout(()=> {
                     setOpenCloseGuiaDeTalles((prevState) => !prevState)
                   }
                 >
-                  <span class="material-symbols-outlined">
+                  <span className="material-symbols-outlined">
                     settings_accessibility
                   </span>
                   Guia de talles
@@ -313,16 +311,15 @@ setTimeout(()=> {
                 <h4 className="form-data-title" ref={refTituloFormEnvio}>
                   Datos de envio
                 </h4>
-                {formDataAnimation ? (
+                {formDataAnimation && (
                   <button
                     className="btn-editar-form-envio"
                     onClick={editFormEnvio}
                   >
                     Editar
                   </button>
-                ) : (
-                  console.log("messi")
-                )}
+                ) 
+                }
                 <p className="form-data-subtitle" ref={refSubtitleFormEnvio}>
                   Usaremos esta info para hacerte llegar el envio.
                 </p>
@@ -449,8 +446,20 @@ setTimeout(()=> {
                     </div>
                   ))}
                 </div>
-                <div className={isLoading ? "cont-btn-mercadopago" : "cont-btn-mercadopago visiblee"} ref={refEspacioBtnMercadopago}>
-                  {isLoading ? <WalletComponent /> : <p className="loading-pay">Cargando</p>}</div>
+                <div
+                  className={
+                    isLoading
+                      ? "cont-btn-mercadopago"
+                      : "cont-btn-mercadopago visiblee"
+                  }
+                  ref={refEspacioBtnMercadopago}
+                >
+                  {isLoading ? (
+                    <WalletComponent />
+                  ) : (
+                    <p className="loading-pay">Cargando</p>
+                  )}
+                </div>
               </div>
             )}
             <div className="cont-info-adicional">

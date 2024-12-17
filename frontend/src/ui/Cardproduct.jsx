@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/components/cardproduct.css"
 export const Cardproduct = () => {
   const navigate = useNavigate();
-  const { productos, setProductos, setproductoSeleccionado, refCatalogo } =
+  const { productos, setProductos, setproductoSeleccionado, btnVerTodo,refCatalogo } =
     useContext(elContexto);
 
   const peticionProductsModal = async (id) => {
@@ -19,8 +19,12 @@ export const Cardproduct = () => {
     console.log(response);
   };
 
+
+
+
+
   return (
-    <section className="cardproduct" >
+    <section className="cardproduct" ref={refCatalogo} >
       <div className="section-from-articles">
         {productos.map((items, index) => (
           <div className="cont-article" onClick={()=> peticionProductsModal(index + 1)} key={index}>

@@ -10,7 +10,9 @@ export const MyProvider = ({ children }) => {
   const [productoSeleccionado, setproductoSeleccionado] = useState([]);
   const [preferenceId, setPreferenceId] = useState('')
   const [openCloseGuiaDeTalles, setOpenCloseGuiaDeTalles] = useState(false)
-const refCatalogo = useRef(null)
+
+
+
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
@@ -20,7 +22,16 @@ const refCatalogo = useRef(null)
 
     peticionProducts();
   }, []);
-console.log(openCloseGuiaDeTalles)
+
+  const refCatalogo = useRef(null)
+
+  
+const verTodo = ()=> {
+
+  const catalogo = refCatalogo.current
+  catalogo.scrollIntoView({ block: "end", behavior: "smooth" });
+}
+
   
   return (
     <ElContexto.Provider
@@ -33,7 +44,8 @@ console.log(openCloseGuiaDeTalles)
         preferenceId,
         setOpenCloseGuiaDeTalles,
         openCloseGuiaDeTalles,
-        refCatalogo
+        refCatalogo,
+        verTodo
       }}
     >
       {children}

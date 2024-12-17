@@ -5,20 +5,7 @@ import ElContexto from "../context/ProductContext";
 import { useContext } from "react";
 export const Hero = () => {
 
-const {refCatalogo} = useContext(ElContexto)
-
-const btnVerTodo = ()=> {
-
-
-if(refCatalogo.current){
-  console.log('lionel messi')
-  refCatalogo.current.focus()
-}
-
-}
-
-
-
+const {setBtnVerTodo, verTodo} = useContext(ElContexto)
 
 
 
@@ -42,7 +29,7 @@ if(refCatalogo.current){
           </div>
           <h1 className="nombre-de-la-marca">NotSocial</h1>
         </div>
-        <div className="cont-marca-btn" onClick={btnVerTodo}>
+        <div className="cont-marca-btn" onClick={verTodo}>
           <p className="btn-catalogo">
             Ver todo{" "}
             <span className="material-symbols-outlined">arrow_right_alt</span>
