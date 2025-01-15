@@ -23,7 +23,6 @@
   display: flex;
   justify-content: end;
   font-size: 1.6em;
-  cursor: pointer;
 }
 
 .menu-slide .cont-menu-opciones-slide {
@@ -35,7 +34,6 @@
 .menu-slide .cont-menu-opciones-slide h5 {
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
   padding: .5em;
   span{
 

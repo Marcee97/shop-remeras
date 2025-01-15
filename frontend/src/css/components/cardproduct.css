@@ -1,5 +1,5 @@
 .cardproduct {
- background-color: #0a0a0a;
+ background: linear-gradient(#000, #131313, #000000);
   padding: 1em 0;
   color: #000000;
   font-family: sans-serif;

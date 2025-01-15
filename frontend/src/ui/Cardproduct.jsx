@@ -19,10 +19,6 @@ export const Cardproduct = () => {
     console.log(response);
   };
 
-
-
-
-
   return (
     <section className="cardproduct" ref={refCatalogo} >
       <div className="section-from-articles">

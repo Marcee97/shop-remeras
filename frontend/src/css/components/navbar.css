@@ -2,15 +2,42 @@
   padding: 0.4em 0.9em;
   background-color: #2e2e2e36;
   border-radius: 19px;
-  color: #fff;
-  cursor: pointer;
+  color: #ffffff;
   font-family: sans-serif;
   margin: 8px;
-
+  position: relative;
 }
 
-.navbar .titulo-navbar {
-  font-size: 2em;
+.cont-logo {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.animation-logo {
+  animation: animation-logo 8s infinite;
+}
+
+
+@keyframes animation-logo {
+  0% {
+    color: #2e2e2e;
+  }
+  50% {
+    color: #525252;
+  }
+  100% {
+    color: #2e2e2e;
+  }
+}
+.titulo-logo {
+  font-size: 1.5em;
+  font-family: monospace;
+}
+
+.icons-nav{
+  font-size: 1.9em;
 }
 
 .navbar .cont-navbar {
@@ -42,25 +69,4 @@
   font-size: 1.4em;
   display: flex;
   gap: 0.5em;
-}
-
-.navbar .cont-navbar .btn-menu {
-  font-size: 1.9em;
-}
-
-.navbar .cont-scroll-data .cont-moving img {
-  width: 100%;
-}
-
-.navbar .opciones-catalogo-navbar {
-  display: flex;
-  gap: 0.3em;
-  margin-bottom: 1.5em;
-}
-
-.navbar .opciones-catalogo-navbar p {
-  background-color: #fff;
-  color: #000;
-  padding: 0.1em 0.6em;
-  border-radius: 5px;
 }

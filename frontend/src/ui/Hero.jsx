@@ -7,9 +7,6 @@ export const Hero = () => {
 
 const {setBtnVerTodo, verTodo} = useContext(ElContexto)
 
-
-
-
   return (
     <section className="hero">
       <div className="cont-hero">
@@ -27,18 +24,17 @@ const {setBtnVerTodo, verTodo} = useContext(ElContexto)
               <div className="face cara-cuatro">Envios</div>
             </div>
           </div>
-          <h1 className="nombre-de-la-marca">NotSocial</h1>
         </div>
         <div className="cont-marca-btn" onClick={verTodo}>
           <p className="btn-catalogo">
-            Ver todo{" "}
-            <span className="material-symbols-outlined">arrow_right_alt</span>
+            Ver todo{" "}<span className="material-symbols-outlined">
+arrow_forward
+</span>
           </p>
         </div>
       </div>
       <div className="encabezado-shop">
 
-        <h5>aca deberia haber algo mas</h5>
       </div>
     </section>
   );

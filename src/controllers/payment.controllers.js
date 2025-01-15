@@ -1,6 +1,5 @@
 import { MercadoPagoConfig, Preference, Payment } from "mercadopago";
 
-
 import { pool } from "../database.js";
 import dotenv from "dotenv";
 import brevo from "@getbrevo/brevo";
@@ -61,14 +60,11 @@ export const dataFormEnvio = async (req, res) => {
 
 //5031 7557 3453 0604
 
-
-
-
 export const paymentProccess = async (req, res) => {
+  
+  console.log(req.body, 'patment proccess');
   try {
-    console.log(req.body);
 
-    
     const {
       nombre,
       apellido,
@@ -77,10 +73,14 @@ export const paymentProccess = async (req, res) => {
       calle,
       numeroDeCalle,
       codigoPostal,
-      unitPrice,
+      dni,
+      piso,
+      departamento,
+      telefono,
+      precio,
       title,
       email,
-      selectTalle
+      selectTalle,
     } = req.body;
 
     const shippingData = {
@@ -93,16 +93,21 @@ export const paymentProccess = async (req, res) => {
       codigoPostal,
       title,
       email,
-      selectTalle
+      selectTalle,
+      departamento,
+      piso,
+      dni,
+      telefono,
+      precio
     };
 
     const shippingDataSerial = JSON.stringify(shippingData);
 
-    const tokenMP = process.env.TOKEN_MERCADO_PAGO_API
-console.log(tokenMP)
+    const tokenMP = process.env.TOKEN_MERCADO_PAGO_API;
+    console.log(tokenMP);
 
     const client = new MercadoPagoConfig({
-      accessToken:tokenMP,
+      accessToken: tokenMP,
     });
 
     const preference = new Preference(client);
@@ -113,7 +118,7 @@ console.log(tokenMP)
           {
             title: title,
             quantity: 1,
-            unit_price: unitPrice,
+            unit_price: 1121,
           },
         ],
         external_reference: shippingDataSerial,
@@ -125,7 +130,7 @@ console.log(tokenMP)
         },
         auto_return: "approved",
         notification_url:
-          "https://workplace-completion-sp-quiz.trycloudflare.com/webhook",
+          "https://polyester-greatest-hack-positioning.trycloudflare.com/webhook",
       },
     });
 
@@ -142,22 +147,21 @@ console.log(tokenMP)
 
 export const webhook = async (req, res) => {
   try {
-
-    const tokenMP = process.env.TOKEN_MERCADO_PAGO_API
-console.log(tokenMP)
+    const tokenMP = process.env.TOKEN_MERCADO_PAGO_API;
+    console.log(tokenMP);
 
     const client = new MercadoPagoConfig({
-      accessToken:tokenMP,
+      accessToken: tokenMP,
     });
 
     const payment = new Payment(client);
 
     const dataPayment = await payment.get({ id: req.query["data.id"] });
 
-    console.log(dataPayment, "el webhooj");
+    console.log(dataPayment, "el webhook");
     const shippingNotSerial = JSON.parse(dataPayment.external_reference);
-    const {transaction_amount} = dataPayment
-console.log(transaction_amount,'ak la transaction')
+    const { transaction_amount } = dataPayment;
+    console.log(dataPayment)
     const {
       nombre,
       apellido,
@@ -168,45 +172,57 @@ console.log(transaction_amount,'ak la transaction')
       codigoPostal,
       title,
       email,
-      selectTalle
-    } = shippingNotSerial
+      selectTalle,
+      departamento,
+      piso,
+      dni,
+      telefono,
+    } = shippingNotSerial;
 
+    console.log(nombre, apellido);
 
-console.log(nombre, apellido)
-
-    await pool.query('INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo, talle) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?)',[nombre, apellido, provincia, localidad, calle, numeroDeCalle, codigoPostal,email, transaction_amount, title, selectTalle])
+    await pool.query(
+      "INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo, talle, dni, telefono, piso, departamento) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        nombre,
+        apellido,
+        provincia,
+        localidad,
+        calle,
+        numeroDeCalle,
+        codigoPostal,
+        email,
+        transaction_amount,
+        title,
+        selectTalle,
+        departamento,
+        dni,
+        telefono,
+        piso
+      ]
+    );
     console.log(shippingNotSerial);
 
+    const apiKey = process.env.APY_KEY_BREVO_EMAILS;
 
+    const apiInstance = new brevo.TransactionalEmailsApi();
 
-    
-const apiKey = process.env.APY_KEY_BREVO_EMAILS
+    apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey);
 
-const apiInstance = new brevo.TransactionalEmailsApi();
+    const sendSmtpEmail = new brevo.SendSmtpEmail();
 
+    sendSmtpEmail.subject = "ShopRemeras";
+    sendSmtpEmail.to = [{ email: email, name: nombre }];
+    sendSmtpEmail.htmlContent =
+      "<html><body><h1>Verificacion de compra gracias Crack</h1><p>Sabias que cuando Einstein recibio el premio nobel Mirta legrand estaba viva</p></body></html>";
 
-apiInstance.setApiKey(
-  brevo.TransactionalEmailsApiApiKeys.apiKey,
-  apiKey
-)
+    sendSmtpEmail.sender = {
+      name: "Litoss",
+      email: "marceloquadrilatero@gmail.com",
+    };
+    const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
 
-
-const sendSmtpEmail = new brevo.SendSmtpEmail();
-
-sendSmtpEmail.subject = "ShopRemeras";
-sendSmtpEmail.to = [
-  {"email": email, "name": nombre}
-]
-sendSmtpEmail.htmlContent = "<html><body><h1>Verificacion de compra gracias Crack</h1><p>Sabias que cuando Einstein recibio el premio nobel Mirta legrand estaba viva</p></body></html>"
-
-sendSmtpEmail.sender = {
-  name: "Litoss",
-  email: "marceloquadrilatero@gmail.com"
-}
-const result = await apiInstance.sendTransacEmail(sendSmtpEmail)
-
-console.log(result)
-
+    console.log(result);
 
     return res.status(200).send("Data recibida");
   } catch (err) {
@@ -214,8 +230,6 @@ console.log(result)
     res.status(500).send("error en el webhook backend");
   }
 };
-
-
 
 export const success = (req, res) => {
   res.status(200).send("succes");

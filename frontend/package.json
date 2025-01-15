@@ -13,6 +13,8 @@
   "dependencies": {
     "@mercadopago/sdk-react": "^0.0.19",
     "axios": "^1.7.4",
+    "ionicons": "^7.4.0",
+    "ldrs": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.26.1",

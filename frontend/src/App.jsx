@@ -8,44 +8,36 @@ import { Hero } from "./ui/Hero";
 import { MenuSlide } from "./ui/MenuSlide";
 import { ScrollTop } from "./helpers/ScrollTop";
 export const App = () => {
-  
-
-
   const MainLayout = ({ children }) => {
-  const [onSlide, setOnSlide] = useState(false)
+    const [onSlide, setOnSlide] = useState(false);
 
-const menuSlideOn = ()=> {
-  setOnSlide(!onSlide)
-
-}
+    const menuSlideOn = () => {
+      setOnSlide(!onSlide);
+    };
     return (
       <>
-        <NavBar activeSlide={menuSlideOn}/>
-        <MenuSlide openCloseSlide={onSlide}/>
-        <Hero/>
+        <NavBar activeSlide={menuSlideOn} />
+        <MenuSlide openCloseSlide={onSlide} />
+        <Hero />
         {children}
-     
         <Footer />
       </>
     );
   };
 
-
-
   return (
     <>
-    <ScrollTop/>
+      <ScrollTop />
       <Routes>
         <Route
           path="/"
           element={
             <MainLayout>
-              <Cardproduct/>
+              <Cardproduct />
             </MainLayout>
           }
         />
-        <Route path="/modal" element={<Modal/>} />
-       
+        <Route path="/modal" element={<Modal />} />
       </Routes>
     </>
   );

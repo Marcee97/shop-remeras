@@ -1,31 +1,34 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import ElContexto from "../context/ProductContext.jsx";
 import client from "../api/axios.js";
-import { z } from "zod";
+import { set, z } from "zod";
 import { WalletComponent } from "./WalletComponent.jsx";
 import { Footer } from "./Footer.jsx";
 import "../css/components/modal.css";
 import { GuiaDeTalles } from "./GuiaDeTalles.jsx";
 import { NavBar } from "./NavBar.jsx";
+import { FormEnvio } from "./FormEnvio.jsx";
 export const Modal = () => {
   const {
     productoSeleccionado,
     setPreferenceId,
     setOpenCloseGuiaDeTalles,
     openCloseGuiaDeTalles,
+    openCloseSectionPay,
+    openInfoMetodoDePago,
+    setOpenInfoMetodoDePago,
+    setOpenCloseFormEnvio,
+    openCloseFormEnvio,
+  sliceFormEnvio,
+  refNombreFocus,
+  focusFormEnvio
   } = useContext(ElContexto);
 
-  const [email, setEmail] = useState("");
-  const [calle, setCalle] = useState("");
-  const [numeroDeCalle, setNumeroDeCalle] = useState("");
-  const [codigoPostal, setCodigoPostal] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [provincia, setProvincia] = useState("");
-  const [localidad, setLocalidad] = useState("");
+  
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFront, setLoadingFront] = useState(false);
-
+  
+  const refFormEnvio = useRef(null);
   const refImageCarrousel = useRef(null);
 
   let i = 0;
@@ -49,18 +52,17 @@ export const Modal = () => {
     imagenes: rows.imagenes.split(","),
   }));
   const [selectTalle, setSelectTalle] = useState("inicial");
-  const [openCloseFormEnvio, setOpenCloseFormEnvio] = useState(false);
 
   const tallesDisponibles = ["S", "XL", "XXL"];
-  const refButtonMulti = useRef(null);
+  const refButtonMultiText = useRef(null);
   const refArrowGuia = useRef(null);
   const refBtnGuiaDesplegable = useRef(null);
   useEffect(() => {
     if (selectTalle !== "inicial") {
-      const buttonMulti = refButtonMulti.current;
+      const buttonMulti = refButtonMultiText.current;
       const arrowGuia = refArrowGuia.current;
       const btnGuiaDesplegable = refBtnGuiaDesplegable.current;
-      buttonMulti.textContent = "Completar compra";
+      buttonMulti.textContent = "Completar envio";
       btnGuiaDesplegable.classList.add("activate");
       arrowGuia.classList.add("arrow-rotate");
       buttonMulti.scrollIntoView({ behavior: "smooth" });
@@ -71,54 +73,30 @@ export const Modal = () => {
   const refNombreFormEnvio = useRef(null);
 
   const despliegoFormEnvio = () => {
-    const buttonMulti = refButtonMulti.current;
-    if (buttonMulti.textContent === "Completar compra") {
-      console.log(openCloseFormEnvio);
+    const buttonMulti = refButtonMultiText.current;
+    if (buttonMulti.textContent === "Completar envio") {
       setOpenCloseFormEnvio((prevState) => !prevState);
+      setTimeout(() => {
+        sliceFormEnvio()
+      }, 400);
+      setTimeout(() => {
+        focusFormEnvio()
+      }, 600);
+      
     }
+
   };
 
-  useEffect(() => {
-    if (openCloseFormEnvio) {
-      const formDataEnvio = refFormDataEnvio.current;
-      formDataEnvio.scrollIntoView({ behavior: "smooth" });
-    }
-    setTimeout(() => {
-      const inputNombre = refNombreFormEnvio.current;
-      inputNombre.focus();
-    }, 500);
-  }, [openCloseFormEnvio]);
-
-  const userSchema = z.object({
-    nombre: z
-      .string()
-      .min(3, { message: "El Nombre debe contener al menos 3 letras" }),
-    apellido: z
-      .string()
-      .min(2, { message: "El Apellido debe contener al menos 2 letras" }),
-    localidad: z
-      .string()
-      .min(2, { message: "La Localidad debe contenr al menos 2 letras" }),
-    calle: z
-      .string()
-      .min(2, { message: "La Calle debe contener al menos 2 letras" }),
-    numeroDeCalle: z.number().min(2, {
-      message: "El numero de calle debe contener al menos 2 numeros",
-    }),
-    codigoPostal: z
-      .number()
-      .min(2, { message: "El codigo postal debe contener al menos 2 numeros" }),
-  });
 
   const refContMethodPay = useRef(null);
   const [errores, setErrores] = useState([]);
-  const [openCloseSectionPay, setOpenCloseSectionPay] = useState(false);
   const [formDataCompleto, setFormDataCompleto] = useState(false);
   const [formDataAnimation, setFormDataAnimation] = useState(false);
   const refSubtitleFormEnvio = useRef(null);
   const refTituloFormEnvio = useRef(null);
 
   //------------- validacion de formulario de envio ---------------
+  /*
   const validateFormEnvio = async (event) => {
     event.preventDefault();
 
@@ -133,7 +111,6 @@ export const Modal = () => {
 
     try {
       const validData = userSchema.parse(formData);
-      console.log(validData, "datos validos");
       setErrores([]);
 
       const unitPrice = productoSeleccionado[0].precio;
@@ -160,16 +137,15 @@ export const Modal = () => {
       const subtitleFormEnvio = refSubtitleFormEnvio.current;
       const tituloFormEnvio = refTituloFormEnvio.current;
 
-      setTimeout(() => {
+     
         setFormDataCompleto((prevState) => !prevState);
         tituloFormEnvio.textContent = "Datos de envio Completo";
-        subtitleFormEnvio.style.display = "none";
-      }, 200);
+      
       setFormDataAnimation((prevData) => !prevData);
 
       setTimeout(() => {
         setOpenCloseSectionPay((prevState) => !prevState);
-      }, 2500);
+      }, 2900);
 
       const formDataEnvio = refFormDataEnvio.current;
 
@@ -181,7 +157,6 @@ export const Modal = () => {
         setIsLoading((prevState) => !prevState);
       }, 4000);
     } catch (error) {
-      console.log(error.errors);
       setErrores(error.errors);
     }
   };
@@ -197,8 +172,21 @@ export const Modal = () => {
     const espacioBtnMercadopago = refEspacioBtnMercadopago.current;
     setTimeout(() => {
       espacioBtnMercadopago.style.height = "110px";
-    }, 1500);
+    }, 1800);
   }, [isLoading]);
+
+  const errorNombre = errores.find(
+    (error) => error.path && error.path[0] === "nombre"
+  );
+
+  const erroresForm = (fieldError) => {
+    const error = errores.find(
+      (error) => error.path && error.path[0] === fieldError
+    );
+
+    return error ? error.message : null;
+  };
+*/
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <>
@@ -258,8 +246,8 @@ export const Modal = () => {
                   }
                 >
                   <span className="material-symbols-outlined">
-                    settings_accessibility
-                  </span>
+settings_accessibility
+</span>
                   Guia de talles
                 </p>
               </header>
@@ -278,15 +266,13 @@ export const Modal = () => {
               </div>
             </div>
 
-            {/*----- Formulario Para Los Envios -----*/}
-
             <div className="cont-form-envio-desplegable">
               <div
                 className="btn-guia-desplegable"
                 onClick={despliegoFormEnvio}
                 ref={refBtnGuiaDesplegable}
               >
-                <strong ref={refButtonMulti}>Seleccioná el talle</strong>
+                <strong ref={refButtonMultiText}>Seleccioná el talle</strong>
                 <span
                   className="material-symbols-outlined prueba-flecha"
                   ref={refArrowGuia}
@@ -299,6 +285,11 @@ export const Modal = () => {
               </p>
             </div>
 
+            {/*----- Formulario Para Los Envios -----*/}
+            <FormEnvio />
+
+
+            {/*/
             {openCloseFormEnvio && (
               <div
                 className={
@@ -318,43 +309,54 @@ export const Modal = () => {
                   >
                     Editar
                   </button>
-                ) 
-                }
+                )}
                 <p className="form-data-subtitle" ref={refSubtitleFormEnvio}>
                   Usaremos esta info para hacerte llegar el envio.
                 </p>
-                {errores.length > 0 &&
-                  errores.map((item, index) => (
-                    <p key={index} className="message-errors">
-                      {item.message}
-                    </p>
-                  ))}
-
-                <input
-                  type="text"
-                  placeholder="Nombre"
-                  className={"input-form-data-envio"}
-                  onChange={(e) => setNombre(e.target.value)}
-                  ref={refNombreFormEnvio}
-                />
-                <input
-                  type="text"
-                  placeholder="Apellido"
-                  className={"input-form-data-envio"}
-                  onChange={(e) => setApellido(e.target.value)}
-                />
+                <div className="cont-inputs-form-envio-nombres">
+                  <h5>Nombre y Apellido</h5>
+                  {erroresForm("nombre") && (
+                    <p className="message-errors">{erroresForm("nombre")}</p>
+                  )}
+                  <input
+                    type="text"
+                    placeholder="Nombre"
+                    className={"input-form-data-envio"}
+                    onChange={(e) => setNombre(e.target.value)}
+                    ref={refNombreFormEnvio}
+                    name="nombre"
+                  />
+                  {erroresForm("apellido") && (
+                    <p className="message-errors">{erroresForm("apellido")}</p>
+                  )}
+                  <input
+                    type="text"
+                    placeholder="Apellido"
+                    className={"input-form-data-envio"}
+                    onChange={(e) => setApellido(e.target.value)}
+                  />
+                </div>
+                {erroresForm("email") && (
+                  <p className="message-errors">{erroresForm("email")}</p>
+                )}
                 <input
                   type="email"
                   placeholder="alan_turing@example.com"
                   className={"input-form-data-envio"}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                {erroresForm("provincia") && (
+                  <p className="message-errors">{erroresForm("provincia")}</p>
+                )}
                 <input
                   type="text"
                   placeholder="Provincia"
                   className={"input-form-data-envio"}
                   onChange={(e) => setProvincia(e.target.value)}
                 />
+                {erroresForm("localidad") && (
+                  <p className="message-errors">{erroresForm("localidad")}</p>
+                )}
                 <input
                   type="text"
                   placeholder="Localidad"
@@ -387,6 +389,7 @@ export const Modal = () => {
                 </button>
               </div>
             )}
+                  */}
             {openCloseSectionPay && (
               <div
                 className={
@@ -447,18 +450,9 @@ export const Modal = () => {
                   ))}
                 </div>
                 <div
-                  className={
-                    isLoading
-                      ? "cont-btn-mercadopago"
-                      : "cont-btn-mercadopago visiblee"
-                  }
-                  ref={refEspacioBtnMercadopago}
+                 
                 >
-                  {isLoading ? (
-                    <WalletComponent />
-                  ) : (
-                    <p className="loading-pay">Cargando</p>
-                  )}
+                  <WalletComponent />
                 </div>
               </div>
             )}
