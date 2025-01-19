@@ -12,7 +12,7 @@ export const FormEnvio = () => {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [calle, setCalle] = useState("");
-  const [numero, setNumero] = useState("");
+  const [numeroDeCalle, setNumeroDeCalle] = useState("");
   const [piso, setPiso] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [codigoPostal, setCodigoPostal] = useState("");
@@ -33,7 +33,14 @@ export const FormEnvio = () => {
     openCloseFormEnvio,
     refFormEnvio,
     refInputEmail,
+    selectTalle,
+    infoProductoSeleccionado,
+    setInfoProductoSeleccionado,
   } = useContext(ElContexto);
+
+  useEffect(() => {
+    console.log(productoSeleccionado[0].precio, "el articulo seleccionado");
+  }, [productoSeleccionado]);
 
   const envioSchema = z.object({
     email: z.string().email({ message: "Email invalido" }),
@@ -49,7 +56,7 @@ export const FormEnvio = () => {
     calle: z
       .string()
       .min(2, { message: "La Calle debe contener al menos 2 letras" }),
-    numero: z.number().min(2, {
+    numeroDeCalle: z.number().min(2, {
       message: "El numero de calle debe contener al menos 2 numeros",
     }),
     piso: z
@@ -59,19 +66,19 @@ export const FormEnvio = () => {
     departamento: z
       .string()
       .min(1, { message: "El departamento debe contener al menos 1 letra" }),
-
     codigoPostal: z
       .number()
       .min(2, { message: "El codigo postal debe contener al menos 2 numeros" }),
-    provincia: z
-      .string()
-      .min(2, { message: "Selecciona una provincia" }),
+    provincia: z.string().min(2, { message: "Selecciona una provincia" }),
     telefono: z
       .number()
       .min(8, { message: "El telefono debe contener al menos 8 numeros" }),
     dni: z
       .number()
       .min(7, { message: "El DNI debe contener al menos 7 numeros" }),
+    selectTalle: z.string(),
+    articulo: z.string(),
+    precio: z.number(),
   });
 
   //Funcion para validar el formulario
@@ -79,6 +86,7 @@ export const FormEnvio = () => {
     setIsLoading((prevState) => !prevState);
 
     const precio = productoSeleccionado[0].precio;
+    const articulo = productoSeleccionado[0].nombre;
 
     console.log(precio);
     try {
@@ -87,7 +95,7 @@ export const FormEnvio = () => {
         nombre,
         apellido,
         calle,
-        numero: numero ? parseInt(numero, 10) : 0,
+        numeroDeCalle: numeroDeCalle ? parseInt(numeroDeCalle, 10) : 0,
         piso: piso ? parseInt(piso, 10) : 9999,
         departamento,
         codigoPostal: codigoPostal ? parseInt(codigoPostal, 10) : 0,
@@ -96,6 +104,8 @@ export const FormEnvio = () => {
         telefono: telefono ? parseInt(telefono, 10) : 0,
         dni: dni ? parseInt(dni, 10) : 0,
         precio,
+        selectTalle,
+        articulo
       };
 
       const validData = envioSchema.parse(datosEnvio);
@@ -214,14 +224,14 @@ export const FormEnvio = () => {
             placeholder="Calle"
             className="input-formenvio"
           />
-          {erroresForm("numero") && (
-            <p className="errores-formenvio">{erroresForm("numero")}</p>
+          {erroresForm("numeroDeCalle") && (
+            <p className="errores-formenvio">{erroresForm("numeroDeCalle")}</p>
           )}
 
           <input
             type="number"
             placeholder="Numero De Calle"
-            onChange={(e) => setNumero(e.target.value)}
+            onChange={(e) => setNumeroDeCalle(e.target.value)}
             className="input-formenvio"
           />
           {erroresForm("piso") && (
@@ -243,37 +253,41 @@ export const FormEnvio = () => {
             onChange={(e) => setDepartamento(e.target.value)}
             className="input-formenvio"
           />
-          {erroresForm("provincia") && ( <p className="errores-formenvio">{erroresForm("provincia")}</p>)}
+          {erroresForm("provincia") && (
+            <p className="errores-formenvio">{erroresForm("provincia")}</p>
+          )}
           <select
             name="Provincia"
             className="input-formenvio__select"
             onChange={(e) => setProvincia(e.target.value)}
           >
-            <option value="" disabled>Provincia</option>
+            <option value="" disabled>
+              Provincia
+            </option>
             <option value="buenos_aires">Buenos Aires</option>
-  <option value="catamarca">Catamarca</option>
-  <option value="chaco">Chaco</option>
-  <option value="chubut">Chubut</option>
-  <option value="cordoba">Córdoba</option>
-  <option value="corrientes">Corrientes</option>
-  <option value="entre_rios">Entre Ríos</option>
-  <option value="formosa">Formosa</option>
-  <option value="jujuy">Jujuy</option>
-  <option value="la_pampa">La Pampa</option>
-  <option value="la_rioja">La Rioja</option>
-  <option value="mendoza">Mendoza</option>
-  <option value="misiones">Misiones</option>
-  <option value="neuquen">Neuquén</option>
-  <option value="rio_negro">Río Negro</option>
-  <option value="salta">Salta</option>
-  <option value="san_juan">San Juan</option>
-  <option value="san_luis">San Luis</option>
-  <option value="santa_cruz">Santa Cruz</option>
-  <option value="santa_fe">Santa Fe</option>
-  <option value="santiago_del_estero">Santiago del Estero</option>
-  <option value="tierra_del_fuego">Tierra del Fuego</option>
-  <option value="tucuman">Tucumán</option>
-  <option value="caba">Ciudad Autónoma de Buenos Aires</option>
+            <option value="catamarca">Catamarca</option>
+            <option value="chaco">Chaco</option>
+            <option value="chubut">Chubut</option>
+            <option value="cordoba">Córdoba</option>
+            <option value="corrientes">Corrientes</option>
+            <option value="entre_rios">Entre Ríos</option>
+            <option value="formosa">Formosa</option>
+            <option value="jujuy">Jujuy</option>
+            <option value="la_pampa">La Pampa</option>
+            <option value="la_rioja">La Rioja</option>
+            <option value="mendoza">Mendoza</option>
+            <option value="misiones">Misiones</option>
+            <option value="neuquen">Neuquén</option>
+            <option value="rio_negro">Río Negro</option>
+            <option value="salta">Salta</option>
+            <option value="san_juan">San Juan</option>
+            <option value="san_luis">San Luis</option>
+            <option value="santa_cruz">Santa Cruz</option>
+            <option value="santa_fe">Santa Fe</option>
+            <option value="santiago_del_estero">Santiago del Estero</option>
+            <option value="tierra_del_fuego">Tierra del Fuego</option>
+            <option value="tucuman">Tucumán</option>
+            <option value="caba">Ciudad Autónoma de Buenos Aires</option>
           </select>
 
           {erroresForm("localidad") && (
@@ -287,12 +301,12 @@ export const FormEnvio = () => {
             className="input-formenvio"
           />
         </div>
-        
+
         <div className="formenvio__inputs-envio__codigoPostal">
           <h4>CODIGO POSTAL</h4>
           {erroresForm("codigoPostal") && (
-          <p className="errores-formenvio">{erroresForm("codigoPostal")}</p>
-        )}
+            <p className="errores-formenvio">{erroresForm("codigoPostal")}</p>
+          )}
           <input
             type="text"
             placeholder="CodigoPostal"

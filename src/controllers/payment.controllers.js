@@ -77,12 +77,14 @@ export const paymentProccess = async (req, res) => {
       piso,
       departamento,
       telefono,
-      precio,
-      title,
       email,
       selectTalle,
-    } = req.body;
+      articulo,
+      precio
+      
+    } = req.body.validData;
 
+    
     const shippingData = {
       nombre,
       apellido,
@@ -91,20 +93,22 @@ export const paymentProccess = async (req, res) => {
       calle,
       numeroDeCalle,
       codigoPostal,
-      title,
-      email,
-      selectTalle,
       departamento,
       piso,
       dni,
       telefono,
+      email,
+      selectTalle,
+      articulo,
       precio
     };
 
+    console.log(shippingData, 'shipping data')
     const shippingDataSerial = JSON.stringify(shippingData);
 
     const tokenMP = process.env.TOKEN_MERCADO_PAGO_API;
-    console.log(tokenMP);
+    console.log(tokenMP, "el tokenMP");
+    console.log(shippingDataSerial, "el seriallllll");
 
     const client = new MercadoPagoConfig({
       accessToken: tokenMP,
@@ -116,94 +120,31 @@ export const paymentProccess = async (req, res) => {
       body: {
         items: [
           {
-            title: title,
+            title: articulo,
             quantity: 1,
-            unit_price: 1121,
+            unit_price: precio,
           },
         ],
-        external_reference: shippingDataSerial,
+        metadata: shippingData,
 
         back_urls: {
           success: "http://localhost:5173/",
-          failure: "http://localhost:3000/pending",
-          pending: "http://localhost:3000/failure",
+          failure: "https://anatomy-photographer-possibility-greater.trycloudflare.com/pending",
+          pending: "https://anatomy-photographer-possibility-greater.trycloudflare.com/failure",
         },
         auto_return: "approved",
         notification_url:
-          "https://polyester-greatest-hack-positioning.trycloudflare.com/webhook",
+          "https://anatomy-photographer-possibility-greater.trycloudflare.com/webhook",
       },
     });
 
     const preferenceId = response.id;
-    console.log(response);
-    return res.status(200).json({ preferenceId });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error En endpoint paymeproccess");
-  }
-};
+    console.log(preferenceId, "el preference id");
+    console.log(response, "la respuesta");
 
-//5031 7557 3453 0604
 
-export const webhook = async (req, res) => {
-  try {
-    const tokenMP = process.env.TOKEN_MERCADO_PAGO_API;
-    console.log(tokenMP);
-
-    const client = new MercadoPagoConfig({
-      accessToken: tokenMP,
-    });
-
-    const payment = new Payment(client);
-
-    const dataPayment = await payment.get({ id: req.query["data.id"] });
-
-    console.log(dataPayment, "el webhook");
-    const shippingNotSerial = JSON.parse(dataPayment.external_reference);
-    const { transaction_amount } = dataPayment;
-    console.log(dataPayment)
-    const {
-      nombre,
-      apellido,
-      provincia,
-      localidad,
-      calle,
-      numeroDeCalle,
-      codigoPostal,
-      title,
-      email,
-      selectTalle,
-      departamento,
-      piso,
-      dni,
-      telefono,
-    } = shippingNotSerial;
-
-    console.log(nombre, apellido);
-
-    await pool.query(
-      "INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo, talle, dni, telefono, piso, departamento) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [
-        nombre,
-        apellido,
-        provincia,
-        localidad,
-        calle,
-        numeroDeCalle,
-        codigoPostal,
-        email,
-        transaction_amount,
-        title,
-        selectTalle,
-        departamento,
-        dni,
-        telefono,
-        piso
-      ]
-    );
-    console.log(shippingNotSerial);
-
-    const apiKey = process.env.APY_KEY_BREVO_EMAILS;
+/*
+    const apiKey = process.env.APY_BREVO;
 
     const apiInstance = new brevo.TransactionalEmailsApi();
 
@@ -223,6 +164,77 @@ export const webhook = async (req, res) => {
     const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
 
     console.log(result);
+*/
+
+
+    return res.status(200).json({ preferenceId });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error En endpoint paymeproccess");
+  }
+};
+
+//5031 7557 3453 0604
+
+export const webhook = async (req, res) => {
+  try {
+    const tokenMP = process.env.TOKEN_MERCADO_PAGO_API;
+    
+    const client = new MercadoPagoConfig({
+      accessToken: tokenMP,
+    });
+    
+    const payment = new Payment(client);
+    
+    const dataPayment = await payment.get({ id: req.query["data.id"] });
+    console.log("lionel messi")
+    console.log(typeof dataPayment.metadata, dataPayment.metadata);
+
+    
+    //const shippingNotSerial = JSON.parse(dataPayment.metadata)
+    const { transaction_amount } = dataPayment;
+    console.log(dataPayment.metadata) //este console.log me muetra todos los datos del comprador
+    const {
+      nombre,
+      apellido,
+      provincia,
+      localidad,
+      calle,
+      numero_de_calle: numeroDeCalle, 
+      codigo_postal: codigoPostal,
+      articulo,
+      email,
+      select_talle: selectTalle,
+      departamento,
+      piso,
+      dni,
+      telefono,
+    } = dataPayment.metadata;
+    
+    console.log(nombre, apellido, numeroDeCalle, codigoPostal,selectTalle); //Pero este me da undefined en numeroDeCalle, codigoPostal y selectTalle
+    
+    console.log("hasta aca llega el webhook")
+    await pool.query(
+      "INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo, talle, departamento,dni, telefono, piso ) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        nombre,
+        apellido,
+        provincia,
+        localidad,
+        calle,
+        numeroDeCalle,
+        codigoPostal,
+        email,
+        transaction_amount,
+        articulo,
+        selectTalle,
+        departamento,
+        dni,
+        telefono,
+        piso
+      ]
+    );
+
 
     return res.status(200).send("Data recibida");
   } catch (err) {

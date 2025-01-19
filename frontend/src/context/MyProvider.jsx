@@ -11,7 +11,8 @@ export const MyProvider = ({ children }) => {
   const [openCloseSectionPay, setOpenCloseSectionPay] = useState(false);
   const [openInfoMetodoDePago, setOpenInfoMetodoDePago] = useState(true);
   const [openCloseFormEnvio, setOpenCloseFormEnvio] = useState(false);
-
+  const [selectTalle, setSelectTalle] = useState("inicial");
+  const [infoProductoSeleccionado, setInfoProductoSeleccionado] = useState([]);
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
@@ -26,8 +27,6 @@ export const MyProvider = ({ children }) => {
   const refNombreFocus = useRef(null);
   const refInputEmail = useRef(null);
 
-  
-
   const verTodo = () => {
     const catalogo = refCatalogo.current;
     catalogo.scrollIntoView({ block: "end", behavior: "smooth" });
@@ -36,14 +35,13 @@ export const MyProvider = ({ children }) => {
   const sliceFormEnvio = () => {
     const formnEnvio = refFormEnvio.current;
     formnEnvio.scrollIntoView({ block: "start", behavior: "smooth" });
-    console.log('Se ejecuto el slide')
-  }
+    console.log("Se ejecuto el slide");
+  };
 
-
-  const focusFormEnvio = ()=> {
+  const focusFormEnvio = () => {
     const inputEmail = refInputEmail.current;
     inputEmail.focus();
-  }
+  };
   return (
     <ElContexto.Provider
       value={{
@@ -66,7 +64,11 @@ export const MyProvider = ({ children }) => {
         refFormEnvio,
         sliceFormEnvio,
         refInputEmail,
-        focusFormEnvio
+        focusFormEnvio,
+        selectTalle,
+        setSelectTalle,
+        infoProductoSeleccionado,
+        setInfoProductoSeleccionado,
       }}
     >
       {children}

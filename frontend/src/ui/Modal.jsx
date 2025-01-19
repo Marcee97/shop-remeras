@@ -19,15 +19,16 @@ export const Modal = () => {
     setOpenInfoMetodoDePago,
     setOpenCloseFormEnvio,
     openCloseFormEnvio,
-  sliceFormEnvio,
-  refNombreFocus,
-  focusFormEnvio
+    sliceFormEnvio,
+    refNombreFocus,
+    focusFormEnvio,
+    setSelectTalle,
+    selectTalle
   } = useContext(ElContexto);
 
-  
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFront, setLoadingFront] = useState(false);
-  
+
   const refFormEnvio = useRef(null);
   const refImageCarrousel = useRef(null);
 
@@ -51,7 +52,6 @@ export const Modal = () => {
     ...rows,
     imagenes: rows.imagenes.split(","),
   }));
-  const [selectTalle, setSelectTalle] = useState("inicial");
 
   const tallesDisponibles = ["S", "XL", "XXL"];
   const refButtonMultiText = useRef(null);
@@ -77,16 +77,13 @@ export const Modal = () => {
     if (buttonMulti.textContent === "Completar envio") {
       setOpenCloseFormEnvio((prevState) => !prevState);
       setTimeout(() => {
-        sliceFormEnvio()
+        sliceFormEnvio();
       }, 400);
       setTimeout(() => {
-        focusFormEnvio()
+        focusFormEnvio();
       }, 600);
-      
     }
-
   };
-
 
   const refContMethodPay = useRef(null);
   const [errores, setErrores] = useState([]);
@@ -246,8 +243,8 @@ export const Modal = () => {
                   }
                 >
                   <span className="material-symbols-outlined">
-settings_accessibility
-</span>
+                    settings_accessibility
+                  </span>
                   Guia de talles
                 </p>
               </header>
@@ -287,7 +284,6 @@ settings_accessibility
 
             {/*----- Formulario Para Los Envios -----*/}
             <FormEnvio />
-
 
             {/*/
             {openCloseFormEnvio && (
@@ -449,9 +445,7 @@ settings_accessibility
                     </div>
                   ))}
                 </div>
-                <div
-                 
-                >
+                <div>
                   <WalletComponent />
                 </div>
               </div>
