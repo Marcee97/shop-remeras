@@ -34,8 +34,6 @@ export const FormEnvio = () => {
     refFormEnvio,
     refInputEmail,
     selectTalle,
-    infoProductoSeleccionado,
-    setInfoProductoSeleccionado,
   } = useContext(ElContexto);
 
   useEffect(() => {
@@ -105,7 +103,7 @@ export const FormEnvio = () => {
         dni: dni ? parseInt(dni, 10) : 0,
         precio,
         selectTalle,
-        articulo
+        articulo,
       };
 
       const validData = envioSchema.parse(datosEnvio);
@@ -122,7 +120,7 @@ export const FormEnvio = () => {
         console.log("Datos enviados correctamente");
         setOpenCloseSectionPay((prevState) => !prevState);
         setOpenInfoMetodoDePago((prevState) => !prevState);
-        setOpenCloseFormEnvio((prevState) => !prevState);
+        setOpenCloseFormEnvio("completed");
         setIsLoading((prevState) => !prevState);
       } else {
         console.log("Error al enviar los datos");
@@ -140,200 +138,213 @@ export const FormEnvio = () => {
     return error ? error.message : null;
   };
 
-  return (
-    <section
-      className={openCloseFormEnvio ? "formenvio " : "completed"}
-      ref={refFormEnvio}
-    >
-      <div className="formenvio__total">
-        <h3 className="formenvio__comprando">Comprando</h3>
-        <p className="formenvio__total-detalle">
-          {productoSeleccionado[0].nombre}
-        </p>
-        <p className="formenvio__total-detalle">
-          (${productoSeleccionado[0].precio})
-        </p>
-      </div>
-      <div className="formenvio__inputs-contacto">
-        <h4>CONTACTO</h4>
-        {erroresForm("email") && (
-          <p className="errores-formenvio">{erroresForm("email")}</p>
-        )}
-        <input
-          type="email"
-          className="input-formenvio"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          ref={refInputEmail}
-        />
-      </div>
-      <div className="formenvio__inputs-direccion">
-        <div className="formenvio__inputs-direccion__datos">
-          <h4>INFORMACION</h4>
-          {erroresForm("nombre") && (
-            <p className="errores-formenvio">{erroresForm("nombre")}</p>
-          )}
-          <input
-            type="text"
-            onChange={(e) => setNombre(e.target.value)}
-            placeholder="Nombre"
-            className="input-formenvio"
-          />
-          {erroresForm("apellido") && (
-            <p className="errores-formenvio">{erroresForm("apellido")}</p>
-          )}
+  const classFormEnvio = {
+    inicial: "inicial",
+    open: "formenvio",
+    completed: "completed",
+  };
 
-          <input
-            type="text"
-            onChange={(e) => setApellido(e.target.value)}
-            placeholder="Apellido"
-            className="input-formenvio"
-          />
-          {erroresForm("dni") && (
-            <p className="errores-formenvio">{erroresForm("dni")}</p>
-          )}
-          <input
-            type="text"
-            placeholder="DNI"
-            onChange={(e) => setDni(e.target.value)}
-            className="input-formenvio"
-          />
-          {erroresForm("telefono") && (
-            <p className="errores-formenvio">{erroresForm("telefono")}</p>
-          )}
-          <input
-            type="text"
-            placeholder="Telefono"
-            onChange={(e) => setTelefono(e.target.value)}
-            className="input-formenvio"
-          />
-          <p className="formenvio__mensage-telefono">
-            Tu telefono es en caso de tener algun problema con el envio
+  return (
+    <section className={classFormEnvio[openCloseFormEnvio]} ref={refFormEnvio}>
+      <div className={openCloseFormEnvio !== "completed" ? "texto-completed" : "texto-completed opacity"}>
+    <h4>Datos de envio</h4>
+    <button className="btn-editar">Editar</button>
+      </div>
+      <div
+        className="cont-formenvio"
+      >
+        <div className="formenvio__total">
+          <h3 className="formenvio__comprando">Comprando</h3>
+          <p className="formenvio__total-detalle">
+            {productoSeleccionado[0].nombre}
+          </p>
+          <p className="formenvio__total-detalle">
+            (${productoSeleccionado[0].precio})
           </p>
         </div>
-
-        <div className="formenvio__inputs-direccion__direccion">
-          <h4>DIRECCION</h4>
-          {erroresForm("calle") && (
-            <p className="errores-formenvio">{erroresForm("calle")}</p>
-          )}
-
-          <input
-            type="text"
-            onChange={(e) => setCalle(e.target.value)}
-            placeholder="Calle"
-            className="input-formenvio"
-          />
-          {erroresForm("numeroDeCalle") && (
-            <p className="errores-formenvio">{erroresForm("numeroDeCalle")}</p>
-          )}
-
-          <input
-            type="number"
-            placeholder="Numero De Calle"
-            onChange={(e) => setNumeroDeCalle(e.target.value)}
-            className="input-formenvio"
-          />
-          {erroresForm("piso") && (
-            <p className="errores-formenvio">{erroresForm("piso")}</p>
+        <div className="formenvio__inputs-contacto">
+          <h4>CONTACTO</h4>
+          {erroresForm("email") && (
+            <p className="errores-formenvio">{erroresForm("email")}</p>
           )}
           <input
-            type="number"
-            placeholder="Piso"
-            onChange={(e) => setPiso(e.target.value)}
+            type="email"
             className="input-formenvio"
-          />
-          {erroresForm("departamento") && (
-            <p className="errores-formenvio">{erroresForm("departamento")}</p>
-          )}
-
-          <input
-            type="text"
-            placeholder="Departamento"
-            onChange={(e) => setDepartamento(e.target.value)}
-            className="input-formenvio"
-          />
-          {erroresForm("provincia") && (
-            <p className="errores-formenvio">{erroresForm("provincia")}</p>
-          )}
-          <select
-            name="Provincia"
-            className="input-formenvio__select"
-            onChange={(e) => setProvincia(e.target.value)}
-          >
-            <option value="" disabled>
-              Provincia
-            </option>
-            <option value="buenos_aires">Buenos Aires</option>
-            <option value="catamarca">Catamarca</option>
-            <option value="chaco">Chaco</option>
-            <option value="chubut">Chubut</option>
-            <option value="cordoba">Córdoba</option>
-            <option value="corrientes">Corrientes</option>
-            <option value="entre_rios">Entre Ríos</option>
-            <option value="formosa">Formosa</option>
-            <option value="jujuy">Jujuy</option>
-            <option value="la_pampa">La Pampa</option>
-            <option value="la_rioja">La Rioja</option>
-            <option value="mendoza">Mendoza</option>
-            <option value="misiones">Misiones</option>
-            <option value="neuquen">Neuquén</option>
-            <option value="rio_negro">Río Negro</option>
-            <option value="salta">Salta</option>
-            <option value="san_juan">San Juan</option>
-            <option value="san_luis">San Luis</option>
-            <option value="santa_cruz">Santa Cruz</option>
-            <option value="santa_fe">Santa Fe</option>
-            <option value="santiago_del_estero">Santiago del Estero</option>
-            <option value="tierra_del_fuego">Tierra del Fuego</option>
-            <option value="tucuman">Tucumán</option>
-            <option value="caba">Ciudad Autónoma de Buenos Aires</option>
-          </select>
-
-          {erroresForm("localidad") && (
-            <p className="errores-formenvio">{erroresForm("localidad")}</p>
-          )}
-
-          <input
-            type="text"
-            placeholder="Localidad"
-            onChange={(e) => setLocalidad(e.target.value)}
-            className="input-formenvio"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            ref={refInputEmail}
           />
         </div>
+        <div className="formenvio__inputs-direccion">
+          <div className="formenvio__inputs-direccion__datos">
+            <h4>INFORMACION</h4>
+            {erroresForm("nombre") && (
+              <p className="errores-formenvio">{erroresForm("nombre")}</p>
+            )}
+            <input
+              type="text"
+              onChange={(e) => setNombre(e.target.value)}
+              placeholder="Nombre"
+              className="input-formenvio"
+            />
+            {erroresForm("apellido") && (
+              <p className="errores-formenvio">{erroresForm("apellido")}</p>
+            )}
 
-        <div className="formenvio__inputs-envio__codigoPostal">
-          <h4>CODIGO POSTAL</h4>
-          {erroresForm("codigoPostal") && (
-            <p className="errores-formenvio">{erroresForm("codigoPostal")}</p>
-          )}
-          <input
-            type="text"
-            placeholder="CodigoPostal"
-            onChange={(e) => setCodigoPostal(e.target.value)}
-            className="input-formenvio"
-          />
+            <input
+              type="text"
+              onChange={(e) => setApellido(e.target.value)}
+              placeholder="Apellido"
+              className="input-formenvio"
+            />
+            {erroresForm("dni") && (
+              <p className="errores-formenvio">{erroresForm("dni")}</p>
+            )}
+            <input
+              type="text"
+              placeholder="DNI"
+              onChange={(e) => setDni(e.target.value)}
+              className="input-formenvio"
+            />
+            {erroresForm("telefono") && (
+              <p className="errores-formenvio">{erroresForm("telefono")}</p>
+            )}
+            <input
+              type="text"
+              placeholder="Telefono"
+              onChange={(e) => setTelefono(e.target.value)}
+              className="input-formenvio"
+            />
+            <p className="formenvio__mensage-telefono">
+              Tu telefono es en caso de tener algun problema con el envio
+            </p>
+          </div>
+
+          <div className="formenvio__inputs-direccion__direccion">
+            <h4>DIRECCION</h4>
+            {erroresForm("calle") && (
+              <p className="errores-formenvio">{erroresForm("calle")}</p>
+            )}
+
+            <input
+              type="text"
+              onChange={(e) => setCalle(e.target.value)}
+              placeholder="Calle"
+              className="input-formenvio"
+            />
+            {erroresForm("numeroDeCalle") && (
+              <p className="errores-formenvio">
+                {erroresForm("numeroDeCalle")}
+              </p>
+            )}
+
+            <input
+              type="number"
+              placeholder="Numero De Calle"
+              onChange={(e) => setNumeroDeCalle(e.target.value)}
+              className="input-formenvio"
+            />
+            {erroresForm("piso") && (
+              <p className="errores-formenvio">{erroresForm("piso")}</p>
+            )}
+            <input
+              type="number"
+              placeholder="Piso"
+              onChange={(e) => setPiso(e.target.value)}
+              className="input-formenvio"
+            />
+            {erroresForm("departamento") && (
+              <p className="errores-formenvio">{erroresForm("departamento")}</p>
+            )}
+
+            <input
+              type="text"
+              placeholder="Departamento"
+              onChange={(e) => setDepartamento(e.target.value)}
+              className="input-formenvio"
+            />
+            {erroresForm("provincia") && (
+              <p className="errores-formenvio">{erroresForm("provincia")}</p>
+            )}
+            <select
+              name="Provincia"
+              className="input-formenvio__select"
+              onChange={(e) => setProvincia(e.target.value)}
+            >
+              <option value="" disabled>
+                Provincia
+              </option>
+              <option value="buenos_aires">Buenos Aires</option>
+              <option value="catamarca">Catamarca</option>
+              <option value="chaco">Chaco</option>
+              <option value="chubut">Chubut</option>
+              <option value="cordoba">Córdoba</option>
+              <option value="corrientes">Corrientes</option>
+              <option value="entre_rios">Entre Ríos</option>
+              <option value="formosa">Formosa</option>
+              <option value="jujuy">Jujuy</option>
+              <option value="la_pampa">La Pampa</option>
+              <option value="la_rioja">La Rioja</option>
+              <option value="mendoza">Mendoza</option>
+              <option value="misiones">Misiones</option>
+              <option value="neuquen">Neuquén</option>
+              <option value="rio_negro">Río Negro</option>
+              <option value="salta">Salta</option>
+              <option value="san_juan">San Juan</option>
+              <option value="san_luis">San Luis</option>
+              <option value="santa_cruz">Santa Cruz</option>
+              <option value="santa_fe">Santa Fe</option>
+              <option value="santiago_del_estero">Santiago del Estero</option>
+              <option value="tierra_del_fuego">Tierra del Fuego</option>
+              <option value="tucuman">Tucumán</option>
+              <option value="caba">Ciudad Autónoma de Buenos Aires</option>
+            </select>
+
+            {erroresForm("localidad") && (
+              <p className="errores-formenvio">{erroresForm("localidad")}</p>
+            )}
+
+            <input
+              type="text"
+              placeholder="Localidad"
+              onChange={(e) => setLocalidad(e.target.value)}
+              className="input-formenvio"
+            />
+          </div>
+
+          <div className="formenvio__inputs-envio__codigoPostal">
+            <h4>CODIGO POSTAL</h4>
+            {erroresForm("codigoPostal") && (
+              <p className="errores-formenvio">{erroresForm("codigoPostal")}</p>
+            )}
+            <input
+              type="text"
+              placeholder="CodigoPostal"
+              onChange={(e) => setCodigoPostal(e.target.value)}
+              className="input-formenvio"
+            />
+          </div>
+
+          <p className="formenvio__mensage-socalo">
+            Usaremos esta información únicamente para realizar el envío de tu
+            pedido
+          </p>
         </div>
-
-        <p className="formenvio__mensage-socalo">
-          Usaremos esta información únicamente para realizar el envío de tu
-          pedido
-        </p>
+        <button className="formenvio__btn-submit" onClick={validateForm}>
+          {isLoading ? (
+            <l-reuleaux
+              size="37"
+              stroke="2"
+              stroke-length="0.15"
+              bg-opacity="0.1"
+              speed="1.2"
+              color="black"
+            ></l-reuleaux>
+          ) : (
+            "Aceptar"
+          )}
+        </button>
       </div>
-      <button className="formenvio__btn-submit" onClick={validateForm}>
-        {isLoading ? (
-          <l-reuleaux
-            size="37"
-            stroke="2"
-            stroke-length="0.15"
-            bg-opacity="0.1"
-            speed="1.2"
-            color="black"
-          ></l-reuleaux>
-        ) : (
-          "Aceptar"
-        )}
-      </button>
     </section>
   );
 };

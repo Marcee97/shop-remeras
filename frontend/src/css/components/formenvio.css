@@ -9,23 +9,83 @@
   gap: 0.5em;
   overflow: hidden;
   color: #fff;
-  padding: .5em 0 .5em 0;
+  padding: 0.5em 0 0.5em 0;
   max-height: 87em;
+  position: relative;
+}
+
+.cont-formenvio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 0.2em 1.3em 0.2em;
+}
+.texto-completed {
+  color: #fff;
+  position: absolute;
+  width: 97%;
+  border-radius: 5px;
+  height: 4em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  transition: all 1s;
+  padding: 1em;
+  background: linear-gradient(to right, #11c92a .9%, #0f5f0f 1%, #0a0a0a 3%);
+}
+.btn-editar{
+  border: 1px solid #fff;
+  font-size: .7em;
+  padding: .6em;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+}
+
+.opacity {
+  opacity: 1;
+}
+
+
+.inicial {
+  font-family: sans-serif;
+  transition: max-height 2s ease, padding 1s ease, opacity 2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  max-height: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.completed {
+  font-family: sans-serif;
+  transition: max-height 2s ease, padding 1s ease, opacity 2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  max-height: 4em;
+  justify-content: center;
+  align-items: center;
 }
 .formenvio__total {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  font-size: .8em;
+  font-size: 0.8em;
   padding: 0 0.8em 1.3em 0.8em;
 }
 .formenvio__total-detalle {
   color: rgb(112, 111, 111);
 }
-.formenvio__comprando{
+.formenvio__comprando {
   font-size: 1.5em;
-  margin-bottom: .2em;
+  margin-bottom: 0.2em;
 }
 
 .formenvio__inputs-direccion {
@@ -41,48 +101,46 @@
   flex-direction: column;
   gap: 0.9em;
   width: 100%;
-  padding: .5em;
+  padding: 0.5em;
   border-radius: 9px;
   border-left: 1px solid #2b2a2a;
-
 }
 
-.formenvio__inputs-direccion__datos{
+.formenvio__inputs-direccion__datos {
   display: flex;
   flex-direction: column;
   gap: 0.9em;
   width: 100%;
   border-radius: 9px;
   border-left: 1px solid #2b2a2a;
-  padding: .5em;
+  padding: 0.5em;
 }
 
-
-.formenvio__inputs-direccion__direccion{
+.formenvio__inputs-direccion__direccion {
   display: flex;
   flex-direction: column;
   gap: 0.9em;
   width: 100%;
   border-radius: 9px;
   border-left: 1px solid #2b2a2a;
-  padding: .5em;
+  padding: 0.5em;
 }
 
-.formenvio__inputs-envio__codigoPostal{
+.formenvio__inputs-envio__codigoPostal {
   display: flex;
   flex-direction: column;
   gap: 0.9em;
   width: 100%;
   border-radius: 9px;
   border-left: 1px solid #2b2a2a;
-  padding: .5em;
+  padding: 0.5em;
 }
-.formenvio__mensage-telefono{
-  font-size: .5em;
+.formenvio__mensage-telefono {
+  font-size: 0.5em;
   margin-top: -16px;
   color: #adadad;
-
 }
+
 
 .errores-formenvio {
   color: red;
@@ -113,20 +171,11 @@
   border-radius: 5px;
   padding: 0.5em 1em;
   width: 90%;
+  text-align: center;
 }
 
 .formenvio__mensage-socalo {
   font-size: 0.7em;
   color: #adadad;
   margin-left: 9px;
-}
-
-.completed {
-  font-family: sans-serif;
-  transition: max-height 1s ease, padding 1s ease, opacity 1s ease;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  max-height: 0;
 }

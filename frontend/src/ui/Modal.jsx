@@ -8,6 +8,7 @@ import "../css/components/modal.css";
 import { GuiaDeTalles } from "./GuiaDeTalles.jsx";
 import { NavBar } from "./NavBar.jsx";
 import { FormEnvio } from "./FormEnvio.jsx";
+import { FormPayment } from "./FormPayment.jsx";
 export const Modal = () => {
   const {
     productoSeleccionado,
@@ -75,7 +76,7 @@ export const Modal = () => {
   const despliegoFormEnvio = () => {
     const buttonMulti = refButtonMultiText.current;
     if (buttonMulti.textContent === "Completar envio") {
-      setOpenCloseFormEnvio((prevState) => !prevState);
+      setOpenCloseFormEnvio("open");
       setTimeout(() => {
         sliceFormEnvio();
       }, 400);
@@ -92,98 +93,7 @@ export const Modal = () => {
   const refSubtitleFormEnvio = useRef(null);
   const refTituloFormEnvio = useRef(null);
 
-  //------------- validacion de formulario de envio ---------------
-  /*
-  const validateFormEnvio = async (event) => {
-    event.preventDefault();
-
-    const formData = {
-      nombre,
-      apellido,
-      localidad,
-      calle,
-      numeroDeCalle: numeroDeCalle ? parseInt(numeroDeCalle, 10) : 0,
-      codigoPostal: codigoPostal ? parseInt(codigoPostal, 10) : 0,
-    };
-
-    try {
-      const validData = userSchema.parse(formData);
-      setErrores([]);
-
-      const unitPrice = productoSeleccionado[0].precio;
-      const quantity = productoSeleccionado[0].cantidad;
-      const title = productoSeleccionado[0].nombre;
-
-      const response = await client.post("/payment-proccess", {
-        unitPrice,
-        quantity,
-        title,
-        nombre,
-        apellido,
-        provincia,
-        localidad,
-        calle,
-        numeroDeCalle,
-        codigoPostal,
-        title,
-        email,
-        selectTalle,
-      });
-      const { preferenceId } = response.data;
-      setPreferenceId(preferenceId);
-      const subtitleFormEnvio = refSubtitleFormEnvio.current;
-      const tituloFormEnvio = refTituloFormEnvio.current;
-
-     
-        setFormDataCompleto((prevState) => !prevState);
-        tituloFormEnvio.textContent = "Datos de envio Completo";
-      
-      setFormDataAnimation((prevData) => !prevData);
-
-      setTimeout(() => {
-        setOpenCloseSectionPay((prevState) => !prevState);
-      }, 2900);
-
-      const formDataEnvio = refFormDataEnvio.current;
-
-      setTimeout(() => {
-        refContMethodPay.current.scrollIntoView({ behavior: "smooth" });
-      }, 5200);
-
-      setTimeout(() => {
-        setIsLoading((prevState) => !prevState);
-      }, 4000);
-    } catch (error) {
-      setErrores(error.errors);
-    }
-  };
-
-  const [openInfoMetodoDePago, setOpenInfoMetodoDePago] = useState(true);
-
-  const editFormEnvio = () => {
-    setFormDataAnimation((prevState) => !prevState);
-    setOpenCloseSectionPay((prevState) => !prevState);
-  };
-  const refEspacioBtnMercadopago = useRef(null);
-  useEffect(() => {
-    const espacioBtnMercadopago = refEspacioBtnMercadopago.current;
-    setTimeout(() => {
-      espacioBtnMercadopago.style.height = "110px";
-    }, 1800);
-  }, [isLoading]);
-
-  const errorNombre = errores.find(
-    (error) => error.path && error.path[0] === "nombre"
-  );
-
-  const erroresForm = (fieldError) => {
-    const error = errores.find(
-      (error) => error.path && error.path[0] === fieldError
-    );
-
-    return error ? error.message : null;
-  };
-*/
+ 
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <>
@@ -284,108 +194,8 @@ export const Modal = () => {
 
             {/*----- Formulario Para Los Envios -----*/}
             <FormEnvio />
-
-            {/*/
-            {openCloseFormEnvio && (
-              <div
-                className={
-                  formDataAnimation
-                    ? "cont-form-data-envio completado"
-                    : "cont-form-data-envio"
-                }
-                ref={refFormDataEnvio}
-              >
-                <h4 className="form-data-title" ref={refTituloFormEnvio}>
-                  Datos de envio
-                </h4>
-                {formDataAnimation && (
-                  <button
-                    className="btn-editar-form-envio"
-                    onClick={editFormEnvio}
-                  >
-                    Editar
-                  </button>
-                )}
-                <p className="form-data-subtitle" ref={refSubtitleFormEnvio}>
-                  Usaremos esta info para hacerte llegar el envio.
-                </p>
-                <div className="cont-inputs-form-envio-nombres">
-                  <h5>Nombre y Apellido</h5>
-                  {erroresForm("nombre") && (
-                    <p className="message-errors">{erroresForm("nombre")}</p>
-                  )}
-                  <input
-                    type="text"
-                    placeholder="Nombre"
-                    className={"input-form-data-envio"}
-                    onChange={(e) => setNombre(e.target.value)}
-                    ref={refNombreFormEnvio}
-                    name="nombre"
-                  />
-                  {erroresForm("apellido") && (
-                    <p className="message-errors">{erroresForm("apellido")}</p>
-                  )}
-                  <input
-                    type="text"
-                    placeholder="Apellido"
-                    className={"input-form-data-envio"}
-                    onChange={(e) => setApellido(e.target.value)}
-                  />
-                </div>
-                {erroresForm("email") && (
-                  <p className="message-errors">{erroresForm("email")}</p>
-                )}
-                <input
-                  type="email"
-                  placeholder="alan_turing@example.com"
-                  className={"input-form-data-envio"}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {erroresForm("provincia") && (
-                  <p className="message-errors">{erroresForm("provincia")}</p>
-                )}
-                <input
-                  type="text"
-                  placeholder="Provincia"
-                  className={"input-form-data-envio"}
-                  onChange={(e) => setProvincia(e.target.value)}
-                />
-                {erroresForm("localidad") && (
-                  <p className="message-errors">{erroresForm("localidad")}</p>
-                )}
-                <input
-                  type="text"
-                  placeholder="Localidad"
-                  className={"input-form-data-envio"}
-                  onChange={(e) => setLocalidad(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Calle"
-                  className={"input-form-data-envio"}
-                  onChange={(e) => setCalle(e.target.value)}
-                />
-                <input
-                  type="number"
-                  className={"input-form-data-envio"}
-                  onChange={(e) => setNumeroDeCalle(e.target.value)}
-                  placeholder="Numero"
-                />
-                <input
-                  type="number"
-                  className={"input-form-data-envio"}
-                  placeholder="Codigo Postal"
-                  onChange={(e) => setCodigoPostal(e.target.value)}
-                />
-                <button
-                  className={"btn-form-data-envio"}
-                  onClick={validateFormEnvio}
-                >
-                  Aceptar
-                </button>
-              </div>
-            )}
-                  */}
+<FormPayment/>
+            
             {openCloseSectionPay && (
               <div
                 className={

@@ -10,9 +10,9 @@ export const MyProvider = ({ children }) => {
   const [openCloseGuiaDeTalles, setOpenCloseGuiaDeTalles] = useState(false);
   const [openCloseSectionPay, setOpenCloseSectionPay] = useState(false);
   const [openInfoMetodoDePago, setOpenInfoMetodoDePago] = useState(true);
-  const [openCloseFormEnvio, setOpenCloseFormEnvio] = useState(false);
+  const [openCloseFormEnvio, setOpenCloseFormEnvio] = useState("inicial");
   const [selectTalle, setSelectTalle] = useState("inicial");
-  const [infoProductoSeleccionado, setInfoProductoSeleccionado] = useState([]);
+  
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
@@ -33,9 +33,10 @@ export const MyProvider = ({ children }) => {
   };
 
   const sliceFormEnvio = () => {
+
     const formnEnvio = refFormEnvio.current;
     formnEnvio.scrollIntoView({ block: "start", behavior: "smooth" });
-    console.log("Se ejecuto el slide");
+    
   };
 
   const focusFormEnvio = () => {
@@ -67,8 +68,7 @@ export const MyProvider = ({ children }) => {
         focusFormEnvio,
         selectTalle,
         setSelectTalle,
-        infoProductoSeleccionado,
-        setInfoProductoSeleccionado,
+      
       }}
     >
       {children}
