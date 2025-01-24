@@ -34,6 +34,7 @@ export const FormEnvio = () => {
     refFormEnvio,
     refInputEmail,
     selectTalle,
+    setPreferenceId
   } = useContext(ElContexto);
 
   useEffect(() => {
@@ -122,6 +123,9 @@ export const FormEnvio = () => {
         setOpenInfoMetodoDePago((prevState) => !prevState);
         setOpenCloseFormEnvio("completed");
         setIsLoading((prevState) => !prevState);
+        setPreferenceId(response.data.preferenceId)
+        console.log(response.data.preferenceId)
+        
       } else {
         console.log("Error al enviar los datos");
       }

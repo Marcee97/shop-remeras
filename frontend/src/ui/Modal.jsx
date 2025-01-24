@@ -2,10 +2,10 @@ import { useEffect, useState, useRef, useContext } from "react";
 import ElContexto from "../context/ProductContext.jsx";
 import client from "../api/axios.js";
 import { set, z } from "zod";
-import { WalletComponent } from "./WalletComponent.jsx";
 import { Footer } from "./Footer.jsx";
 import "../css/components/modal.css";
 import { GuiaDeTalles } from "./GuiaDeTalles.jsx";
+import { WalletComponent } from "../ui/WalletComponent.jsx";
 import { NavBar } from "./NavBar.jsx";
 import { FormEnvio } from "./FormEnvio.jsx";
 import { FormPayment } from "./FormPayment.jsx";
@@ -195,7 +195,7 @@ export const Modal = () => {
             {/*----- Formulario Para Los Envios -----*/}
             <FormEnvio />
 <FormPayment/>
-            
+            {/* 
             {openCloseSectionPay && (
               <div
                 className={
@@ -260,6 +260,8 @@ export const Modal = () => {
                 </div>
               </div>
             )}
+                  */}
+            
             <div className="cont-info-adicional">
               <div className="info-adicional">
                 <span className="material-symbols-outlined">

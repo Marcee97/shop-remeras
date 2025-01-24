@@ -1,12 +1,62 @@
 .formpayment{
+    background: linear-gradient(to top, #080808 10%, transparent 120%);
 
+}
+.formpayment-titulo{
+color: #fff;
 }
 
 .cont-formpayment{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+color: rgb(112, 111, 111);
 
 }
 
 .img-formpayment{
-    width: 40%;
-    
+    width: 20%;
+        
 }
+.formpayment-detalles{
+margin-top: .5em;
+}
+
+.formpayment-detalles-btn{
+ border-left: 1px solid #fff;
+ font-size: 1em;
+ margin: 0 5px;
+ padding: .2em;   
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ color: #fff;
+ padding: .6em .2em;
+
+}
+
+
+.formpayment-detalles-texto{
+    padding: .8em .2em .2em .2em ;
+    transition: 1s all ease;
+    max-height: 11em;
+    overflow: hidden;
+
+}
+
+.texto-openclose{
+    max-height: 0;
+    transition: 1s all ease;
+    overflow: hidden;
+    padding: .2em;
+
+}
+
+.btn-mercadopago{
+    height: 105px;
+    width: 320px;
+    margin: 1.5em 0 .3em 0;
+    overflow: hidden;
+}
+
