@@ -119,11 +119,14 @@ export const FormEnvio = () => {
 
       if (response.status === 200) {
         console.log("Datos enviados correctamente");
-        setOpenCloseSectionPay((prevState) => !prevState);
         setOpenInfoMetodoDePago((prevState) => !prevState);
         setOpenCloseFormEnvio("completed");
-        setIsLoading((prevState) => !prevState);
         setPreferenceId(response.data.preferenceId)
+        setTimeout(()=> {
+
+          setOpenCloseSectionPay((prevState) => !prevState);
+        }, 2300)
+        setIsLoading((prevState) => !prevState);
         console.log(response.data.preferenceId)
         
       } else {

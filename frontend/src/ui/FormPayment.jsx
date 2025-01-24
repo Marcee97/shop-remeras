@@ -4,7 +4,7 @@ import ElContexto from "../context/ProductContext";
 import "../css/components/formpayment.css";
 import { WalletComponent } from "../ui/WalletComponent";
 export const FormPayment = () => {
-  const { productoSeleccionado, selectTalle } = useContext(ElContexto);
+  const { productoSeleccionado, selectTalle, openCloseSectionPay } = useContext(ElContexto);
 
   const [openCloseComoPagar, setOpenCloseComoPagar] = useState(false);
   const arrayImagenes = productoSeleccionado.map((rows) => ({
@@ -13,7 +13,7 @@ export const FormPayment = () => {
   }));
 
   return (
-    <section className="formpayment">
+    <section className={openCloseSectionPay ? "formpayment-open" : "formpayment"}>
       <div className="cont-formpayment">
         <h3 className="formpayment-titulo">Pagar</h3>
         <p className="cont-formpayment__precio">

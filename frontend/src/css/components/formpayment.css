@@ -1,62 +1,63 @@
-.formpayment{
-    background: linear-gradient(to top, #080808 10%, transparent 120%);
-
+.formpayment {
+  background: linear-gradient(to top, #080808 10%, transparent 120%);
+  overflow: hidden;
+  transition: all .7s ease-in-out;
+  max-height: 0;
 }
-.formpayment-titulo{
-color: #fff;
+.formpayment-open {
+  max-height: 30em;
+  background: linear-gradient(to top, #080808 10%, transparent 120%);
+  overflow: hidden;
+  transition: all .7s ease-in-out;
 }
-
-.cont-formpayment{
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
-color: rgb(112, 111, 111);
-
-}
-
-.img-formpayment{
-    width: 20%;
-        
-}
-.formpayment-detalles{
-margin-top: .5em;
+.formpayment-titulo {
+  color: #fff;
 }
 
-.formpayment-detalles-btn{
- border-left: 1px solid #fff;
- font-size: 1em;
- margin: 0 5px;
- padding: .2em;   
- display: flex;
- justify-content: space-between;
- align-items: center;
- color: #fff;
- padding: .6em .2em;
-
+.cont-formpayment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: rgb(112, 111, 111);
 }
 
-
-.formpayment-detalles-texto{
-    padding: .8em .2em .2em .2em ;
-    transition: 1s all ease;
-    max-height: 11em;
-    overflow: hidden;
-
+.img-formpayment {
+  width: 20%;
+}
+.formpayment-detalles {
+  margin-top: 0.5em;
 }
 
-.texto-openclose{
-    max-height: 0;
-    transition: 1s all ease;
-    overflow: hidden;
-    padding: .2em;
-
+.formpayment-detalles-btn {
+  border-left: 1px solid #fff;
+  font-size: 1em;
+  margin: 0 5px;
+  padding: 0.2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  padding: 0.6em 0.2em;
 }
 
-.btn-mercadopago{
-    height: 105px;
-    width: 320px;
-    margin: 1.5em 0 .3em 0;
-    overflow: hidden;
+.formpayment-detalles-texto {
+  padding: 0.8em 0.2em 0.2em 0.2em;
+  transition: 1s all ease;
+  max-height: 11em;
+  overflow: hidden;
 }
 
+.texto-openclose {
+  max-height: 0;
+  transition: 1s all ease;
+  overflow: hidden;
+  padding: 0.2em;
+}
+
+.btn-mercadopago {
+  height: 105px;
+  width: 320px;
+  margin: 1.5em 0 0.3em 0;
+  overflow: hidden;
+}
