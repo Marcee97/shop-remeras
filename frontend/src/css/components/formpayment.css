@@ -1,14 +1,15 @@
 .formpayment {
-  background: linear-gradient(to top, #080808 10%, transparent 120%);
   overflow: hidden;
   transition: all .7s ease-in-out;
   max-height: 0;
 }
 .formpayment-open {
   max-height: 30em;
-  background: linear-gradient(to top, #080808 10%, transparent 120%);
+  background: linear-gradient(to top, #0a0a0a 10%, transparent 120%);
   overflow: hidden;
   transition: all .7s ease-in-out;
+  border-radius: 5px;
+
 }
 .formpayment-titulo {
   color: #fff;

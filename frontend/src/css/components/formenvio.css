@@ -20,6 +20,8 @@
   align-items: center;
   width: 100%;
   padding: 0 0.2em 1.3em 0.2em;
+  opacity: 1;
+
 }
 .texto-completed {
   color: #fff;
@@ -31,9 +33,13 @@
   justify-content: space-between;
   align-items: center;
   opacity: 0;
-  transition: all 1s;
+  transition: all .5s;
   padding: 1em;
   background: linear-gradient(to right, #11c92a .9%, #0f5f0f 1%, #0a0a0a 3%);
+}
+.texto-completed__completados{
+  color: #706f6f;
+  font-size: .7em;
 }
 .btn-editar{
   border: 1px solid #fff;
@@ -46,6 +52,12 @@
 
 .opacity {
   opacity: 1;
+}
+
+.opacityoff{
+  opacity: 0;
+  transition: opacity .3s ease-out;
+ 
 }
 
 
@@ -71,6 +83,7 @@
   max-height: 4em;
   justify-content: center;
   align-items: center;
+  
 }
 .formenvio__total {
   display: flex;
@@ -81,7 +94,7 @@
   padding: 0 0.8em 1.3em 0.8em;
 }
 .formenvio__total-detalle {
-  color: rgb(112, 111, 111);
+  color: #706f6f;
 }
 .formenvio__comprando {
   font-size: 1.5em;

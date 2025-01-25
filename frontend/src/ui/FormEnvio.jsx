@@ -34,7 +34,7 @@ export const FormEnvio = () => {
     refFormEnvio,
     refInputEmail,
     selectTalle,
-    setPreferenceId
+    setPreferenceId,
   } = useContext(ElContexto);
 
   useEffect(() => {
@@ -121,14 +121,12 @@ export const FormEnvio = () => {
         console.log("Datos enviados correctamente");
         setOpenInfoMetodoDePago((prevState) => !prevState);
         setOpenCloseFormEnvio("completed");
-        setPreferenceId(response.data.preferenceId)
-        setTimeout(()=> {
-
+        setPreferenceId(response.data.preferenceId);
+        setTimeout(() => {
           setOpenCloseSectionPay((prevState) => !prevState);
-        }, 2300)
+        }, 2300);
         setIsLoading((prevState) => !prevState);
-        console.log(response.data.preferenceId)
-        
+        console.log(response.data.preferenceId);
       } else {
         console.log("Error al enviar los datos");
       }
@@ -153,13 +151,20 @@ export const FormEnvio = () => {
 
   return (
     <section className={classFormEnvio[openCloseFormEnvio]} ref={refFormEnvio}>
-      <div className={openCloseFormEnvio !== "completed" ? "texto-completed" : "texto-completed opacity"}>
-    <h4>Datos de envio</h4>
-    <button className="btn-editar">Editar</button>
-      </div>
       <div
-        className="cont-formenvio"
+        className={
+          openCloseFormEnvio !== "completed"
+            ? "texto-completed"
+            : "texto-completed opacity"
+        }
       >
+        <div>
+        <h4>Datos de envio</h4>
+        <p className="texto-completed__completados">(Completados)</p>
+        </div>
+        <button className="btn-editar">Editar</button>
+      </div>
+      <div className="cont-formenvio">
         <div className="formenvio__total">
           <h3 className="formenvio__comprando">Comprando</h3>
           <p className="formenvio__total-detalle">
@@ -169,7 +174,7 @@ export const FormEnvio = () => {
             (${productoSeleccionado[0].precio})
           </p>
         </div>
-        <div className="formenvio__inputs-contacto">
+        <div className={openCloseFormEnvio === "completed" ? " formenvio__inputs-contacto opacityoff" : "formenvio__inputs-contacto"}>
           <h4>CONTACTO</h4>
           {erroresForm("email") && (
             <p className="errores-formenvio">{erroresForm("email")}</p>
@@ -228,7 +233,7 @@ export const FormEnvio = () => {
           </div>
 
           <div className="formenvio__inputs-direccion__direccion">
-            <h4>DIRECCION</h4>
+            <h4 className={openCloseFormEnvio === "completed" ? "opacityoff" : ""}>DIRECCION</h4>
             {erroresForm("calle") && (
               <p className="errores-formenvio">{erroresForm("calle")}</p>
             )}

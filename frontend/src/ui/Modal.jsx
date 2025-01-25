@@ -24,7 +24,7 @@ export const Modal = () => {
     refNombreFocus,
     focusFormEnvio,
     setSelectTalle,
-    selectTalle
+    selectTalle,
   } = useContext(ElContexto);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -93,7 +93,6 @@ export const Modal = () => {
   const refSubtitleFormEnvio = useRef(null);
   const refTituloFormEnvio = useRef(null);
 
- 
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <>
@@ -192,76 +191,9 @@ export const Modal = () => {
               </p>
             </div>
 
-            {/*----- Formulario Para Los Envios -----*/}
             <FormEnvio />
-<FormPayment/>
-            {/* 
-            {openCloseSectionPay && (
-              <div
-                className={
-                  openCloseSectionPay
-                    ? "cont-metodo-de-pago animation-payment"
-                    : "cont-metodo-de-pago "
-                }
-                ref={refContMethodPay}
-              >
-                <h4 className="title-cont-metodo-de-pago">Finalizar Compra</h4>
-                <div className="cont-metodo-de-pago-info">
-                  <h5
-                    className={
-                      openInfoMetodoDePago
-                        ? "btn-como-pagar"
-                        : "info-active-btn-pagar"
-                    }
-                    onClick={() =>
-                      setOpenInfoMetodoDePago((prevState) => !prevState)
-                    }
-                  >
-                    ¿Como pagar?{" "}
-                    <span className="material-symbols-outlined">
-                      keyboard_arrow_down
-                    </span>
-                  </h5>
-                  <p
-                    className={
-                      openInfoMetodoDePago
-                        ? "metodo-de-pago-info"
-                        : "metodo-de-pago-info info-active"
-                    }
-                  >
-                    Usamos MercadoPago para manejar los pagos de forma segura.
-                    Al presionar el botón de pago, serás redirigido a
-                    MercadoPago, donde podrás elegir el método de pago que
-                    prefieras: débito, crédito o dinero disponible.{" "}
-                  </p>
-                </div>
-                <div className="section-info-payment">
-                  <h4 className="title-info-payment">Detalle</h4>
-                  {transformArray.map((items, index) => (
-                    <div className="cont-info-payment" key={index}>
-                      <img
-                        src={items.imagenes[0]}
-                        alt="img payment"
-                        className="img-info-payment"
-                      />
-                      <div className="cont-detalle-info">
-                        <p className="payment-product">{items.nombre}</p>
-                        <p>Total: {items.precio}</p>
-                        <div className="cont-talle-edit">
-                          <p>Talle: {selectTalle}</p>
-                          <p className="btn-edit-talle">Editar</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <WalletComponent />
-                </div>
-              </div>
-            )}
-                  */}
-            
+            <FormPayment />
+
             <div className="cont-info-adicional">
               <div className="info-adicional">
                 <span className="material-symbols-outlined">

@@ -2,12 +2,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import "../css/components/navbar.css";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import ElContexto from "../context/ProductContext";
-import { set } from "zod";
 
 export const NavBar = ({ activeSlide }) => {
   const [dataActives, setDataActives] = useState(false);
 
-  const { setOpenCloseFormEnvio} = useContext(ElContexto);
+  const { setOpenCloseFormEnvio, setSelectTalle, setproductoSeleccionado} = useContext(ElContexto);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,8 +39,11 @@ export const NavBar = ({ activeSlide }) => {
   }, [location.pathname]);
 
   const goHome = () => {
-setOpenCloseFormEnvio(prevState => !prevState);
+setOpenCloseFormEnvio("inicial");
+setSelectTalle("inicial")
+setproductoSeleccionado([])
     navigate("/");
+
   };
 
   return (
