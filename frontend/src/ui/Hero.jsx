@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "../css/components/hero.css";
 import ElContexto from "../context/ProductContext";
@@ -8,25 +8,26 @@ export const Hero = () => {
 
   const refContCarrousel = useRef(null);
 
-  let i = 0;
-  const carrousel = () => {
-    i++;
-    const carrousel = refContCarrousel.current;
-    if (i < 3) {
-      let resultado = i * -33.3;
-      carrousel.style.transform = `translateX(${resultado}%)`;
-    } else {
-      i = 0;
-      let resultado = i * -33.3;
-      carrousel.style.transform = `translateX(${resultado}%)`;
-    }
-  };
+  const [btns, setBtns] = useState(0)
+
   useEffect(()=> {
 
-    
+    const carrousel = refContCarrousel.current;
+    if (btns < 3) {
+      let resultado = btns * -33.3;
+      carrousel.style.transform = `translateX(${resultado}%)`;
+      
+    } else {
+      setBtns(0)
+      let resultado = btns * -33.3;
+      carrousel.style.transform = `translateX(${resultado}%)`;
+    }
+  }, [btns])
+ 
+  useEffect(()=> {
     const intervalCarrousel = setInterval(()=> {
-      carrousel()
-    }, 4000)
+      setBtns(prevState => prevState + 1)
+    }, 6000)
 
     return ()=> {
       clearInterval(intervalCarrousel)
@@ -35,29 +36,34 @@ export const Hero = () => {
 
   return (
     <section className="hero">
+      
       <div className="cont-hero">
+      <div className="nombre-marca-portada">
+    <h2 className="titulo-portada">E-Commerce</h2>
+      </div>
         <div className="carrousel">
-          <div className="cont-carrousel activo" ref={refContCarrousel}>
+        
+          <div className="cont-carrousel" ref={refContCarrousel}>
             <img
-              src="\public\img\portada\portada01.jpg"
+              src="\img\portada\portada01.jpg"
               alt="remera"
               className="img-carrousel"
             />{" "}
             <img
-              src="\public\img\portada\portada1.jpg"
+              src="\img\portada\portada1.jpg"
               alt="remera"
               className="img-carrousel"
             />{" "}
             <img
-              src="\public\img\portada\portada2.jpg"
+              src="\img\portada\portada2.jpg"
               alt="remera"
               className="img-carrousel"
             />
           </div>
-        <div onClick={carrousel} className="cont-btn-portada">
-          <button className="btn-portada"></button>
-          <button className="btn-portada"></button>
-          <button className="btn-portada"></button>
+        <div className="cont-btn-portada">
+          <button className={btns === 0 ? "btn-activo" : "btn-portada"}></button>
+          <button className={btns === 1 ? "btn-activo" : "btn-portada"}></button>
+          <button className={btns === 2 ? "btn-activo" : "btn-portada"}></button>
         </div>
         </div>
         {/*<div className="texto-hero">

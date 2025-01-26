@@ -9,7 +9,86 @@
 .carrousel {
   overflow: hidden;
   border-radius: 5px;
+  position: relative;
+  width: 100%;
 }
+
+.nombre-marca-portada {
+  position: absolute;
+  outline: 1px solid red;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 19;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo-portada {
+  animation: movtitle 20s ease-out infinite;
+  font-size: 2em;
+  font-weight: bold;
+}
+@keyframes movtitle {
+  0% {
+    color: #ffffff00; /* Totalmente transparente */
+  }
+  5% {
+    color: #ffffff00; /* Parpadeo tenue */
+  }
+  10% {
+    color: #ffffff00; /* Parpadeo más brillante */
+  }
+  15% {
+    color: #ffffffa4;
+  }
+  15.5% {
+    color: #ffffff00;
+  }
+  16.5% {
+    color: #ffffffb6;
+  }
+  17% {
+    color: #ffffff18;
+  }
+
+  17.3% {
+    color: #ffffff;
+  }
+  17.9% {
+    color: #ffffff27;
+  }
+  18.3% {
+    color: #ffffffe5;
+  }
+  19% {
+    color: #f8f8f821;
+  }
+  19.3% {
+    color: #ffffff;
+  }
+  20% {
+    color: #ffffff00;
+  }
+  20.5% {
+    color: #ffffff;
+  }
+  21% {
+    color: #ffffff00;
+  }
+  21.5% {
+    color: #ffffff00;
+  }
+  22% {
+    color: #ffffff;
+  }
+  100% {
+    color: #ffffff;
+  }
+}
+
 .cont-carrousel {
   display: flex;
   width: 300%;
@@ -28,13 +107,17 @@
 }
 
 .btn-portada {
-  padding: 0.5em;
+  padding: 0.3em;
   border-radius: 9px;
   border: none;
+  background-color: #75747477;
 }
 
-.activo {
-  transition: 1s all;
+.btn-activo {
+  background-color: rgb(255, 255, 255);
+  padding: 0.3em;
+  border-radius: 9px;
+  border: none;
 }
 
 .img-carrousel {

@@ -1,10 +1,13 @@
 .cardproduct {
- background: linear-gradient(#000, #131313, #000000);
-  padding: 1em 0;
   color: #000000;
   font-family: sans-serif;
 }
+.cardproduct-subtitle{
+  color: #fff;
+  padding: .5em;
+  font-size: 1.2em;
 
+}
 .cardproduct .section-from-articles {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
