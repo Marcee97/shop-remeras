@@ -3,9 +3,9 @@
   height: 100vh;
   width: 100%;
   font-family: monospace;
-  transform: translateX(0%);
+  transform: translateX(-2%);
   transition: 0.5s all ease;
-  background: linear-gradient(#0000009f, transparent);
+  background: linear-gradient(#00000007, transparent);
   top: 0;
   z-index: 80;
 }
@@ -31,7 +31,7 @@
   padding: 0.3em;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(209px);
+  backdrop-filter: blur(110px);
 }
 .seccion-talles-title {
   color: #ffffff;
@@ -39,19 +39,17 @@
 }
 .medidas-cuadro {
   padding: 2.2em;
-  background-color: #000000a4;
   border-radius: 5px;
   position: relative;
   max-height: 27em;
-  width: 99%;
-margin-left: -2px;
+  width: 100%;
 }
 
 .cuadro-img {
+  
   display: grid;
   border-left: 1px dashed #ffffff;
   width: 100%;
-  margin: auto;
   position: relative;
   background-color: #00000009;
   max-height: 23em;
@@ -88,7 +86,7 @@ margin-left: -2px;
   bottom: 0;
   position: absolute;
   z-index: 55;
-  top: 95%;
+  top: 92%;
   left: 50%;
   transform: translate(-50%, -10%);
 }
@@ -137,11 +135,10 @@ margin-left: -2px;
   display: flex;
 }
 .btn-talles {
-  background: transparent;
   font-size: 0.5em;
   border-radius: 5px;
-  border: 1px solid #fff;
-  color: #fff;
+  border: 1px solid #f0f0f0;
+  color: #000000;
   padding: 0.3em 1.4em;
 }
 .btn-back {
@@ -155,5 +152,6 @@ margin-left: -2px;
 }
 
 .activo {
-  background-color: #ffffff28;
+  background-color: #e21c1ce7;
+  color: #e7e5e5;
 }

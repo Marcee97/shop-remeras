@@ -27,7 +27,7 @@ export const GuiaDeTalles = () => {
       <div className="section-guia-de-talles">
         {transformArray.map((item, index) => (
           <div className="cont-cuadro-img" key={index}>
-            <p className="seccion-talles-title">Talle: {guiaSeleccionada}</p>
+           
             <div className="medidas-cuadro">
               <p className="medida-cuello centimetros">
                 Cuello <br /> {medidas.cuello}cm
@@ -60,7 +60,7 @@ export const GuiaDeTalles = () => {
                     {producto.talles.map((talle, idx) => (
                       <button
                         className={`btn-talles ${
-                          guiaSeleccionada === talle ? "activo" : ""
+                          guiaSeleccionada === talle ? "" : "activo"
                         }`}
                         key={idx}
                         onClick={() => setGuiaSeleccionada(talle)}
