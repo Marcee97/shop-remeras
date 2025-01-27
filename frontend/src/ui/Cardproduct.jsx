@@ -35,8 +35,8 @@ export const Cardproduct = () => {
               <strong className="article-precio">$ {items.precio}</strong>
             </header>
             <article className="article" key={index}>
-          <h6>Disponibles ({items.cantidad})</h6>
               <p ref={refCatalogo}>{items.nombre}</p>
+          <h6>Disponibles ({items.cantidad})</h6>
             </article>
           </div>
         ))}

@@ -20,10 +20,11 @@
 }
 
 .cardproduct .section-from-articles .cont-article .article-header {
-  background-color: #5c5c5c9d;
+  background-color: #c5222200;
   max-width: 100%;
   margin-bottom: 9px;
   border-radius: 15px;
+  height: 237px;
 }
 
 .cardproduct .section-from-articles .cont-article .article-header img {
@@ -31,18 +32,24 @@
 }
 
 .cardproduct .section-from-articles .cont-article .article-header .article-precio {
-  background-color: #c2c2c2;
   padding: 0 0.3em;
-  border-radius: 0 0 0 6px;
+  border-radius: 0 0 0 0;
+  font-family: monospace;
+  font-size: 1.2em;
+  color: #ffffff;
+  border-left: 1px solid #4b4a4a;
 }
 
 .cardproduct .section-from-articles .cont-article .article {
-  padding: 0.3em;
+  padding: 0 1em 0 0;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.6em;
   color: #ffffff;
   font-weight: bold;
+  font-size: .9em;
+  height: 55px;
 }
 
 .cardproduct .section-from-articles .cont-article .article h6 {
