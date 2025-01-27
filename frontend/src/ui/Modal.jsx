@@ -96,8 +96,8 @@ export const Modal = () => {
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <>
-      <section className="modal">
         <NavBar />
+      <section className="modal">
         <div className="modal-cardproduct">
           {transformArray.map((items, index) => (
             <div className="cont-modal-product" key={index}>

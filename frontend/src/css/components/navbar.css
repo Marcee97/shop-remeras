@@ -1,11 +1,17 @@
 .navbar {
   padding: 0.4em 0.9em;
-  background-color: #2e2e2e36;
+  background-color: #070707;
   border-radius: 19px;
   color: #ffffff;
   font-family: sans-serif;
-  margin: 8px;
-  position: relative;
+  position: fixed;
+  width: 97%;
+  z-index: 55;
+  margin-top: .2em;
+  transform: translate(-50%, -50%);
+  top: 3.5%;
+  left: 50%;
+  box-shadow: 13px 6px 15px 2px #000;
 }
 
 .cont-logo {
@@ -18,7 +24,6 @@
 .animation-logo {
   animation: animation-logo 8s infinite;
 }
-
 
 @keyframes animation-logo {
   0% {
@@ -36,7 +41,7 @@
   font-family: monospace;
 }
 
-.icons-nav{
+.icons-nav {
   font-size: 1.9em;
 }
 

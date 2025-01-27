@@ -1,3 +1,4 @@
+
 .hero .cont-hero {
   position: relative;
   width: 100%;
@@ -11,6 +12,8 @@
   border-radius: 5px;
   position: relative;
   width: 100%;
+  margin-top: 3.5em;
+
 }
 
 .nombre-marca-portada {
@@ -98,24 +101,29 @@
 
 .cont-btn-portada {
   display: flex;
-  gap: 1em;
+  gap: .8em;
   padding: 0.2em;
   width: 100%;
-  position: absolute;
   bottom: 12px;
   justify-content: center;
+  align-items: center;
 }
 
 .btn-portada {
-  padding: 0.3em;
+  width: .4em;
+  height: .4em;
   border-radius: 9px;
   border: none;
   background-color: #75747477;
+  transition:width .3s ease-in-out;
+
 }
 
 .btn-activo {
-  background-color: rgb(255, 255, 255);
-  padding: 0.3em;
+  background-color: #ffffff;
+  transition: width .3s ease-in-out;
+  width: .8em;
+  height: .3em;
   border-radius: 9px;
   border: none;
 }

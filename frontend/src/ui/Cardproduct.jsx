@@ -22,7 +22,7 @@ export const Cardproduct = () => {
 
   return (
     <section className="cardproduct" ref={refCatalogo} >
-      <h4 className="cardproduct-subtitle">Lo ultimo</h4>
+      <h4 className="cardproduct-subtitle">Ultimos Lanzamientos</h4>
       <div className="section-from-articles">
         {productos.map((items, index) => (
           <div className="cont-article" onClick={()=> peticionProductsModal(index + 1)} key={index}>
