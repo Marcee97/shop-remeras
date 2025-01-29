@@ -11,6 +11,7 @@ export const MyProvider = ({ children }) => {
   const [openCloseSectionPay, setOpenCloseSectionPay] = useState(false);
   const [openInfoMetodoDePago, setOpenInfoMetodoDePago] = useState(true);
   const [openCloseFormEnvio, setOpenCloseFormEnvio] = useState("inicial");
+  const [openCloseMenuSlide, setOpenCloseMenuSlide] = useState(true)
   const [selectTalle, setSelectTalle] = useState("inicial");
   
   useEffect(() => {
@@ -68,6 +69,8 @@ export const MyProvider = ({ children }) => {
         focusFormEnvio,
         selectTalle,
         setSelectTalle,
+        openCloseMenuSlide,
+        setOpenCloseMenuSlide
       
       }}
     >

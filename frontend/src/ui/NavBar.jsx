@@ -2,11 +2,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import "../css/components/navbar.css";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import ElContexto from "../context/ProductContext";
+import { MenuSlide } from "./MenuSlide";
 
 export const NavBar = ({ activeSlide }) => {
   const [dataActives, setDataActives] = useState(false);
 
-  const { setOpenCloseFormEnvio, setSelectTalle, setproductoSeleccionado} = useContext(ElContexto);
+  const { setOpenCloseFormEnvio, setSelectTalle, setproductoSeleccionado, setOpenCloseMenuSlide} = useContext(ElContexto);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ setproductoSeleccionado([])
         <div className="cont-logo">
           <span
             className="material-symbols-outlined icons-nav"
-            onClick={funcionMenuslide}
+            onClick={() => setOpenCloseMenuSlide((prevState) => !prevState)}
             ref={refBtnMenu}
           >
             menu
@@ -66,7 +67,7 @@ setproductoSeleccionado([])
           className="material-symbols-outlined icons-nav"
           ref={refBtnHome}
           onClick={goHome}
-        >
+          >
           home
         </span>
       </div>

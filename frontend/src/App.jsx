@@ -5,8 +5,8 @@ import { Route, Routes } from "react-router-dom";
 import { NavBar } from "./ui/NavBar";
 import { Footer } from "./ui/Footer";
 import { Hero } from "./ui/Hero";
-import { MenuSlide } from "./ui/MenuSlide";
 import { ScrollTop } from "./helpers/ScrollTop";
+import { MenuSlide } from "./ui/MenuSlide";
 export const App = () => {
   const MainLayout = ({ children }) => {
     const [onSlide, setOnSlide] = useState(false);
@@ -17,7 +17,8 @@ export const App = () => {
     return (
       <>
         <NavBar activeSlide={menuSlideOn} />
-        <MenuSlide openCloseSlide={onSlide} />
+        <MenuSlide/>
+
         <Hero />
         {children}
         <Footer />

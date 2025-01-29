@@ -18,6 +18,9 @@
   transform: translateX(100%);
   transition: 0.5s all ease;
   top: 0;
+  z-index: 80;
+  
+
 }
 
 .section-guia-de-talles {
