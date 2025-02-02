@@ -7,7 +7,13 @@ import { MenuSlide } from "./MenuSlide";
 export const NavBar = ({ activeSlide }) => {
   const [dataActives, setDataActives] = useState(false);
 
-  const { setOpenCloseFormEnvio, setSelectTalle, setproductoSeleccionado, setOpenCloseMenuSlide} = useContext(ElContexto);
+  const {
+    setOpenCloseFormEnvio,
+    setSelectTalle,
+    setproductoSeleccionado,
+    setOpenCloseMenuSlide,
+    setOpenCloseCarrito,
+  } = useContext(ElContexto);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,16 +23,13 @@ export const NavBar = ({ activeSlide }) => {
   };
 
   const refNavbar = useRef(null);
-  const refBtnHome = useRef(null);
   const refBtnMenu = useRef(null);
 
   const menuStyle = () => {
     if (location.pathname === "/modal") {
       const navbar = refNavbar.current;
-      const btnHome = refBtnHome.current;
       const btnMenu = refBtnMenu.current;
       btnMenu.style.visibility = "hidden";
-      btnHome.style.color = "#727272";
       navbar.style.position = "absolute";
       navbar.style.color = "#2b2a2a";
       navbar.classList.add("animation-logo");
@@ -40,35 +43,32 @@ export const NavBar = ({ activeSlide }) => {
   }, [location.pathname]);
 
   const goHome = () => {
-setOpenCloseFormEnvio("inicial");
-setSelectTalle("inicial")
-setproductoSeleccionado([])
+    setOpenCloseFormEnvio("inicial");
+    setSelectTalle("inicial");
+    setproductoSeleccionado([]);
     navigate("/");
-
   };
 
   return (
-    <section className="navbar" >
+    <section className="navbar">
       <div className="cont-navbar">
         <div className="cont-logo">
           <span
             className="material-symbols-outlined icons-nav"
-            onClick={() => setOpenCloseMenuSlide((prevState) => !prevState)}
             ref={refBtnMenu}
+            onClick={() => setOpenCloseMenuSlide((prevState) => !prevState)}
           >
-            menu
+            sort
           </span>
-
           <h1 className="titulo-logo" onClick={goHome} ref={refNavbar}>
-            E-Commerce
+            Polarys
           </h1>
         </div>
         <span
-          className="material-symbols-outlined icons-nav"
-          ref={refBtnHome}
-          onClick={goHome}
-          >
-          home
+          className="material-symbols-outlined"
+          onClick={() => setOpenCloseCarrito((prevState) => !prevState)}
+        >
+          shopping_bag
         </span>
       </div>
     </section>

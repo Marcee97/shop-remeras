@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/components/cardproduct.css"
 export const Cardproduct = () => {
   const navigate = useNavigate();
-  const { productos, setProductos, setproductoSeleccionado,productoSeleccionado, btnVerTodo,refCatalogo,setInfoProductoSeleccionado } =
+  const { productos, setProductos, setproductoSeleccionado,productoSeleccionado,refCatalogo,setInfoProductoSeleccionado } =
     useContext(elContexto);
 
   const peticionProductsModal = async (id) => {

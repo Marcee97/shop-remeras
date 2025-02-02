@@ -11,9 +11,13 @@ export const MyProvider = ({ children }) => {
   const [openCloseSectionPay, setOpenCloseSectionPay] = useState(false);
   const [openInfoMetodoDePago, setOpenInfoMetodoDePago] = useState(true);
   const [openCloseFormEnvio, setOpenCloseFormEnvio] = useState("inicial");
-  const [openCloseMenuSlide, setOpenCloseMenuSlide] = useState(true)
+  const [openCloseMenuSlide, setOpenCloseMenuSlide] = useState(true);
+  const [openCloseCarrito, setOpenCloseCarrito] = useState(true);
+  const [productoCarrito, setProductoCarrito] = useState([])
+  const [totalCarrito, setTotalCarrito] = useState(0)
+
   const [selectTalle, setSelectTalle] = useState("inicial");
-  
+
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
@@ -34,16 +38,35 @@ export const MyProvider = ({ children }) => {
   };
 
   const sliceFormEnvio = () => {
-
     const formnEnvio = refFormEnvio.current;
     formnEnvio.scrollIntoView({ block: "start", behavior: "smooth" });
-    
   };
 
   const focusFormEnvio = () => {
     const inputEmail = refInputEmail.current;
     inputEmail.focus();
   };
+
+  
+
+  const addCarrito = ()=> {
+    
+  const transformArray = productoSeleccionado.map((rows) => ({
+    ...rows,
+    imagenes: rows.imagenes.split(","),
+  }));
+
+
+  setProductoCarrito((prev) => {
+    const newCarrito = [...prev, ...transformArray]
+    const nuevoTotal = newCarrito.reduce((acc, item) => acc + item.precio, 0)
+    setTotalCarrito(nuevoTotal)
+
+return newCarrito
+  });
+  }
+
+
   return (
     <ElContexto.Provider
       value={{
@@ -70,8 +93,12 @@ export const MyProvider = ({ children }) => {
         selectTalle,
         setSelectTalle,
         openCloseMenuSlide,
-        setOpenCloseMenuSlide
-      
+        setOpenCloseMenuSlide,
+        openCloseCarrito,
+        setOpenCloseCarrito,
+        productoCarrito,
+        addCarrito,
+        totalCarrito
       }}
     >
       {children}

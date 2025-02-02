@@ -9,6 +9,7 @@ import { WalletComponent } from "../ui/WalletComponent.jsx";
 import { NavBar } from "./NavBar.jsx";
 import { FormEnvio } from "./FormEnvio.jsx";
 import { FormPayment } from "./FormPayment.jsx";
+import { Carrito } from "./Carrito.jsx";
 export const Modal = () => {
   const {
     productoSeleccionado,
@@ -25,6 +26,7 @@ export const Modal = () => {
     focusFormEnvio,
     setSelectTalle,
     selectTalle,
+    addCarrito
   } = useContext(ElContexto);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +99,7 @@ export const Modal = () => {
   return (
     <>
         <NavBar />
+        <Carrito/>
       <section className="modal">
         <div className="modal-cardproduct">
           {transformArray.map((items, index) => (
@@ -186,7 +189,7 @@ export const Modal = () => {
                   arrow_forward
                 </span>
               </div>
-              <p className="btn-cripto">
+              <p className="btn-cripto" onClick={addCarrito}>
                 <span className="material-symbols-outlined">favorite</span>
               </p>
             </div>

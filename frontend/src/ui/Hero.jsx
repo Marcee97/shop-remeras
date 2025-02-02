@@ -36,7 +36,7 @@ export const Hero = () => {
     <section className="hero">
       <div className="cont-hero">
         <div className="nombre-marca-portada">
-          <h2 className="titulo-portada">E-Commerce</h2>
+          <h2 className="titulo-portada">Polarys</h2>
         </div>
         <div className="carrousel">
           <div className="cont-carrousel" ref={refContCarrousel}>

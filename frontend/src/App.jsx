@@ -7,22 +7,21 @@ import { Footer } from "./ui/Footer";
 import { Hero } from "./ui/Hero";
 import { ScrollTop } from "./helpers/ScrollTop";
 import { MenuSlide } from "./ui/MenuSlide";
+import { Carrito } from "./ui/Carrito";
+import "./app.css"
 export const App = () => {
   const MainLayout = ({ children }) => {
-    const [onSlide, setOnSlide] = useState(false);
+ 
 
-    const menuSlideOn = () => {
-      setOnSlide(!onSlide);
-    };
     return (
-      <>
-        <NavBar activeSlide={menuSlideOn} />
-        <MenuSlide/>
-
+      <section className="app-inter">
+        <NavBar />
+        <MenuSlide />
+        <Carrito/>
         <Hero />
         {children}
         <Footer />
-      </>
+      </section>
     );
   };
 
