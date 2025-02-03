@@ -13,6 +13,8 @@ export const NavBar = ({ activeSlide }) => {
     setproductoSeleccionado,
     setOpenCloseMenuSlide,
     setOpenCloseCarrito,
+    setPreferenceId,
+    setOpenCloseSectionPay
   } = useContext(ElContexto);
 
   const location = useLocation();
@@ -46,6 +48,8 @@ export const NavBar = ({ activeSlide }) => {
     setOpenCloseFormEnvio("inicial");
     setSelectTalle("inicial");
     setproductoSeleccionado([]);
+    setPreferenceId("")
+    setOpenCloseSectionPay(false)
     navigate("/");
   };
 
