@@ -3,11 +3,13 @@ import { pool } from "../database.js"
 
 export const modalProduct = async(req, res) => {
     try{
-
         const idProducto = req.body.id
         console.log(idProducto)
-        //const [rows] = await pool.query('SELECT productos.nombre, productos.precio, productos.cantidad, GROUP_CONCAT(imagenes.url_imagen) AS imagenes FROM productos JOIN imagenes ON productos.id = imagenes.id_imagen WHERE productos.id = ? GROUP BY productos.id', [idProducto])
-        const [rows] = await pool.query('SELECT productos.nombre, productos.precio, productos.cantidad, GROUP_CONCAT(DISTINCT imagenes.url_imagen ORDER BY imagenes.id ASC) AS imagenes,GROUP_CONCAT(DISTINCT talles.talles  ORDER BY talles.talles ASC) AS talles FROM productos LEFT JOIN imagenes ON productos.id = imagenes.id_imagen LEFT JOIN talles ON productos.id = talles.id_remera WHERE productos.id = ? GROUP BY productos.id', [idProducto])
+        /*const [rows] = await pool.query('SELECT productos.nombre, productos.precio, productos.cantidad, GROUP_CONCAT(DISTINCT imagenes.url_imagen ORDER BY imagenes.id ASC) AS imagenes,GROUP_CONCAT(DISTINCT talles.talles  ORDER BY talles.talles ASC) AS talles FROM productos LEFT JOIN imagenes ON productos.id = imagenes.id_imagen LEFT JOIN talles ON productos.id = talles.id_remera WHERE productos.id = ? GROUP BY productos.id', [idProducto])
+
+*/
+        const [rows] = await pool.query('SELECT productos.nombre, productos.precio, productos.cantidad, productos.talles, GROUP_CONCAT(DISTINCT imagenes.url_imagen ORDER BY imagenes.id ASC) AS imagenes FROM productos LEFT JOIN imagenes ON productos.id = imagenes.id_imagen WHERE productos.id = ? GROUP BY productos.id', [idProducto])
+
         res.status(200).json(rows)
         console.log(rows)
     }catch(err){

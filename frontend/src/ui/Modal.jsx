@@ -12,6 +12,8 @@ import { FormPayment } from "./FormPayment.jsx";
 import { Carrito } from "./Carrito.jsx";
 export const Modal = () => {
   const {
+    productos,
+    setProductos,
     productoSeleccionado,
     setPreferenceId,
     setOpenCloseGuiaDeTalles,
@@ -31,6 +33,17 @@ export const Modal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFront, setLoadingFront] = useState(false);
+  const [tallesDisponibles, setTallesDisponibles] = useState([])
+
+  console.log(productoSeleccionado[0].talles)
+
+useEffect(()=> {
+  const talles = productoSeleccionado[0].talles.split(",")
+  console.log(talles)
+setTallesDisponibles(talles)
+
+}, [])
+
 
   const refFormEnvio = useRef(null);
   const refImageCarrousel = useRef(null);
@@ -56,7 +69,6 @@ export const Modal = () => {
     imagenes: rows.imagenes.split(","),
   }));
 
-  const tallesDisponibles = ["S", "XL", "XXL"];
   const refButtonMultiText = useRef(null);
   const refArrowGuia = useRef(null);
   const refBtnGuiaDesplegable = useRef(null);
@@ -146,8 +158,7 @@ export const Modal = () => {
           >
             <div className="section-botones-talles">
               <header className="header-seleccionar-talle">
-                <strong className="talle-title">Talles</strong>
-
+                <strong className="talle-title">{tallesDisponibles.length === 1 ? "Unico Talle Disponible:" : "Talles:"}</strong>
                 <p
                   className="guia-talles"
                   onClick={() =>

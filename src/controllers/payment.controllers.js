@@ -134,7 +134,7 @@ export const paymentProccess = async (req, res) => {
         },
         auto_return: "approved",
         notification_url:
-          "https://anatomy-photographer-possibility-greater.trycloudflare.com/webhook",
+          "https://part-honolulu-plenty-clarke.trycloudflare.com/webhook",
       },
     });
 
