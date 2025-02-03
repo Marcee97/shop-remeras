@@ -1,12 +1,16 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import ElContexto from "../context/ProductContext";
 import "../css/components/guiadetalles.css";
 
 export const GuiaDeTalles = () => {
-  const { productoSeleccionado, setPreferenceId, openCloseGuiaDeTalles, setOpenCloseGuiaDeTalles } = useContext(ElContexto);
-
+  const {
+    productoSeleccionado,
+    setPreferenceId,
+    openCloseGuiaDeTalles,
+    setOpenCloseGuiaDeTalles,
+  } = useContext(ElContexto);
   const [guiaSeleccionada, setGuiaSeleccionada] = useState("S");
-
+  const refMedidas = useRef([]);
   const talles = ["S", "XL", "XXL"];
 
   const medidasPorTalle = {
@@ -19,24 +23,36 @@ export const GuiaDeTalles = () => {
   const transformArray = productoSeleccionado.map((rows) => ({
     ...rows,
     imagenes: rows.imagenes.split(","),
-    talles: rows.talles.split(","),
+    talles: rows.talles.split(",").map((talle) => talle.toUpperCase()),
   }));
+
+  useEffect(() => {
+    console.log("se selecciono un talle para ver");
+
+    refMedidas.current.forEach((medida) => {
+      if (medida) {
+        medida.classList.remove("activate-guia");
+        setTimeout(() => {
+          medida.classList.add("activate-guia");
+        }, 10);
+      }
+    });
+  }, [guiaSeleccionada]);
 
   return (
     <section className={openCloseGuiaDeTalles ? "guia-de-talles" : "slide"}>
       <div className="section-guia-de-talles">
         {transformArray.map((item, index) => (
           <div className="cont-cuadro-img" key={index}>
-           
             <div className="medidas-cuadro">
-              <p className="medida-cuello centimetros">
+              <p className="medida-cuello" ref={(el) => (refMedidas.current[0] = el)}>
                 Cuello <br /> {medidas.cuello}cm
               </p>
 
-              <p className="medida-alto centimetros">
+              <p className="medida-alto" ref={(el) => (refMedidas.current[1] = el)}>
                 Alto <br /> {medidas.alto}cm
               </p>
-              <p className="medida-manga centimetros">
+              <p className="medida-manga" ref={(el) => (refMedidas.current[2] = el)}>
                 Manga <br /> {medidas.manga}cm
               </p>
 
@@ -50,7 +66,7 @@ export const GuiaDeTalles = () => {
                 />
                 <span className="ancho-remera"></span>
               </div>
-              <p className="medida-de-ancho centimetros">Ancho {medidas.ancho}cm</p>
+              <p className="medida-de-ancho" ref={(el) => (refMedidas.current[3] = el)}>Ancho {medidas.ancho}cm</p>
             </div>
             <div className="guia-talles-control-de-talles">
               <h6>Ver medidas</h6>
@@ -60,7 +76,7 @@ export const GuiaDeTalles = () => {
                     {producto.talles.map((talle, idx) => (
                       <button
                         className={`btn-talles ${
-                          guiaSeleccionada === talle ? "" : "activo"
+                          guiaSeleccionada === talle ? "" : "activo-guia"
                         }`}
                         key={idx}
                         onClick={() => setGuiaSeleccionada(talle)}
@@ -71,7 +87,12 @@ export const GuiaDeTalles = () => {
                   </div>
                 ))}
               </div>
-              <button className="btn-back" onClick={()=> setOpenCloseGuiaDeTalles(prevState => !prevState)}>
+              <button
+                className="btn-back"
+                onClick={() =>
+                  setOpenCloseGuiaDeTalles((prevState) => !prevState)
+                }
+              >
                 Volver
               </button>
             </div>

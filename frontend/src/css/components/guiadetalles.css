@@ -19,8 +19,6 @@
   transition: 0.5s all ease;
   top: 0;
   z-index: 80;
-  
-
 }
 
 .section-guia-de-talles {
@@ -28,7 +26,6 @@
 }
 
 .cont-cuadro-img {
-
   background-color: #000000ab;
   position: absolute;
   padding: 0.3em;
@@ -49,17 +46,17 @@
 }
 
 .cuadro-img {
-  
   display: grid;
   border-left: 1px dashed #ffffff;
   width: 100%;
   position: relative;
   background-color: #00000009;
-  max-height: 23em;
+  max-height: 22em;
   max-width: 21em;
+  padding: .1em;
 }
 .cuello {
-  width: 22%;
+  width: 21%;
   border-top: 1px dashed #ffffff;
   position: absolute;
   top: -5px;
@@ -154,7 +151,30 @@
   margin-top: 2em;
 }
 
-.activo {
-  background-color: #e21c1ce7;
-  color: #e7e5e5;
+.activo-guia {
+  color: #949393;
+  transition: .2s ease all;
+  background-color: #111111;
+}
+
+.activate-guia{
+  animation: forwards .4s talles ;
+}
+
+
+@keyframes talles {
+  0%{
+color: #333232;
+  }
+  50%{
+    color: #e4e2e2;
+  }
+  60%{
+color: #141414;
+    
+  }
+  100%{
+    color: #ffffff;
+
+  }
 }
