@@ -1,5 +1,5 @@
 .navbar {
-  padding: 0.4em 0.9em;
+  padding: 0.5em 0.9em;
   background-color: #070707;
   border-radius: 19px;
   color: #ffffff;
@@ -16,8 +16,9 @@
 
 .cont-logo {
   display: flex;
-  width: 50%;
-  gap: 1.5em;
+  justify-content: space-between;
+  width: 39%;
+  gap: .2em;
   align-items: center;
 }
 
@@ -53,14 +54,10 @@
   margin-left: auto;
 }
 
-.navbar .cont-navbar .icon-home {
+.arrowback{
+  display: none;
   font-size: 1.8em;
-}
-
-.navbar .cont-navbar .titulo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top:1px;  
 }
 
 .navbar .cont-navbar .titulo span {
@@ -68,10 +65,3 @@
   font-size: 1.5em;
 }
 
-.navbar .cont-navbar .ul-navbar-redes-sociales {
-  margin-right: 0;
-  list-style: none;
-  font-size: 1.4em;
-  display: flex;
-  gap: 0.5em;
-}

@@ -14,9 +14,13 @@ export const NavBar = ({ activeSlide }) => {
     setOpenCloseMenuSlide,
     setOpenCloseCarrito,
     setPreferenceId,
-    setOpenCloseSectionPay
+    setOpenCloseSectionPay,
   } = useContext(ElContexto);
 
+  const refNavbar = useRef(null);
+  const refBtnMenu = useRef(null);
+  const refArrowBack = useRef(null);
+  const refContIcons = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -24,13 +28,14 @@ export const NavBar = ({ activeSlide }) => {
     activeSlide("messi");
   };
 
-  const refNavbar = useRef(null);
-  const refBtnMenu = useRef(null);
-
   const menuStyle = () => {
     if (location.pathname === "/modal") {
       const navbar = refNavbar.current;
       const btnMenu = refBtnMenu.current;
+      const arrowBack = refArrowBack.current;
+      const contIcons = refContIcons.current;
+      contIcons.style.flexDirection = "row-reverse" 
+      arrowBack.style.display = "block";
       btnMenu.style.visibility = "hidden";
       navbar.style.position = "absolute";
       navbar.style.color = "#2b2a2a";
@@ -48,21 +53,28 @@ export const NavBar = ({ activeSlide }) => {
     setOpenCloseFormEnvio("inicial");
     setSelectTalle("inicial");
     setproductoSeleccionado([]);
-    setPreferenceId("")
-    setOpenCloseSectionPay(false)
+    setPreferenceId("");
+    setOpenCloseSectionPay(false);
     navigate("/");
   };
 
   return (
     <section className="navbar">
       <div className="cont-navbar">
-        <div className="cont-logo">
+        <div className="cont-logo" ref={refContIcons}>
           <span
             className="material-symbols-outlined icons-nav"
             ref={refBtnMenu}
             onClick={() => setOpenCloseMenuSlide((prevState) => !prevState)}
           >
             sort
+          </span>
+
+          <span
+            className="material-symbols-outlined arrowback"
+            ref={refArrowBack} onClick={goHome}
+          >
+            keyboard_backspace
           </span>
           <h1 className="titulo-logo" onClick={goHome} ref={refNavbar}>
             Polarys

@@ -21,7 +21,6 @@ export const MyProvider = ({ children }) => {
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
-      console.log(response.data)
       setProductos(response.data);
     };
 
