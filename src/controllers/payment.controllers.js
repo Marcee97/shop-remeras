@@ -1,5 +1,5 @@
 import { MercadoPagoConfig, Preference, Payment } from "mercadopago";
-
+import { v4 as uuidv4 } from 'uuid';
 import { pool } from "../database.js";
 import dotenv from "dotenv";
 import brevo from "@getbrevo/brevo";
@@ -47,8 +47,6 @@ export const dataFormEnvio = async (req, res) => {
       ]
     );
 
-    
-
     res.status(200).send({ message: "lionel messi" });
   } catch (err) {
     console.error(err);
@@ -58,10 +56,8 @@ export const dataFormEnvio = async (req, res) => {
 //5031 7557 3453 0604
 
 export const paymentProccess = async (req, res) => {
-  
-  console.log(req.body, 'patment proccess');
+  console.log(req.body, "patment proccess");
   try {
-
     const {
       nombre,
       apellido,
@@ -78,10 +74,9 @@ export const paymentProccess = async (req, res) => {
       selectTalle,
       articulo,
       precio,
-      
     } = req.body.validData;
-const {idproducto} = req.body
-    
+    const { idproducto } = req.body;
+
     const shippingData = {
       nombre,
       apellido,
@@ -98,10 +93,12 @@ const {idproducto} = req.body
       selectTalle,
       articulo,
       precio,
-      idproducto
+      idproducto,
     };
+const ordenCompra = uuidv4()
 
-    console.log(shippingData, 'shipping data')
+console.log(ordenCompra)
+    console.log(shippingData, "shipping data");
     const shippingDataSerial = JSON.stringify(shippingData);
 
     const tokenMP = process.env.TOKEN_MERCADO_PAGO_API;
@@ -124,22 +121,24 @@ const {idproducto} = req.body
           },
         ],
         metadata: shippingData,
+        external_reference: ordenCompra,
 
         back_urls: {
           success: "http://localhost:5173/",
-          failure: "https://anatomy-photographer-possibility-greater.trycloudflare.com/pending",
-          pending: "https://anatomy-photographer-possibility-greater.trycloudflare.com/failure",
+          failure:
+            "https://anatomy-photographer-possibility-greater.trycloudflare.com/pending",
+          pending:
+            "https://anatomy-photographer-possibility-greater.trycloudflare.com/failure",
         },
         auto_return: "approved",
         notification_url:
           "https://pads-upgrades-flows-redeem.trycloudflare.com/webhook",
       },
     });
-console.log(response)
+    console.log(response);
     const preferenceId = response.id;
 
-
-/*
+    /*
     const apiKey = process.env.APY_BREVO;
 
     const apiInstance = new brevo.TransactionalEmailsApi();
@@ -162,7 +161,6 @@ console.log(response)
     console.log(result);
 */
 
-
     return res.status(200).json({ preferenceId });
   } catch (error) {
     console.log(error);
@@ -175,27 +173,26 @@ console.log(response)
 export const webhook = async (req, res) => {
   try {
     const tokenMP = process.env.TOKEN_MERCADO_PAGO_API;
-    
+
     const client = new MercadoPagoConfig({
       accessToken: tokenMP,
     });
-    
-    const payment = new Payment(client);
-    
-    const dataPayment = await payment.get({ id: req.query["data.id"] });
-    console.log("lionel messi")
-    console.log(typeof dataPayment.metadata, dataPayment.metadata);
 
-    
+    const payment = new Payment(client);
+
+    const dataPayment = await payment.get({ id: req.query["data.id"] });
+    console.log("lionel messi");
+    console.log(dataPayment);
+
     const { transaction_amount } = dataPayment;
-    console.log(dataPayment.metadata) //este console.log me muetra todos los datos del comprador
+    console.log(dataPayment.metadata); //este console.log me muetra todos los datos del comprador
     const {
       nombre,
       apellido,
       provincia,
       localidad,
       calle,
-      numero_de_calle: numeroDeCalle, 
+      numero_de_calle: numeroDeCalle,
       codigo_postal: codigoPostal,
       articulo,
       email,
@@ -204,14 +201,17 @@ export const webhook = async (req, res) => {
       piso,
       dni,
       telefono,
-      idproducto
+      idproducto,
     } = dataPayment.metadata;
+
     
-    console.log(nombre, apellido, numeroDeCalle, codigoPostal,selectTalle); //Pero este me da undefined en numeroDeCalle, codigoPostal y selectTalle
-    
-    console.log("hasta aca llega el webhook")
+    console.log(dataPayment.external_reference)
+
+    const orden = dataPayment.external_reference
+
+    console.log("hasta aca llega el webhook");
     await pool.query(
-      "INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo, talle, departamento,dni, telefono, piso ) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO ventas (nombre, apellido, provincia, localidad, calle, numero, codigoPostal,email, total, articulo, talle, departamento,dni, telefono, piso, orden ) VALUES (?, ?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         nombre,
         apellido,
@@ -227,10 +227,11 @@ export const webhook = async (req, res) => {
         departamento,
         dni,
         telefono,
-        piso
+        piso,
+        orden
       ]
     );
-    console.log(idproducto, "id Producto en el webhook")
+    console.log(idproducto, "id Producto en el webhook");
 
     await pool.query(
       "UPDATE productos SET cantidad = cantidad - 1 WHERE id = ? AND cantidad > 0",
@@ -243,10 +244,6 @@ export const webhook = async (req, res) => {
     res.status(500).send("error en el webhook backend");
   }
 };
-
-
-
-
 
 export const success = (req, res) => {
   res.status(200).send("succes");
