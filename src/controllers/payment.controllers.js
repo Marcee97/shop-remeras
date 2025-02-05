@@ -47,10 +47,7 @@ export const dataFormEnvio = async (req, res) => {
       ]
     );
 
-    await pool.query(
-      "UPDATE productos SET cantidad = cantidad - 1 WHERE id = ? AND cantidad > 0",
-      [id]
-    );
+    
 
     res.status(200).send({ message: "lionel messi" });
   } catch (err) {
@@ -80,10 +77,10 @@ export const paymentProccess = async (req, res) => {
       email,
       selectTalle,
       articulo,
-      precio
+      precio,
       
     } = req.body.validData;
-
+const {idproducto} = req.body
     
     const shippingData = {
       nombre,
@@ -100,7 +97,8 @@ export const paymentProccess = async (req, res) => {
       email,
       selectTalle,
       articulo,
-      precio
+      precio,
+      idproducto
     };
 
     console.log(shippingData, 'shipping data')
@@ -134,13 +132,11 @@ export const paymentProccess = async (req, res) => {
         },
         auto_return: "approved",
         notification_url:
-          "https://part-honolulu-plenty-clarke.trycloudflare.com/webhook",
+          "https://pads-upgrades-flows-redeem.trycloudflare.com/webhook",
       },
     });
-
+console.log(response)
     const preferenceId = response.id;
-    console.log(preferenceId, "el preference id");
-    console.log(response, "la respuesta");
 
 
 /*
@@ -191,7 +187,6 @@ export const webhook = async (req, res) => {
     console.log(typeof dataPayment.metadata, dataPayment.metadata);
 
     
-    //const shippingNotSerial = JSON.parse(dataPayment.metadata)
     const { transaction_amount } = dataPayment;
     console.log(dataPayment.metadata) //este console.log me muetra todos los datos del comprador
     const {
@@ -209,6 +204,7 @@ export const webhook = async (req, res) => {
       piso,
       dni,
       telefono,
+      idproducto
     } = dataPayment.metadata;
     
     console.log(nombre, apellido, numeroDeCalle, codigoPostal,selectTalle); //Pero este me da undefined en numeroDeCalle, codigoPostal y selectTalle
@@ -234,7 +230,12 @@ export const webhook = async (req, res) => {
         piso
       ]
     );
+    console.log(idproducto, "id Producto en el webhook")
 
+    await pool.query(
+      "UPDATE productos SET cantidad = cantidad - 1 WHERE id = ? AND cantidad > 0",
+      [idproducto]
+    );
 
     return res.status(200).send("Data recibida");
   } catch (err) {

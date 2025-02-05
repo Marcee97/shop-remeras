@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import ElContexto from "./ProductContext";
 
 import client from "../api/axios";
@@ -15,9 +17,16 @@ export const MyProvider = ({ children }) => {
   const [openCloseCarrito, setOpenCloseCarrito] = useState(true);
   const [productoCarrito, setProductoCarrito] = useState([])
   const [totalCarrito, setTotalCarrito] = useState(0)
+  const [idproducto, setIdproducto] = useState(0)
+
 
   const [selectTalle, setSelectTalle] = useState("inicial");
+  const refCatalogo = useRef(null);
+  const refFormEnvio = useRef(null);
+  const refNombreFocus = useRef(null);
+  const refInputEmail = useRef(null);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
@@ -27,10 +36,19 @@ export const MyProvider = ({ children }) => {
     peticionProducts();
   }, []);
 
-  const refCatalogo = useRef(null);
-  const refFormEnvio = useRef(null);
-  const refNombreFocus = useRef(null);
-  const refInputEmail = useRef(null);
+  
+  const peticionProductsModal = async (id) => {
+    setIdproducto(id)
+    const response = await client.post("/modal-products", {
+      id,
+    });
+    setproductoSeleccionado(response.data);
+    
+    navigate("/modal");
+
+    console.log(response);
+  };
+
 
   const verTodo = () => {
     const catalogo = refCatalogo.current;
@@ -98,7 +116,9 @@ return newCarrito
         setOpenCloseCarrito,
         productoCarrito,
         addCarrito,
-        totalCarrito
+        totalCarrito,
+        peticionProductsModal,
+        idproducto
       }}
     >
       {children}

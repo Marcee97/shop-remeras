@@ -2,23 +2,12 @@ import client from "../api/axios.js";
 import { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import elContexto from "../context/ProductContext.jsx";
-import { useNavigate } from "react-router-dom";
 import "../css/components/cardproduct.css"
 export const Cardproduct = () => {
-  const navigate = useNavigate();
-  const { productos, setProductos, setproductoSeleccionado,productoSeleccionado,refCatalogo,setInfoProductoSeleccionado } =
+ 
+  const { productos, setProductos, setproductoSeleccionado,productoSeleccionado,refCatalogo,setInfoProductoSeleccionado, peticionProductsModal } =
     useContext(elContexto);
 
-  const peticionProductsModal = async (id) => {
-    const response = await client.post("/modal-products", {
-      id,
-    });
-    setproductoSeleccionado(response.data);
-    
-    navigate("/modal");
-
-    console.log(response);
-  };
 
   return (
     <section className="cardproduct" ref={refCatalogo} >

@@ -35,6 +35,7 @@ export const FormEnvio = () => {
     refInputEmail,
     selectTalle,
     setPreferenceId,
+    idproducto
   } = useContext(ElContexto);
 
   useEffect(() => {
@@ -114,6 +115,7 @@ export const FormEnvio = () => {
         "http://localhost:3000/payment-proccess",
         {
           validData,
+          idproducto
         }
       );
 
