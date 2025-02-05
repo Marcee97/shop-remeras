@@ -56,14 +56,14 @@
 
 .opacityoff{
   opacity: 0;
-  transition: opacity .3s ease-out;
+  transition: opacity .8s ease-out;
  
 }
 
 
 .inicial {
   font-family: sans-serif;
-  transition: max-height 2s ease, padding 1s ease, opacity 2s ease;
+  transition: max-height 1s ease, padding 1s ease, opacity 2s ease;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -75,7 +75,7 @@
 
 .completed {
   font-family: sans-serif;
-  transition: max-height 2s ease, padding 1s ease, opacity 2s ease;
+  transition: max-height 1s ease, padding 1s ease, opacity 2s ease;
   overflow: hidden;
   display: flex;
   flex-direction: column;

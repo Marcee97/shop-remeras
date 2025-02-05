@@ -15,16 +15,18 @@ export const MyProvider = ({ children }) => {
   const [openCloseFormEnvio, setOpenCloseFormEnvio] = useState("inicial");
   const [openCloseMenuSlide, setOpenCloseMenuSlide] = useState(true);
   const [openCloseCarrito, setOpenCloseCarrito] = useState(true);
-  const [productoCarrito, setProductoCarrito] = useState([])
-  const [totalCarrito, setTotalCarrito] = useState(0)
-  const [idproducto, setIdproducto] = useState(0)
-
+  const [productoCarrito, setProductoCarrito] = useState([]);
+  const [totalCarrito, setTotalCarrito] = useState(0);
+  const [idproducto, setIdproducto] = useState(0);
+  const [loadingWallet, setLoadingWallet] = useState(false);
 
   const [selectTalle, setSelectTalle] = useState("inicial");
   const refCatalogo = useRef(null);
   const refFormEnvio = useRef(null);
   const refNombreFocus = useRef(null);
   const refInputEmail = useRef(null);
+  const refContBtnWallet = useRef(null)
+
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -36,19 +38,17 @@ export const MyProvider = ({ children }) => {
     peticionProducts();
   }, []);
 
-  
   const peticionProductsModal = async (id) => {
-    setIdproducto(id)
+    setIdproducto(id);
     const response = await client.post("/modal-products", {
       id,
     });
     setproductoSeleccionado(response.data);
-    
+
     navigate("/modal");
 
     console.log(response);
   };
-
 
   const verTodo = () => {
     const catalogo = refCatalogo.current;
@@ -65,25 +65,20 @@ export const MyProvider = ({ children }) => {
     inputEmail.focus();
   };
 
-  
+  const addCarrito = () => {
+    const transformArray = productoSeleccionado.map((rows) => ({
+      ...rows,
+      imagenes: rows.imagenes.split(","),
+    }));
 
-  const addCarrito = ()=> {
-    
-  const transformArray = productoSeleccionado.map((rows) => ({
-    ...rows,
-    imagenes: rows.imagenes.split(","),
-  }));
+    setProductoCarrito((prev) => {
+      const newCarrito = [...prev, ...transformArray];
+      const nuevoTotal = newCarrito.reduce((acc, item) => acc + item.precio, 0);
+      setTotalCarrito(nuevoTotal);
 
-
-  setProductoCarrito((prev) => {
-    const newCarrito = [...prev, ...transformArray]
-    const nuevoTotal = newCarrito.reduce((acc, item) => acc + item.precio, 0)
-    setTotalCarrito(nuevoTotal)
-
-return newCarrito
-  });
-  }
-
+      return newCarrito;
+    });
+  };
 
   return (
     <ElContexto.Provider
@@ -118,7 +113,10 @@ return newCarrito
         addCarrito,
         totalCarrito,
         peticionProductsModal,
-        idproducto
+        idproducto,
+        loadingWallet,
+        setLoadingWallet,
+        refContBtnWallet
       }}
     >
       {children}

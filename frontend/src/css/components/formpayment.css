@@ -7,7 +7,7 @@
   max-height: 30em;
   background: linear-gradient(to top, #0a0a0a 10%, transparent 120%);
   overflow: hidden;
-  transition: all .7s ease-in-out;
+  transition: max-height 2s ease-in-out;
   border-radius: 5px;
 
 }
@@ -44,21 +44,34 @@
 
 .formpayment-detalles-texto {
   padding: 0.8em 0.2em 0.2em 0.2em;
-  transition: 1s all ease;
+  transition: 1s all ease-in-out;
   max-height: 11em;
   overflow: hidden;
 }
 
 .texto-openclose {
   max-height: 0;
-  transition: 1s all ease;
+  transition: 1s all ease-in-out;
   overflow: hidden;
   padding: 0.2em;
 }
 
-.btn-mercadopago {
-  height: 105px;
+.cont-btn-mercadopago {
+  max-height: 105px;
   width: 320px;
   margin: 1.5em 0 0.3em 0;
   overflow: hidden;
+  transition: 1s all ease-in-out;
+  
+}
+.btn-mercadopago{
+  transform: translateY(95%);
+  opacity: 0;
+  transition: 1s all ease-in-out;
+}
+
+.activepay{
+  max-height: 0;
+  overflow: hidden;
+  transition: 1s all ease-in-out;
 }

@@ -35,7 +35,9 @@ export const FormEnvio = () => {
     refInputEmail,
     selectTalle,
     setPreferenceId,
-    idproducto
+    idproducto,
+    setLoadingWallet,
+    refContBtnWallet
   } = useContext(ElContexto);
 
   useEffect(() => {
@@ -83,8 +85,7 @@ export const FormEnvio = () => {
 
   //Funcion para validar el formulario
   const validateForm = async () => {
-    setIsLoading((prevState) => !prevState);
-
+   
     const precio = productoSeleccionado[0].precio;
     const articulo = productoSeleccionado[0].nombre;
 
@@ -115,7 +116,7 @@ export const FormEnvio = () => {
         "http://localhost:3000/payment-proccess",
         {
           validData,
-          idproducto
+          idproducto,
         }
       );
 
@@ -126,7 +127,13 @@ export const FormEnvio = () => {
         setPreferenceId(response.data.preferenceId);
         setTimeout(() => {
           setOpenCloseSectionPay((prevState) => !prevState);
-        }, 2300);
+        }, 1800);
+        setTimeout(()=> {
+          const contBtnWallet = refContBtnWallet.current
+          contBtnWallet.style.opacity = 1
+          contBtnWallet.style.transform = "translateY(0%)"
+        },4200)
+
         setIsLoading((prevState) => !prevState);
         console.log(response.data.preferenceId);
       } else {
@@ -161,8 +168,8 @@ export const FormEnvio = () => {
         }
       >
         <div>
-        <h4>Datos de envio</h4>
-        <p className="texto-completed__completados">(Completados)</p>
+          <h4>Datos de envio</h4>
+          <p className="texto-completed__completados">(Completados)</p>
         </div>
         <button className="btn-editar">Editar</button>
       </div>
@@ -176,7 +183,13 @@ export const FormEnvio = () => {
             (${productoSeleccionado[0].precio})
           </p>
         </div>
-        <div className={openCloseFormEnvio === "completed" ? " formenvio__inputs-contacto opacityoff" : "formenvio__inputs-contacto"}>
+        <div
+          className={
+            openCloseFormEnvio === "completed"
+              ? "formenvio__inputs-contacto opacityoff"
+              : "formenvio__inputs-contacto"
+          }
+        >
           <h4>CONTACTO</h4>
           {erroresForm("email") && (
             <p className="errores-formenvio">{erroresForm("email")}</p>
@@ -189,7 +202,13 @@ export const FormEnvio = () => {
             ref={refInputEmail}
           />
         </div>
-        <div className="formenvio__inputs-direccion">
+        <div
+          className={
+            openCloseFormEnvio === "completed"
+              ? "formenvio__inputs-direccion opacityoff"
+              : "formenvio__inputs-direccion"
+          }
+        >
           <div className="formenvio__inputs-direccion__datos">
             <h4>INFORMACION</h4>
             {erroresForm("nombre") && (
@@ -235,7 +254,11 @@ export const FormEnvio = () => {
           </div>
 
           <div className="formenvio__inputs-direccion__direccion">
-            <h4 className={openCloseFormEnvio === "completed" ? "opacityoff" : ""}>DIRECCION</h4>
+            <h4
+              className={openCloseFormEnvio === "completed" ? "opacityoff" : ""}
+            >
+              DIRECCION
+            </h4>
             {erroresForm("calle") && (
               <p className="errores-formenvio">{erroresForm("calle")}</p>
             )}

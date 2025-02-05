@@ -1,16 +1,20 @@
-import React from "react";
-import { useContext, useState } from "react";
+
+import { useContext, useState, useMemo, useRef } from "react";
 import ElContexto from "../context/ProductContext";
 import "../css/components/formpayment.css";
 import { WalletComponent } from "../ui/WalletComponent";
 export const FormPayment = () => {
-  const { productoSeleccionado, selectTalle, openCloseSectionPay } = useContext(ElContexto);
+  const { productoSeleccionado, selectTalle, openCloseSectionPay, loadingWallet,refContBtnWallet } = useContext(ElContexto);
 
   const [openCloseComoPagar, setOpenCloseComoPagar] = useState(false);
   const arrayImagenes = productoSeleccionado.map((rows) => ({
     ...rows,
     imagenes: rows.imagenes.split(","),
   }));
+
+  
+    const walletMemo = useMemo(() => <WalletComponent/>, [])
+  
 
   return (
     <section className={openCloseSectionPay ? "formpayment-open" : "formpayment"}>
@@ -56,8 +60,10 @@ export const FormPayment = () => {
             dinero disponible.
           </article>
         </div>
-        <div className="btn-mercadopago">
-          <WalletComponent />
+        <div className="cont-btn-mercadopago" >
+          <div className="btn-mercadopago" ref={refContBtnWallet}>
+          {walletMemo}
+          </div>
         </div>
       </div>
     </section>
