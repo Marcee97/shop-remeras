@@ -28,22 +28,32 @@ export const Modal = () => {
     focusFormEnvio,
     setSelectTalle,
     selectTalle,
-    addCarrito
+    addCarrito,
+    idproducto,
+    idProductosCarrito,
   } = useContext(ElContexto);
+  const [agregadoCarrito, setAgregadoCarrito] = useState(false);
+  useEffect(() => {
+    if (idProductosCarrito.includes(productoSeleccionado[0].id)) {
+      console.log("ya esta agegado");
+      setAgregadoCarrito(true);
+    } else {
+      console.log("no esta agregado");
+      setAgregadoCarrito(false);
+    }
+  }, [idProductosCarrito, productoSeleccionado]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFront, setLoadingFront] = useState(false);
-  const [tallesDisponibles, setTallesDisponibles] = useState([])
+  const [tallesDisponibles, setTallesDisponibles] = useState([]);
 
-  console.log(productoSeleccionado[0].talles)
+  console.log(productoSeleccionado[0].talles);
 
-useEffect(()=> {
-  const talles = productoSeleccionado[0].talles.split(",")
-  console.log(talles)
-setTallesDisponibles(talles)
-
-}, [])
-
+  useEffect(() => {
+    const talles = productoSeleccionado[0].talles.split(",");
+    console.log(talles);
+    setTallesDisponibles(talles);
+  }, []);
 
   const refFormEnvio = useRef(null);
   const refImageCarrousel = useRef(null);
@@ -110,8 +120,8 @@ setTallesDisponibles(talles)
   //-------------------  COMIENZA EL JSX  -----------------------------------------------------------------
   return (
     <>
-        <NavBar />
-        <Carrito/>
+      <NavBar />
+      <Carrito />
       <section className="modal">
         <div className="modal-cardproduct">
           {transformArray.map((items, index) => (
@@ -158,7 +168,11 @@ setTallesDisponibles(talles)
           >
             <div className="section-botones-talles">
               <header className="header-seleccionar-talle">
-                <strong className="talle-title">{tallesDisponibles.length === 1 ? "Unico Talle Disponible:" : "Talles:"}</strong>
+                <strong className="talle-title">
+                  {tallesDisponibles.length === 1
+                    ? "Unico Talle Disponible:"
+                    : "Talles:"}
+                </strong>
                 <p
                   className="guia-talles"
                   onClick={() =>
@@ -189,25 +203,30 @@ setTallesDisponibles(talles)
             <div className="cont-form-envio-desplegable">
               <div
                 className="btn-guia-desplegable"
-                onClick={despliegoFormEnvio}
-                ref={refBtnGuiaDesplegable}
               >
-                <strong ref={refButtonMultiText}>Seleccioná el talle</strong>
-                <span
-                  className="material-symbols-outlined prueba-flecha"
-                  ref={refArrowGuia}
-                >
-                  arrow_forward
-                </span>
-              </div>
-              <p className="btn-cripto" onClick={addCarrito}>
-                <span className="material-symbols-outlined">favorite</span>
-              </p>
-            </div>
+                <div className="btn-alternate"  onClick={despliegoFormEnvio} ref={refBtnGuiaDesplegable}>
+                  <strong ref={refButtonMultiText} >
+                    Seleccioná el talle{" "}
+                  </strong>
+                  <span
+                    className="material-symbols-outlined prueba-flecha"
+                    ref={refArrowGuia}
+                  >
+                    arrow_forward
+                  </span>
+                </div>
 
+                <p className="cont-btn-cripto" onClick={addCarrito}>
+                  {agregadoCarrito ? (
+                    <i className="fa-solid fa-heart btn-add-carrito-active"></i>
+                  ) : (
+                    <i className="fa-regular fa-heart btn-add-carrito"></i>
+                  )}
+                </p>
+              </div>
+            </div>
             <FormEnvio />
             <FormPayment />
-
             <div className="cont-info-adicional">
               <div className="info-adicional">
                 <span className="material-symbols-outlined">

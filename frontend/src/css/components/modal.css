@@ -189,15 +189,22 @@
   .cont-preferencias-modal-product
   .cont-form-envio-desplegable
   .btn-guia-desplegable {
-  background: #0f0f0f;
   display: flex;
   justify-content: space-between;
-  width: 79%;
-  border: 1px solid #ffffff;
-  padding: 0.8em;
+  width: 100%;
   font-size: 1.2em;
+  height: 3em;
 }
+.btn-alternate{
+background-color: #0f0f0f;
+border: 1px solid #fff;
+display: flex;
+align-items: center;
+gap:.7em;
+width: 75%;
+padding: .5em;
 
+}
 .modal
   .modal-cardproduct
   .cont-preferencias-modal-product
@@ -262,10 +269,24 @@
   .modal-cardproduct
   .cont-preferencias-modal-product
   .cont-form-envio-desplegable
-  .btn-cripto {
+  .cont-btn-cripto {
   border: 1px solid #ffffff;
-  padding: 0.9em;
+  padding: .98em;
   background: #0f0f0f;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.btn-add-carrito{
+  font-size: 1.1em;
+}
+
+.btn-add-carrito-active{
+  font-size: 1.1em;
+  color: rgb(255, 255, 255);
 }
 
 .modal

@@ -19,19 +19,20 @@ export const MyProvider = ({ children }) => {
   const [totalCarrito, setTotalCarrito] = useState(0);
   const [idproducto, setIdproducto] = useState(0);
   const [loadingWallet, setLoadingWallet] = useState(false);
+  const [idProductosCarrito, setIdProductosCarrito] = useState([]);
 
   const [selectTalle, setSelectTalle] = useState("inicial");
   const refCatalogo = useRef(null);
   const refFormEnvio = useRef(null);
   const refNombreFocus = useRef(null);
   const refInputEmail = useRef(null);
-  const refContBtnWallet = useRef(null)
-
+  const refContBtnWallet = useRef(null);
 
   const navigate = useNavigate();
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
+      console.log(response.data.id, "el id desde /productos");
       setProductos(response.data);
     };
 
@@ -74,7 +75,10 @@ export const MyProvider = ({ children }) => {
     setProductoCarrito((prev) => {
       const newCarrito = [...prev, ...transformArray];
       const nuevoTotal = newCarrito.reduce((acc, item) => acc + item.precio, 0);
+      const idProductosCarrito = newCarrito.map((item) => item.id);
+      setIdProductosCarrito(idProductosCarrito);
       setTotalCarrito(nuevoTotal);
+      console.log(idProductosCarrito, "los id obtenidos en prov");
 
       return newCarrito;
     });
@@ -116,7 +120,9 @@ export const MyProvider = ({ children }) => {
         idproducto,
         loadingWallet,
         setLoadingWallet,
-        refContBtnWallet
+        refContBtnWallet,
+        idProductosCarrito,
+        setIdProductosCarrito,
       }}
     >
       {children}

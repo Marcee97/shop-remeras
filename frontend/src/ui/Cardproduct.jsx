@@ -5,7 +5,7 @@ import elContexto from "../context/ProductContext.jsx";
 import "../css/components/cardproduct.css"
 export const Cardproduct = () => {
  
-  const { productos, setProductos, setproductoSeleccionado,productoSeleccionado,refCatalogo,setInfoProductoSeleccionado, peticionProductsModal } =
+  const { productos, setProductos,refCatalogo,setInfoProductoSeleccionado, peticionProductsModal } =
     useContext(elContexto);
 
 
