@@ -32,7 +32,7 @@ export const MyProvider = ({ children }) => {
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
-      console.log(response.data.id, "el id desde /productos");
+     
       setProductos(response.data);
     };
 
@@ -45,10 +45,7 @@ export const MyProvider = ({ children }) => {
       id,
     });
     setproductoSeleccionado(response.data);
-
     navigate("/modal");
-
-    console.log(response);
   };
 
   const verTodo = () => {

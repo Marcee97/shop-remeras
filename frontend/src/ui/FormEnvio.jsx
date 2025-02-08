@@ -40,10 +40,7 @@ export const FormEnvio = () => {
     refContBtnWallet
   } = useContext(ElContexto);
 
-  useEffect(() => {
-    console.log(productoSeleccionado[0].precio, "el articulo seleccionado");
-  }, [productoSeleccionado]);
-
+ 
   const envioSchema = z.object({
     email: z.string().email({ message: "Email invalido" }),
     nombre: z

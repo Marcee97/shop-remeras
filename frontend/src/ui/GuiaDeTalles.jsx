@@ -27,7 +27,7 @@ export const GuiaDeTalles = () => {
   }));
 
   useEffect(() => {
-    console.log("se selecciono un talle para ver");
+   
 
     refMedidas.current.forEach((medida) => {
       if (medida) {

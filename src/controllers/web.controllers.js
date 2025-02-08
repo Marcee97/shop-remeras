@@ -6,7 +6,7 @@ export const modalProduct = async(req, res) => {
         const idProducto = req.body.id
         console.log(idProducto)
        
-        const [rows] = await pool.query('SELECT productos.nombre, productos.precio, productos.cantidad, productos.talles, GROUP_CONCAT(DISTINCT imagenes.url_imagen ORDER BY imagenes.id ASC) AS imagenes FROM productos LEFT JOIN imagenes ON productos.id = imagenes.id_imagen WHERE productos.id = ? GROUP BY productos.id', [idProducto])
+        const [rows] = await pool.query('SELECT productos.nombre, productos.precio, productos.cantidad, productos.talles,productos.id, GROUP_CONCAT(DISTINCT imagenes.url_imagen ORDER BY imagenes.id ASC) AS imagenes FROM productos LEFT JOIN imagenes ON productos.id = imagenes.id_imagen WHERE productos.id = ? GROUP BY productos.id', [idProducto])
 
         res.status(200).json(rows)
         console.log(rows)
