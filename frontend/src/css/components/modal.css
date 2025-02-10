@@ -176,7 +176,7 @@
   .modal-cardproduct
   .cont-preferencias-modal-product
   .cont-form-envio-desplegable {
-  transition: 0.5s all ease;
+  transition: 0.5s max-height ease;
   font-size: 0.8em;
   display: flex;
   justify-content: space-between;
@@ -210,7 +210,7 @@ padding: .5em;
   .cont-preferencias-modal-product
   .cont-form-envio-desplegable
   .prueba-flecha {
-  transition: 0.6s all ease;
+  transition: 1.5s transform ease;
   transform: rotate(-90deg);
 }
 
@@ -326,7 +326,7 @@ padding: .5em;
   overflow: hidden;
   background: linear-gradient(#000 2%, #0f0f0f 20%);
   border-radius: 5px;
-  transition: 1s all ease;
+  transition: 1s max-height ease;
   height: 29em;
   
 }
@@ -422,7 +422,7 @@ padding: .5em;
   margin-top: 0.5em;
   font-size: 0.8em;
   max-height: 0;
-  transition: 0.2s all ease;
+  transition: 0.2s max-height ease;
   overflow: hidden;
   border-left: 1px solid #fff;
   padding-left: 0.4em;

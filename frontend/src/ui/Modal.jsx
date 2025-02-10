@@ -31,23 +31,39 @@ export const Modal = () => {
     addCarrito,
     idproducto,
     idProductosCarrito,
+    setProductoCarrito,
+    productoCarrito
   } = useContext(ElContexto);
   const [agregadoCarrito, setAgregadoCarrito] = useState(false);
   useEffect(() => {
+    console.log(productoCarrito)
     if (idProductosCarrito.includes(productoSeleccionado[0].id)) {
       console.log("ya esta agegado");
       setAgregadoCarrito(true);
+
     } else {
       console.log("no esta agregado");
       setAgregadoCarrito(false);
     }
   }, [idProductosCarrito, productoSeleccionado]);
 
+const verificarProductoEnCarrito = ()=> {
+  if(productoCarrito.includes(productoSeleccionado[0].id)){
+    
+    setProductoCarrito(prevCarrito => prevCarrito.filter(producto => producto.id !== productoSeleccionado[0].id));
+
+
+  }
+
+
+}
+
+//Aca quede sin terminar la funcion para eliminar el producto del carrito desde el button del corazon,o temabn preguntar si estas seguro si deseas eliminarlo
+
+
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFront, setLoadingFront] = useState(false);
   const [tallesDisponibles, setTallesDisponibles] = useState([]);
-
-  console.log(productoSeleccionado[0].talles);
 
   useEffect(() => {
     const talles = productoSeleccionado[0].talles.split(",");

@@ -10,7 +10,8 @@ export const Carrito = () => {
     productoCarrito,
     totalCarrito
   } = useContext(ElContexto);
-  
+
+
 
   return (
     <section

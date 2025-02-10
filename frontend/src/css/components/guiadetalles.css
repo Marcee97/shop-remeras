@@ -4,7 +4,7 @@
   width: 100%;
   font-family: monospace;
   transform: translateX(-2%);
-  transition: 0.5s all ease;
+  transition: 0.5s transform ease;
   background: linear-gradient(#00000007, transparent);
   top: 0;
   z-index: 80;
@@ -16,7 +16,7 @@
   width: 100%;
   font-family: monospace;
   transform: translateX(100%);
-  transition: 0.5s all ease;
+  transition: 0.5s transform ease;
   top: 0;
   z-index: 80;
 }
@@ -153,7 +153,6 @@
 
 .activo-guia {
   color: #949393;
-  transition: .2s ease all;
   background-color: #111111;
 }
 

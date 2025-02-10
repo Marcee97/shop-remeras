@@ -70,13 +70,16 @@ export const MyProvider = ({ children }) => {
     }));
 
     setProductoCarrito((prev) => {
-      const newCarrito = [...prev, ...transformArray];
+      const productosNoDuplicados = transformArray.filter(
+        (nuevoProducto) => !prev.some((item) => item.id === nuevoProducto.id)
+      );
+      if (productosNoDuplicados.length === 0) return prev;
+      const newCarrito = [...prev, ...productosNoDuplicados];
       const nuevoTotal = newCarrito.reduce((acc, item) => acc + item.precio, 0);
       const idProductosCarrito = newCarrito.map((item) => item.id);
       setIdProductosCarrito(idProductosCarrito);
       setTotalCarrito(nuevoTotal);
       console.log(idProductosCarrito, "los id obtenidos en prov");
-
       return newCarrito;
     });
   };

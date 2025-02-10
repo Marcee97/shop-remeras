@@ -45,7 +45,7 @@
   padding: 0.5em;
   font-size: 1.2em;
   span {
-    transition: 0.6s all;
+    transition: 0.5s transform ease;
   }
 }
 
@@ -56,7 +56,7 @@
 .cont-menu-opciones-slide .contenido {
   max-height: 0;
   overflow: hidden;
-  transition: 0.8s ease;
+  transition: 0.8s max-height ease;
   font-size: 0.6em;
   color: #9b9a9a;
   padding-left: 0.8em;

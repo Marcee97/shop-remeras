@@ -33,7 +33,6 @@
   justify-content: space-between;
   align-items: center;
   opacity: 0;
-  transition: all .5s;
   padding: 1em;
   background: linear-gradient(to right, #11c92a .9%, #0f5f0f 1%, #0a0a0a 3%);
 }

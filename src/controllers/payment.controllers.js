@@ -10,7 +10,6 @@ dotenv.config();
 export const productosDatabase = async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM productos");
-    console.log(rows[0].id, "los productos con el id")
     res.json(rows);
   } catch (error) {
     console.log(error, "error peticion productos a base de datos");
@@ -98,7 +97,6 @@ export const paymentProccess = async (req, res) => {
     };
 const ordenCompra = uuidv4()
 
-console.log(ordenCompra)
     console.log(shippingData, "shipping data");
     const shippingDataSerial = JSON.stringify(shippingData);
 

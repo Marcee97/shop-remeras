@@ -4,7 +4,7 @@
   height: 100%;
   z-index: 88;
   position: fixed;
-  transition: 1s all ease;
+  transition: .5s transform ease;
   transform: translateX(100%);
   overflow: hidden;
   backdrop-filter: blur(9px);
@@ -86,6 +86,5 @@
 }
 .activo {
   transform: translateX(0%);
-
-  transition: 1s all ease;
+  transition: .5s transform ease;
 }
