@@ -20,8 +20,10 @@ export const MyProvider = ({ children }) => {
   const [idproducto, setIdproducto] = useState(0);
   const [loadingWallet, setLoadingWallet] = useState(false);
   const [idProductosCarrito, setIdProductosCarrito] = useState([]);
+  const [agregadoCarrito, setAgregadoCarrito] = useState(false);
 
   const [selectTalle, setSelectTalle] = useState("inicial");
+  const [compraDesdeCarrito, setCompraDesdeCarrito] = useState(false)
   const refCatalogo = useRef(null);
   const refFormEnvio = useRef(null);
   const refNombreFocus = useRef(null);
@@ -32,7 +34,7 @@ export const MyProvider = ({ children }) => {
   useEffect(() => {
     const peticionProducts = async () => {
       const response = await client.get("/productos");
-     
+
       setProductos(response.data);
     };
 
@@ -113,6 +115,7 @@ export const MyProvider = ({ children }) => {
         setOpenCloseMenuSlide,
         openCloseCarrito,
         setOpenCloseCarrito,
+        setProductoCarrito,
         productoCarrito,
         addCarrito,
         totalCarrito,
@@ -123,6 +126,10 @@ export const MyProvider = ({ children }) => {
         refContBtnWallet,
         idProductosCarrito,
         setIdProductosCarrito,
+        agregadoCarrito,
+        setAgregadoCarrito,
+        compraDesdeCarrito,
+        setCompraDesdeCarrito
       }}
     >
       {children}

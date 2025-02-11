@@ -86,5 +86,5 @@
 }
 .activo {
   transform: translateX(0%);
-  transition: .5s transform ease;
+  transition: .4s transform ease;
 }

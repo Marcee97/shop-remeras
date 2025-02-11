@@ -7,11 +7,35 @@ export const Carrito = () => {
     openCloseCarrito,
     setOpenCloseCarrito,
     productoSeleccionado,
+    setProductoCarrito,
     productoCarrito,
-    totalCarrito
+    totalCarrito,
+    setIdProductosCarrito,
+    idProductosCarrito,
+    compraDesdeCarrito,
+    setCompraDesdeCarrito,
   } = useContext(ElContexto);
 
+  const eliminarProducto = (id) => {
+    setProductoCarrito(
+      productoCarrito.filter(
+        (productoParaEliminar) => productoParaEliminar.id !== id
+      )
+    );
+    setIdProductosCarrito(
+      idProductosCarrito.filter((idParaEliminar) => idParaEliminar !== id)
+    );
+  };
 
+  const btnComprar = () => {
+    setCompraDesdeCarrito((prevState) => !prevState)
+    setOpenCloseCarrito((prevState) => !prevState)
+
+    setTimeout(()=> {
+    setCompraDesdeCarrito((prevState) => !prevState)
+
+    }, 2100)
+  };
 
   return (
     <section
@@ -43,8 +67,13 @@ export const Carrito = () => {
                 <strong>{items.precio}</strong>
               </div>
               <div className="cont-buttons">
-                <span className="material-symbols-outlined">delete</span>
-                <button className="btn-comprar">Comprar</button>
+                <span
+                  className="material-symbols-outlined"
+                  onClick={() => eliminarProducto(items.id)}
+                >
+                  delete
+                </span>
+                <button className="btn-comprar" onClick={btnComprar}>Comprar</button>
               </div>
             </article>
           ))

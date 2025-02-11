@@ -32,34 +32,25 @@ export const Modal = () => {
     idproducto,
     idProductosCarrito,
     setProductoCarrito,
-    productoCarrito
+    productoCarrito,
+    agregadoCarrito,
+    setAgregadoCarrito,
+    compraDesdeCarrito,
+    setCompraDesdeCarrito,
   } = useContext(ElContexto);
-  const [agregadoCarrito, setAgregadoCarrito] = useState(false);
+
+  //On/Off de button corazon de producto ya añadido al carrito
+
   useEffect(() => {
-    console.log(productoCarrito)
+    console.log(productoCarrito);
     if (idProductosCarrito.includes(productoSeleccionado[0].id)) {
       console.log("ya esta agegado");
       setAgregadoCarrito(true);
-
     } else {
       console.log("no esta agregado");
       setAgregadoCarrito(false);
     }
-  }, [idProductosCarrito, productoSeleccionado]);
-
-const verificarProductoEnCarrito = ()=> {
-  if(productoCarrito.includes(productoSeleccionado[0].id)){
-    
-    setProductoCarrito(prevCarrito => prevCarrito.filter(producto => producto.id !== productoSeleccionado[0].id));
-
-
-  }
-
-
-}
-
-//Aca quede sin terminar la funcion para eliminar el producto del carrito desde el button del corazon,o temabn preguntar si estas seguro si deseas eliminarlo
-
+  }, [idProductosCarrito, productoSeleccionado, productoCarrito]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFront, setLoadingFront] = useState(false);
@@ -104,6 +95,7 @@ const verificarProductoEnCarrito = ()=> {
       const arrowGuia = refArrowGuia.current;
       const btnGuiaDesplegable = refBtnGuiaDesplegable.current;
       buttonMulti.textContent = "Completar envio";
+
       btnGuiaDesplegable.classList.add("activate");
       arrowGuia.classList.add("arrow-rotate");
       buttonMulti.scrollIntoView({ behavior: "smooth" });
@@ -207,7 +199,8 @@ const verificarProductoEnCarrito = ()=> {
                     key={talle}
                     className={`btn-talle ${
                       selectTalle === talle ? "btn-talle-activo" : ""
-                    }`}
+                    }
+                    ${compraDesdeCarrito ? "btn-talle-animation" : ""}`}
                     onClick={() => setSelectTalle(talle)}
                   >
                     {talle.toUpperCase()}
@@ -217,13 +210,17 @@ const verificarProductoEnCarrito = ()=> {
             </div>
 
             <div className="cont-form-envio-desplegable">
-              <div
-                className="btn-guia-desplegable"
-              >
-                <div className="btn-alternate"  onClick={despliegoFormEnvio} ref={refBtnGuiaDesplegable}>
-                  <strong ref={refButtonMultiText} >
-                    Seleccioná el talle{" "}
-                  </strong>
+              <div className="btn-guia-desplegable">
+                <div
+                  className="btn-alternate"
+                  onClick={despliegoFormEnvio}
+                  ref={refBtnGuiaDesplegable}
+                >
+                  <div >
+                    <strong ref={refButtonMultiText} className="button-multi-text">
+                      Seleccioná el talle
+                      </strong>
+                       </div>
                   <span
                     className="material-symbols-outlined prueba-flecha"
                     ref={refArrowGuia}
