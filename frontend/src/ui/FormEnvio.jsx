@@ -174,10 +174,10 @@ export const FormEnvio = () => {
         <div className="formenvio__total">
           <h3 className="formenvio__comprando">Comprando</h3>
           <p className="formenvio__total-detalle">
-            {productoSeleccionado[0].nombre}
+            {productoSeleccionado?.[0] ? `${productoSeleccionado[0].nombre}` : "Cargando"}
           </p>
           <p className="formenvio__total-detalle">
-            (${productoSeleccionado[0].precio})
+        ({productoSeleccionado?.[0] ? `${productoSeleccionado[0].precio}` : "Cargando"})
           </p>
         </div>
         <div

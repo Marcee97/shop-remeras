@@ -46,7 +46,11 @@ export const MyProvider = ({ children }) => {
     const response = await client.post("/modal-products", {
       id,
     });
+
+
     setproductoSeleccionado(response.data);
+
+    sessionStorage.setItem("productoSeleccionado", JSON.stringify(response.data))
     navigate("/modal");
   };
 

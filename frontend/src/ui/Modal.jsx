@@ -14,6 +14,7 @@ export const Modal = () => {
   const {
     productos,
     setProductos,
+    setproductoSeleccionado,
     productoSeleccionado,
     setPreferenceId,
     setOpenCloseGuiaDeTalles,
@@ -39,16 +40,29 @@ export const Modal = () => {
     setCompraDesdeCarrito,
   } = useContext(ElContexto);
 
+
+  //Persistencia de datos de productoSeleccionado
+
+  useEffect(()=> {
+const dataRecuperada = sessionStorage.getItem("productoSeleccionado");
+if(dataRecuperada) {
+  setproductoSeleccionado(JSON.parse(dataRecuperada))
+}
+  }, [])
+
   //On/Off de button corazon de producto ya añadido al carrito
 
   useEffect(() => {
     console.log(productoCarrito);
-    if (idProductosCarrito.includes(productoSeleccionado[0].id)) {
-      console.log("ya esta agegado");
-      setAgregadoCarrito(true);
-    } else {
-      console.log("no esta agregado");
-      setAgregadoCarrito(false);
+    if(productoSeleccionado?.[0]){
+
+      if (idProductosCarrito.includes(productoSeleccionado[0].id)) {
+        console.log("ya esta agegado");
+        setAgregadoCarrito(true);
+      } else {
+        console.log("no esta agregado");
+        setAgregadoCarrito(false);
+      }
     }
   }, [idProductosCarrito, productoSeleccionado, productoCarrito]);
 
@@ -57,10 +71,11 @@ export const Modal = () => {
   const [tallesDisponibles, setTallesDisponibles] = useState([]);
 
   useEffect(() => {
-    const talles = productoSeleccionado[0].talles.split(",");
+    if(!productoSeleccionado?.[0]?.talles) return
+    const talles = productoSeleccionado?.[0]?.talles?.split(",");
     console.log(talles);
     setTallesDisponibles(talles);
-  }, []);
+  }, [productoSeleccionado]);
 
   const refFormEnvio = useRef(null);
   const refImageCarrousel = useRef(null);
@@ -85,6 +100,7 @@ export const Modal = () => {
     ...rows,
     imagenes: rows.imagenes.split(","),
   }));
+
 
   const refButtonMultiText = useRef(null);
   const refArrowGuia = useRef(null);
@@ -132,7 +148,7 @@ export const Modal = () => {
       <Carrito />
       <section className="modal">
         <div className="modal-cardproduct">
-          {transformArray.map((items, index) => (
+          {transformArray?.map((items, index) => (
             <div className="cont-modal-product" key={index}>
               <div className="modal-carrousel">
                 <div className="cont-img-carrousel" ref={refImageCarrousel}>

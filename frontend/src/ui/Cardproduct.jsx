@@ -1,5 +1,3 @@
-import client from "../api/axios.js";
-import { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import elContexto from "../context/ProductContext.jsx";
 import "../css/components/cardproduct.css"

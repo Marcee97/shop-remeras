@@ -21,12 +21,14 @@ export const FormPayment = () => {
       <div className="cont-formpayment">
         <h3 className="formpayment-titulo">Pagar</h3>
         <p className="cont-formpayment__precio">
-          (${productoSeleccionado[0].precio})
+          {productoSeleccionado?.[0] ? `${productoSeleccionado[0].nombre}` : "Cargando"}
         </p>
         <p className="cont-formpayment__nombre">
-          {productoSeleccionado[0].nombre}
+          {productoSeleccionado?.[0] ? `(${productoSeleccionado[0].precio})` : "Cargando"}
         </p>
-        <p>{productoSeleccionado[0].talle}</p>
+        <p>{productoSeleccionado?.[0] && (
+          <span>{productoSeleccionado[0].talle}</span>
+        )}</p>
         <strong>{selectTalle}</strong>
         {arrayImagenes.map((item, index) => (
           <img
